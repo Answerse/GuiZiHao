@@ -1,0 +1,39 @@
+.region-section {
+  width: 1920px;
+  background-color: #FFFFFF;
+  padding: 32px 0;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.region-content {
+  width: 1440px;
+}
+
+.region-tags {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: repeat(2, fit-content(100%));
+  gap: 16px;
+}
+
+.region-tag {
+  padding: 8px 32px;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid rgba(16, 18, 21, 0.1);
+  border-radius: 30px;
+  text-align: center;
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.region-tag.active {
+  background-color: #15803D;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}

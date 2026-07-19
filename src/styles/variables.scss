@@ -1,0 +1,60 @@
+:root {
+  --color-brand-primary: #101215;
+  --color-brand-green: #15803D;
+  --color-brand-lime: #65A30D;
+  --color-brand-lime-dark: #4D7C0F;
+  --color-brand-orange: #FA6400;
+  --color-text-primary: #111827;
+  --color-text-secondary: #222222;
+  --color-text-tertiary: #333333;
+  --color-text-quaternary: #666666;
+  --color-text-muted: #6B7280;
+  --color-text-placeholder: #767676;
+  --color-text-disabled: #8D8D8D;
+  --color-bg-white: #FFFFFF;
+  --color-bg-page: #F9FAFB;
+  --color-bg-card: #F8F8F8;
+  --color-bg-input: #F4F4F4;
+  --color-bg-hover: #EBF2FC;
+  --color-bg-sidebar: #E1E8F2;
+  --color-border-default: #DDDDDD;
+  --color-border-light: rgba(16, 18, 21, 0.1);
+  --color-overlay-dark: rgba(16, 18, 21, 0.6);
+  --color-overlay-light: rgba(255, 255, 255, 0.2);
+  --color-black: #000000;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 10px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+
+  --font-family-sans: 'MiSans', sans-serif;
+  --font-family-display: 'Altinn-DIN Condensed', sans-serif;
+  --font-family-body: 'Inter', sans-serif;
+
+  --font-size-display: 100px;
+  --font-size-huge: 60px;
+  --font-size-xl: 30px;
+  --font-size-lg: 24px;
+  --font-size-md: 20px;
+  --font-size-md-bold: 20px;
+  --font-size-base: 16px;
+  --font-size-sm-bold: 16px;
+  --font-size-sm: 14px;
+  --font-size-xs: 12px;
+
+  --font-weight-bold: 600;
+  --font-weight-regular: 400;
+
+  --line-height-body: 18px;
+  --line-height-heading: 22px;
+  --line-height-display: 26px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 30px;
+  --radius-full: 9999px;
+}

@@ -1,0 +1,207 @@
+/* ===== 详情页全局 ===== */
+.detail-page {
+  width: 1920px;
+  margin: 0 auto;
+  padding-top: 100px;
+  background-color: #FFFFFF;
+}
+
+/* ===== 面包屑导航 ===== */
+.detail-breadcrumb {
+  background-color: #FFFFFF;
+}
+
+.breadcrumb-content {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 75px;
+  padding: 0;
+}
+
+.breadcrumb-home-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.breadcrumb-chevron {
+  width: 7px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.breadcrumb-item {
+  font-family: 'MiSans', sans-serif;
+  font-size: 16px;
+  font-weight: 330;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.breadcrumb-current {
+  font-weight: 630;
+}
+
+/* ===== 主图区 ===== */
+.detail-hero {
+  display: flex;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+
+.detail-hero-inner {
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  gap: 64px;
+}
+
+.detail-main-image {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  align-self: stretch;
+}
+
+.detail-main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 0;
+}
+
+.detail-product-title {
+  font-family: 'MiSans', sans-serif;
+  font-size: 40px;
+  font-weight: 630;
+  color: #111827;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-label {
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.meta-value {
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #111827;
+}
+
+.detail-purchase {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.purchase-section-title {
+  font-family: 'Altinn-DIN Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.purchase-btn {
+  width: 100%;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 16px 32px;
+  outline: none;
+}
+
+.purchase-btn-primary {
+  background-color: #15803D;
+  color: #FFFFFF;
+  border: none;
+}
+
+.purchase-btn-outline {
+  background-color: transparent;
+  color: #16A34A;
+  border: 1px solid #15803D;
+}
+
+/* ========== 农产品品牌详情页专属样式 ========== */
+.brand-product-detail-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+
+.brand-product-detail-image img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+/* ===== 产品介绍 ===== */
+.detail-description {
+  display: flex;
+  justify-content: center;
+  background-color: #FFFFFF;
+  padding: 80px 0;
+}
+
+.detail-description-inner {
+  max-width: 1440px;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.description-title {
+  font-family: 'Altinn-DIN Condensed', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.description-text {
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #111827;
+  line-height: 1.6;
+  margin: 0;
+}

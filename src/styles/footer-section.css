@@ -1,0 +1,134 @@
+.footer-section {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-bg-white);
+}
+
+.footer-content {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.footer-columns {
+  padding: 48px 0;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 48px;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+}
+
+.footer-logo-img {
+  width: 99px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.footer-logo-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.footer-title {
+  font-family: var(--font-family-sans);
+  font-size: 40px;
+  font-weight: 630;
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.footer-subtitle {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  font-weight: 330;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.footer-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-contact-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-contact-label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: 330;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.footer-contact-value {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: 330;
+  color: var(--color-text-primary);
+}
+
+.footer-contact-extra {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: 330;
+  color: var(--color-text-primary);
+}
+
+.footer-divider {
+  height: 0;
+  border: none;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.footer-copyright {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.footer-copyright span {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-xs);
+  font-weight: 330;
+  color: var(--color-text-primary);
+}
+
+.footer-icp-link {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-icp-link:hover {
+  color: var(--color-brand-primary);
+}

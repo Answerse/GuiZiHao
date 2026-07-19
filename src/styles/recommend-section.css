@@ -1,0 +1,183 @@
+.recommend-section {
+  width: 100%;
+  background-color: #65A30D;
+  padding: 40px 0;
+  position: relative;
+}
+
+.recommend-content {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== Coverflow ========== */
+.recommend-coverflow {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 2000px;
+  perspective-origin: center center;
+  transform-style: preserve-3d;
+}
+
+.recommend-slide {
+  position: absolute;
+  width: 360px;
+  height: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.recommend-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recommend-slide-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.recommend-slide.active {
+  box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+.recommend-slide.active:hover {
+  transform: translateX(0px) scale(1.05) !important;
+  opacity: 1 !important;
+  transition: transform 0.4s ease-in, opacity 0.4s ease-in;
+  z-index: 1000 !important;
+}
+
+.coverflow-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  outline: none;
+  color: #FFFFFF;
+}
+
+.coverflow-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.coverflow-arrow-icon {
+  width: 20px;
+  height: 18px;
+}
+
+.coverflow-arrow-left .coverflow-arrow-icon {
+  transform: rotate(180deg);
+}
+
+.coverflow-arrow-left {
+  left: -40px;
+}
+
+.coverflow-arrow-right {
+  right: -40px;
+}
+
+/* ========== Logo 双排横向滚动（农业企业品牌）Figma #2153:1157 ========== */
+.logo-scroll-wrap {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  /* 蒙版渐隐：两侧淡出 */
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0%,
+    #000 30%,
+    #000 70%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(90deg,
+    transparent 0%,
+    #000 30%,
+    #000 70%,
+    transparent 100%
+  );
+}
+
+.logo-grid-strip {
+  display: flex;
+  gap: 24px;
+  width: fit-content;
+  will-change: transform;
+}
+
+/* 一组完整网格：10列 × 2行，每列272px，总计2936×424.59 */
+.logo-grid-set {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 24px;
+  width: 2936px;
+  height: 424.59px;
+  flex-shrink: 0;
+}
+
+/* 每格：图片填满+圆角，无白底卡片/阴影 */
+.logo-grid-card {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.logo-grid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hover 遮罩：从下往上滑入 */
+.logo-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in;
+}
+
+.logo-grid-card:hover .logo-grid-overlay {
+  transform: translateY(0);
+}
+
+.logo-grid-name {
+  color: #FFFFFF;
+  font-size: var(--font-size-md);
+  text-align: center;
+  line-height: 1.4;
+}
