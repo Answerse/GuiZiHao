@@ -14,13 +14,14 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 0 40px;
+  padding: 0 40px 0 160px;
   gap: 48px;
   height: 75px;
 }
 
 .header-logo {
-  position: relative;
+  position: absolute;
+  left: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -119,18 +120,21 @@
 }
 
 .header-scrolled .header-nav {
-  max-width: 1920px;
-  margin: 0 auto;
+  width: 100%;
   height: 80px;
   align-items: stretch;
   justify-content: flex-start;
   gap: 48px;
-  padding: 0 40px;
 }
 
 .header-scrolled .header-logo {
-  height: auto;
-  align-self: stretch;
+  position: absolute;
+  left: 30px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-scrolled .header-logo-text {
@@ -176,6 +180,7 @@
   align-items: center;
   gap: 32px;
   flex: 1;
+  margin-left: 60px;
 }
 
 .scrolled-category-tab {
@@ -201,6 +206,80 @@
   font-size: 24px;
   border-bottom: 2px solid #15803D;
   color: #111827;
+}
+
+/* 窄屏：分类下拉菜单（默认隐藏，窄屏显示） */
+.scrolled-category-wrapper {
+  display: none;
+  position: relative;
+}
+
+.scrolled-category-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  background-color: #FFFFFF;
+  border-radius: 40px;
+  padding: 0 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.scrolled-category-label {
+  font-family: 'MiSans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #101215;
+  white-space: nowrap;
+}
+
+.scrolled-category-value {
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 630;
+  color: #101215;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.scrolled-category-chevron {
+  width: 15px;
+  height: 9px;
+  flex-shrink: 0;
+}
+
+.category-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  padding-top: 4px;
+}
+
+.category-popup .dropdown-popup-inner {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 200px;
+}
+
+/* 窄屏：隐藏标签按钮，显示下拉菜单 */
+@media (max-width: 1280px) {
+  .scrolled-category-tabs {
+    display: none;
+  }
+  .scrolled-category-wrapper {
+    display: block;
+  }
+  .scrolled-nav-section {
+    gap: 24px;
+  }
 }
 
 .scrolled-region-pill {

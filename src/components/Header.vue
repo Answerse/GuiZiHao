@@ -20,6 +20,7 @@ let scrollHandler = null
 // Dropdown state
 const showTypeMenu = ref(false)
 const showRegionMenu = ref(false)
+const showCategoryMenu = ref(false)
 const selectedType = ref('区域公用品牌')
 const selectedRegion = ref('全部')
 
@@ -43,6 +44,13 @@ function toggleTypeMenu() {
 function toggleRegionMenu() {
   showRegionMenu.value = !showRegionMenu.value
   showTypeMenu.value = false
+  showCategoryMenu.value = false
+}
+
+function toggleCategoryMenu() {
+  showCategoryMenu.value = !showCategoryMenu.value
+  showTypeMenu.value = false
+  showRegionMenu.value = false
 }
 
 function selectType(opt) {
@@ -58,6 +66,7 @@ function selectRegion(opt) {
 function closeMenus() {
   showTypeMenu.value = false
   showRegionMenu.value = false
+  showCategoryMenu.value = false
 }
 
 onMounted(() => {
@@ -150,6 +159,24 @@ onUnmounted(() => {
               :class="['scrolled-category-tab', { 'scrolled-category-tab-active': i === props.activeTab }]"
               @click="selectTab(i)"
             >{{ tab }}</button>
+          </div>
+          <!-- 窄屏：分类下拉菜单 -->
+          <div class="scrolled-category-wrapper">
+            <div class="scrolled-category-dropdown" @click.stop="toggleCategoryMenu">
+              <span class="scrolled-category-label">分类：</span>
+              <span class="scrolled-category-value">{{ navTabs[props.activeTab] }}</span>
+              <img src="/icons/chevron-down.svg" class="scrolled-category-chevron" alt="▾">
+            </div>
+            <div v-if="showCategoryMenu" class="dropdown-popup category-popup" @click.stop>
+              <div class="dropdown-popup-inner">
+                <button
+                  v-for="(tab, i) in navTabs"
+                  :key="tab"
+                  :class="['dropdown-chip', { 'dropdown-chip-active': i === props.activeTab }]"
+                  @click="selectTab(i); showCategoryMenu = false"
+                >{{ tab }}</button>
+              </div>
+            </div>
           </div>
           <div class="scrolled-region-wrapper">
             <div class="scrolled-region-pill" @click.stop="toggleRegionMenu">
