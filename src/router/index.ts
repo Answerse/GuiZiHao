@@ -29,14 +29,12 @@ const router = createRouter({
     {
       path: '/chenpitong',
       name: 'ChenpiTong',
-      props: { src: '/chenpitong/index.html' },
-      component: () => import('@/views/ChenpiTongPage.vue')
+      component: () => import('@/views/ChenpiTongHome.vue')
     },
     {
       path: '/chenpitong/product',
       name: 'ChenpiTongProduct',
-      props: { src: '/chenpitong/product.html' },
-      component: () => import('@/views/ChenpiTongPage.vue')
+      component: () => import('@/views/ChenpiTongProduct.vue')
     }
   ]
 })
