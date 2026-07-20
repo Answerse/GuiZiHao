@@ -97,6 +97,78 @@ button {
 }
 
 /* ============================================
+   BREADCRUMB NAVIGATION
+   Figma 29076:4345
+   ============================================ */
+.breadcrumb {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 24px;
+  background: var(--white);
+}
+
+.breadcrumb__inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+}
+
+.breadcrumb__back {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #26170B;
+  border-radius: 50%;
+  transition: opacity 0.2s ease;
+}
+
+.breadcrumb__back:hover {
+  opacity: 0.85;
+}
+
+.breadcrumb__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+}
+
+.breadcrumb__link {
+  font-family: 'MiSans', 'Inter', sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.breadcrumb__link--home {
+  font-weight: 330;
+  color: #172439;
+  padding: 20px 0 20px 10px;
+}
+
+.breadcrumb__link--home:hover {
+  opacity: 0.7;
+}
+
+.breadcrumb__link--current {
+  font-weight: 630;
+  color: #172439;
+  padding: 20px 0 20px 10px;
+}
+
+.breadcrumb__arrow {
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ============================================
    1. HEADER
    Base + Transparent (homepage) / Solid (product page)
    ============================================ */
@@ -510,7 +582,8 @@ button {
 .pubei-story__inner,
 .product-detail__inner,
 .tasting-notes__inner,
-.how-to-prepare__inner {
+.how-to-prepare__inner,
+.breadcrumb__inner {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 64px;
@@ -964,7 +1037,10 @@ a.product-card {
   font-weight: 330;
   color: var(--white);
   line-height: 1.6;
-  margin: 0;
+}
+
+.product-card__desc-heading {
+  color: var(--white);
 }
 
 .product-card__price-row {
@@ -1016,6 +1092,8 @@ a.product-card {
   transform: translateY(-2px);
 }
 
+
+
 /* ============================================
    7. HERITAGE SECTION - The Story Of Time
    ============================================ */
@@ -1024,7 +1102,7 @@ a.product-card {
   width: 100%;
   height: 919px;
   padding: 120px 0;
-  background-image: url('../assets/images/heritage-bg-cover.png');
+  background-image: url('../assets/images/heritage-bg-cover.webp');
   background-size: cover;
   background-position: center;
   background-color: #8D5325;
@@ -1461,6 +1539,7 @@ a.product-card {
   color: #26170B;
   line-height: 1.7;
   margin: 0;
+  flex: 1;
   font-family: var(--font-primary);
   text-align: left;
 }
@@ -2033,36 +2112,20 @@ a.product-card {
   height: 15px;
 }
 
-/* dot container: 5.61px wide, holds line + bullet character */
+/* dot container: holds the bullet dot */
 .pubei-story__info-dot {
-  width: 5.61px;
-  position: relative;
+  width: 6px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Vertical line behind the bullet */
+/* Bullet dot (圆点) */
 .pubei-story__info-line {
-  width: 100%;
-  height: 100%;
+  width: 6px;
+  height: 6px;
   background: #26170B;
-  border-radius: 2px;
-}
-
-/* Bullet: actual • text character per Figma (Inter 15px, y-offset -4px) */
-.pubei-story__info-bullet {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, 0);
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 15px;
-  color: #26170B;
-  pointer-events: none;
-  /* vertical offset -4px relative to line center (Figma y:-4 relative to node top) */
-  margin-top: -4px;
+  border-radius: 50%;
 }
 
 .pubei-story__info-label {
@@ -2194,6 +2257,232 @@ a.product-card {
 }
 
 /* ============================================
+   LOGIN MODAL
+   Figma 29078:1247
+   ============================================ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay--open {
+  display: flex;
+}
+
+.modal {
+  position: relative;
+  width: 480px;
+  min-height: 720px;
+  background: #EBF2FC;
+  border-radius: 20px;
+  padding: 60px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  overflow: hidden;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 21px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+}
+
+/* Decorative background image from Figma */
+.modal__decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 480px;
+  height: 420px;
+  border-radius: 8px;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.modal__decor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Brand logo */
+.modal__brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.modal__brand-logomark {
+  width: 128px;
+  height: 128px;
+  display: block;
+}
+
+.modal__brand-logotype {
+  width: 203px;
+  height: 48px;
+  display: block;
+}
+
+/* Login card */
+.modal__card {
+  position: relative;
+  z-index: 1;
+  width: 448px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 40px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.modal__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'MiSans', 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 330;
+  color: #111827;
+  line-height: 1;
+}
+
+.modal__label img {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.modal__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  border: none;
+  border-bottom: 1px solid rgba(16, 18, 21, 0.2);
+  padding: 0 14px;
+}
+
+.modal__input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: 'MiSans', 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 330;
+  color: #111827;
+  background: transparent;
+  line-height: 1;
+}
+
+.modal__input-field::placeholder {
+  color: #6B7280;
+}
+
+.modal__input-divider {
+  width: 0;
+  height: 36px;
+  border-left: 1px solid #F36C1A;
+  flex-shrink: 0;
+}
+
+.modal__input-send {
+  font-family: 'MiSans', 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 330;
+  color: #DD5F12;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.modal__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.modal__checkbox-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(16, 18, 21, 0.2);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.modal__checkbox-text {
+  font-family: 'MiSans', 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 330;
+  color: #DD5F12;
+  line-height: 1;
+}
+
+.modal__login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 80px;
+  height: 64px;
+  background: #DD5F12;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  font-family: 'MiSans', 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #F9FAFB;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.modal__login-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* ============================================
    HAMBURGER MENU (Mobile)
    ============================================ */
 .header__hamburger {
@@ -2263,7 +2552,8 @@ a.product-card {
   .pubei-story__inner,
   .product-detail__inner,
   .tasting-notes__inner,
-  .how-to-prepare__inner {
+  .how-to-prepare__inner,
+  .breadcrumb__inner {
     padding: 0 24px;
   }
 
@@ -2335,8 +2625,7 @@ a.product-card {
   }
 
   .product-card {
-    height: auto;
-    min-height: 400px;
+    height: 400px;
   }
 
   .product-card__info {
@@ -2597,7 +2886,8 @@ a.product-card {
   .pubei-story__inner,
   .product-detail__inner,
   .tasting-notes__inner,
-  .how-to-prepare__inner {
+  .how-to-prepare__inner,
+  .breadcrumb__inner {
     padding: 0 32px;
   }
 
@@ -2687,9 +2977,12 @@ a.product-card {
   }
 
   .product-card {
-    height: auto;
-    min-height: 440px;
+    height: 440px;
     flex-direction: row;
+  }
+
+  .product-card--reversed {
+    flex-direction: row-reverse;
   }
 
   .product-card__image-wrapper {
@@ -3042,7 +3335,8 @@ a.product-card {
   .pubei-story__inner,
   .product-detail__inner,
   .tasting-notes__inner,
-  .how-to-prepare__inner {
+  .how-to-prepare__inner,
+  .breadcrumb__inner {
     padding: 0 60px;
   }
 
@@ -3129,8 +3423,7 @@ a.product-card {
   }
 
   .product-card {
-    height: auto;
-    min-height: 520px;
+    height: 520px;
   }
 
   .product-card__info {
@@ -3475,7 +3768,8 @@ a.product-card {
   .pubei-story__inner,
   .product-detail__inner,
   .tasting-notes__inner,
-  .how-to-prepare__inner {
+  .how-to-prepare__inner,
+  .breadcrumb__inner {
     padding: 0;
   }
 

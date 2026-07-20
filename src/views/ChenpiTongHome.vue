@@ -6,6 +6,7 @@ const isNavOpen = ref(false)
 const isLangDropdownOpen = ref(false)
 const currentSlide = ref(0)
 const isAutoPlayPaused = ref(false)
+const isModalOpen = ref(false)
 
 const translations = {
   en: {
@@ -22,7 +23,7 @@ const translations = {
     'hero2-cta': 'Discover Our Heritage',
     'about-subtitle': 'DISCOVER CHENPI',
     'about-title': 'What Is Chenpi?',
-    'about-body': 'Chenpi is the dried peel of mature mandarins that has been carefully harvested, sun-dried, and naturally aged over time.<br>As it matures, its aroma, color, and flavor continue to evolve, making it a unique product shaped by the value of time.',
+    'about-body': 'Chenpi is the dried peel of mature mandarins that has been carefully harvested, sun-dried, and naturally aged over time.\nAs it matures, its aroma, color, and flavor continue to evolve, making it a unique product shaped by the value of time.',
     'enjoy-subtitle': 'WAYS TO ENJOY',
     'enjoy-title': 'How to Enjoy Chenpi',
     'enjoy-card1-title': 'Brew as Tea',
@@ -38,17 +39,17 @@ const translations = {
     'why-stat3-label': 'Traceability System',
     'products-subtitle': 'AGED COLLECTION',
     'products-title': 'Explore by Aging Years',
-    'prod10-lg': '10-Year',
+    'prod10-lg': 'AAA',
     'prod10-sm': 'Vintage Chenpi',
     'prod10-desc-head': 'The Daily Essential',
     'prod10-desc': 'A balanced, smooth introduction to aged citrus. Perfect for everyday wellness and gifting.',
     'prod10-price-unit': '/kg',
-    'prod20-lg': '20-Year',
+    'prod20-lg': 'AAAA',
     'prod20-sm': 'Vintage Chenpi',
     'prod20-desc-head': 'The Connoisseur\'s Choice',
     'prod20-desc': 'Richer, deeper flavor with woody notes. Ideal for serious tea lovers and culinary use.',
     'prod20-price-unit': '/kg',
-    'prod30-lg': '30-Year',
+    'prod30-lg': 'AAAAA',
     'prod30-sm': 'Vintage Chenpi',
     'prod30-desc-head': 'The Collector\'s Pinnacle',
     'prod30-desc': 'Rare, intense, and ultra-smooth. The ultimate "liquid gold" investment.',
@@ -56,7 +57,7 @@ const translations = {
     'btn-buy': 'Buy',
     'heritage-subtitle': 'OUR HERITAGE',
     'heritage-title': 'The Story Of Time',
-    'heritage-text': 'True Chenpi cannot be made overnight.<br>It begins with carefully selected mandarins, continues through sunshine and changing seasons, and reaches its finest expression only after years of natural aging.<br>Every year adds depth.<br>Every season leaves its mark.<br>This is the story of time.',
+    'heritage-text': 'True Chenpi cannot be made overnight.\nIt begins with carefully selected mandarins, continues through sunshine and changing seasons, and reaches its finest expression only after years of natural aging.\nEvery year adds depth.\nEvery season leaves its mark.\nThis is the story of time.',
     'footer-home': 'Home',
     'footer-products': 'Products',
     'footer-stories': 'Stories',
@@ -77,7 +78,7 @@ const translations = {
     'hero2-cta': '了解我们的传承',
     'about-subtitle': '认识陈皮',
     'about-title': '什么是陈皮？',
-    'about-body': '陈皮是成熟橘子的干果皮，经过精心采摘、自然晒干和多年陈化而成。<br>随着时间推移，其香气、颜色和风味不断演变，成为独一无二的天然珍品。',
+    'about-body': '陈皮是成熟橘子的干果皮，经过精心采摘、自然晒干和多年陈化而成。\n随着时间推移，其香气、颜色和风味不断演变，成为独一无二的天然珍品。',
     'enjoy-subtitle': '品赏方式',
     'enjoy-title': '如何品赏陈皮',
     'enjoy-card1-title': '冲泡饮用',
@@ -93,25 +94,25 @@ const translations = {
     'why-stat3-label': '可追溯体系',
     'products-subtitle': '年份系列',
     'products-title': '按年份探索',
-    'prod10-lg': '十年',
+    'prod10-lg': 'AAA',
     'prod10-sm': '陈皮',
     'prod10-desc-head': '日常臻选',
-    'prod10-desc': '平衡顺滑，是陈化柑橘的入门之选。适合日常养生与送礼。',
+    'prod10-desc': '口感均衡顺滑的陈皮茶，适合日常养生与送礼。',
     'prod10-price-unit': '/公斤',
-    'prod20-lg': '二十年',
+    'prod20-lg': 'AAAA',
     'prod20-sm': '陈皮',
     'prod20-desc-head': '鉴赏家之选',
-    'prod20-desc': '风味浓郁深邃，带有木香。理想的茶饮爱好者之选。',
+    'prod20-desc': '更为浓郁深沉，带木质香气，适合茶艺爱好者与烹调使用。',
     'prod20-price-unit': '/公斤',
-    'prod30-lg': '三十年',
+    'prod30-lg': 'AAAAA',
     'prod30-sm': '陈皮',
     'prod30-desc-head': '收藏家巅峰之选',
-    'prod30-desc': '稀有、浓郁、极致顺滑。终极的"液体黄金"投资。',
+    'prod30-desc': '稀有、浓郁、超级顺滑。极致的"液体黄金"收藏品。',
     'prod30-price-unit': '/公斤',
     'btn-buy': '购买',
     'heritage-subtitle': '我们的传承',
     'heritage-title': '时间的故事',
-    'heritage-text': '真正的陈皮并非一朝一夕可以制成。<br>它始于精心挑选的橘子，历经阳光与四季更迭，唯有经过多年自然陈化，方能达到最极致的表达。<br>每一年都在增加深度。<br>每一季都在留下印记。<br>这就是时间的故事。',
+    'heritage-text': '真正的陈皮并非一朝一夕可以制成。\n它始于精心挑选的橘子，历经阳光与四季更迭，唯有经过多年自然陈化，方能达到最极致的表达。\n每一年都在增加深度。\n每一季都在留下印记。\n这就是时间的故事。',
     'footer-home': '首页',
     'footer-products': '产品',
     'footer-stories': '故事',
@@ -121,7 +122,8 @@ const translations = {
 }
 
 const t = (key) => {
-  return translations[currentLang.value][key] || key
+  const value = translations[currentLang.value][key] || key
+  return value.replace(/\n/g, '<br>')
 }
 
 const currentLangText = computed(() => {
@@ -153,6 +155,20 @@ const nextSlide = () => {
 
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + 2) % 2
+}
+
+const openModal = () => {
+  isModalOpen.value = true
+}
+
+const closeModal = () => {
+  isModalOpen.value = false
+}
+
+const handleModalClick = (e) => {
+  if (e.target === e.currentTarget) {
+    closeModal()
+  }
 }
 
 let autoPlayInterval = null
@@ -265,7 +281,7 @@ onUnmounted(() => {
       <section class="hero" @mouseenter="pauseAutoPlay" @mouseleave="resumeAutoPlay">
         <div class="hero__slides">
           <div class="hero__slide" :class="{ 'hero__slide--active': currentSlide === 0 }">
-            <img class="hero__slide-bg" src="/chenpitong/assets/images/hero-banner-01.png" alt="Hero Banner 1">
+            <img class="hero__slide-bg" src="/chenpitong/assets/images/hero-banner-01.webp" alt="Hero Banner 1">
             <div class="hero__slide-overlay hero__slide-overlay--1"></div>
             <div class="hero__slide-content">
               <h1 class="hero__title">{{ t('hero1-title') }}</h1>
@@ -274,7 +290,7 @@ onUnmounted(() => {
             </div>
           </div>
           <div class="hero__slide" :class="{ 'hero__slide--active': currentSlide === 1 }">
-            <img class="hero__slide-bg" src="/chenpitong/assets/images/hero-banner-02.png" alt="Hero Banner 2">
+            <img class="hero__slide-bg" src="/chenpitong/assets/images/hero-banner-02.webp" alt="Hero Banner 2">
             <div class="hero__slide-overlay hero__slide-overlay--2"></div>
             <div class="hero__slide-content">
               <h1 class="hero__title">{{ t('hero2-title') }}</h1>
@@ -301,7 +317,7 @@ onUnmounted(() => {
             <p class="about__body" v-html="t('about-body')"></p>
           </div>
           <div class="about__image-area">
-            <img class="about__image" src="/chenpitong/assets/images/about-img.png" alt="Chenpi">
+            <img class="about__image" src="/chenpitong/assets/images/about-img.webp" alt="Chenpi">
           </div>
         </div>
       </section>
@@ -316,7 +332,7 @@ onUnmounted(() => {
           <div class="enjoy__grid">
             <div class="enjoy__card">
               <div class="enjoy__card-img">
-                <img src="/chenpitong/assets/images/enjoy-brew-crop-39e639.png" alt="Brew as Tea">
+                <img src="/chenpitong/assets/images/enjoy-brew-crop-39e639.webp" alt="Brew as Tea">
                 <div class="enjoy__card-overlay"></div>
               </div>
               <div class="enjoy__card-info">
@@ -327,7 +343,7 @@ onUnmounted(() => {
 
             <div class="enjoy__card">
               <div class="enjoy__card-img">
-                <img src="/chenpitong/assets/images/enjoy-cook-crop-6e4b94.png" alt="Cook with Flavor">
+                <img src="/chenpitong/assets/images/enjoy-cook-crop-6e4b94.webp" alt="Cook with Flavor">
                 <div class="enjoy__card-overlay"></div>
               </div>
               <div class="enjoy__card-info">
@@ -338,7 +354,7 @@ onUnmounted(() => {
 
             <div class="enjoy__card">
               <div class="enjoy__card-img">
-                <img src="/chenpitong/assets/images/enjoy-bake-cover.png" alt="Bake and Create">
+                <img src="/chenpitong/assets/images/enjoy-bake-cover.webp" alt="Bake and Create">
                 <div class="enjoy__card-overlay"></div>
               </div>
               <div class="enjoy__card-info">
@@ -351,7 +367,7 @@ onUnmounted(() => {
       </section>
 
       <section class="why">
-        <img class="why__bg" src="/chenpitong/assets/images/why-bg-header.png" alt="Why Pu Bei Background">
+        <img class="why__bg" src="/chenpitong/assets/images/why-bg-header.webp" alt="Why Pu Bei Background">
         <div class="why__inner">
           <div class="why__title-group">
             <p class="why__subtitle">{{ t('why-subtitle') }}</p>
@@ -383,9 +399,9 @@ onUnmounted(() => {
           </div>
 
           <div class="products__list">
-            <a href="/chenpitong/product" class="product-card">
+            <a href="/chenpitong/product?v=10" class="product-card">
               <div class="product-card__image-wrapper">
-                <img class="product-card__image" src="/chenpitong/assets/images/product-10year-figma.png" alt="10-Year Vintage Chenpi">
+                <img class="product-card__image" src="/chenpitong/assets/images/product-10year-figma.webp" alt="AAA Vintage Chenpi">
               </div>
               <div class="product-card__info product-card__info--gold">
                 <div class="product-card__info-row product-card__info-row--title">
@@ -406,14 +422,14 @@ onUnmounted(() => {
                       <span class="product-card__price-unit">{{ t('prod10-price-unit') }}</span>
                     </div>
                   </div>
-                  <button class="product-card__buy">{{ t('btn-buy') }}</button>
+                  <button class="product-card__buy" @click.stop="openModal">{{ t('btn-buy') }}</button>
                 </div>
               </div>
             </a>
 
-            <a href="/chenpitong/product" class="product-card product-card--reversed">
+            <a href="/chenpitong/product?v=20" class="product-card product-card--reversed">
               <div class="product-card__image-wrapper">
-                <img class="product-card__image" src="/chenpitong/assets/images/product-20year-figma.png" alt="20-Year Vintage Chenpi">
+                <img class="product-card__image" src="/chenpitong/assets/images/product-20year-figma.webp" alt="AAAA Vintage Chenpi">
               </div>
               <div class="product-card__info product-card__info--brown">
                 <div class="product-card__info-row product-card__info-row--title">
@@ -434,14 +450,14 @@ onUnmounted(() => {
                       <span class="product-card__price-unit">{{ t('prod20-price-unit') }}</span>
                     </div>
                   </div>
-                  <button class="product-card__buy">{{ t('btn-buy') }}</button>
+                  <button class="product-card__buy" @click.stop="openModal">{{ t('btn-buy') }}</button>
                 </div>
               </div>
             </a>
 
-            <a href="/chenpitong/product" class="product-card">
+            <a href="/chenpitong/product?v=30" class="product-card">
               <div class="product-card__image-wrapper">
-                <img class="product-card__image" src="/chenpitong/assets/images/product-30year-figma.png" alt="30-Year Vintage Chenpi">
+                <img class="product-card__image" src="/chenpitong/assets/images/product-30year-figma.webp" alt="AAAAA Vintage Chenpi">
               </div>
               <div class="product-card__info product-card__info--dark">
                 <div class="product-card__info-row product-card__info-row--title">
@@ -462,7 +478,7 @@ onUnmounted(() => {
                       <span class="product-card__price-unit">{{ t('prod30-price-unit') }}</span>
                     </div>
                   </div>
-                  <button class="product-card__buy">{{ t('btn-buy') }}</button>
+                  <button class="product-card__buy" @click.stop="openModal">{{ t('btn-buy') }}</button>
                 </div>
               </div>
             </a>
@@ -526,6 +542,58 @@ onUnmounted(() => {
         <p class="footer__copyright">{{ t('footer-copyright') }}</p>
       </footer>
 
+    </div>
+
+    <div class="modal-overlay" id="loginModal" :class="{ 'modal-overlay--open': isModalOpen }" @click="handleModalClick">
+      <div class="modal">
+        <button class="modal__close" @click="closeModal" aria-label="Close">
+          <img src="/chenpitong/assets/icons/icon-close-v2.svg" alt="Close" width="28" height="28">
+        </button>
+
+        <div class="modal__decor">
+          <img class="modal__decor-img" src="/chenpitong/assets/icons/modal-bg.webp" alt="">
+        </div>
+
+        <div class="modal__brand">
+          <img class="modal__brand-logomark" src="/chenpitong/assets/icons/modal-logomark.svg" alt="ChenPi Tong">
+          <img class="modal__brand-logotype" src="/chenpitong/assets/icons/modal-logotype.svg" alt="ChenPi Tong">
+        </div>
+
+        <div class="modal__card">
+          <div class="modal__form">
+            <div class="modal__field">
+              <label class="modal__label">
+                <img src="/chenpitong/assets/icons/icon-phone-v2.svg" alt="" width="24" height="24">
+                <span>手机号</span>
+              </label>
+              <div class="modal__input">
+                <input type="text" placeholder="请输入手机号" class="modal__input-field">
+              </div>
+            </div>
+
+            <div class="modal__field">
+              <label class="modal__label">
+                <img src="/chenpitong/assets/icons/icon-shield-v2.svg" alt="" width="24" height="24">
+                <span>验证码</span>
+              </label>
+              <div class="modal__input">
+                <input type="text" placeholder="请输入验证码" class="modal__input-field">
+                <span class="modal__input-divider"></span>
+                <span class="modal__input-send">获取验证码</span>
+              </div>
+            </div>
+
+            <label class="modal__checkbox">
+              <span class="modal__checkbox-box"></span>
+              <span class="modal__checkbox-text">我已阅读并同意《用户服务协议》《隐私协议》</span>
+            </label>
+          </div>
+
+          <button class="modal__login-btn">
+            <span>登录</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
