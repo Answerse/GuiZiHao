@@ -26,11 +26,74 @@
   overflow: hidden;
 }
 
-.hero-bg-image {
+.hero-bg-slides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ========== 每张背景图的独立控制 ========== */
+.hero-bg-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+
+  /* 基础缩放过渡（从 1 开始，不会与 visible 状态的 transition 冲突） */
+  transition: transform 8s linear;
+  transform: scale(1);
+}
+
+.hero-bg-slide-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
+}
+
+/* ============================================
+   所有可见状态的缩放目标值统一为 1.35
+   通过 transition 持续运行，不因类切换中断
+   ============================================ */
+.hero-bg-slide.phase-entering,
+.hero-bg-slide.phase-holding,
+.hero-bg-slide.phase-exiting {
+  transform: scale(1.35);
+}
+
+/* 进场：仅控制透明度淡入，缩放由 transition 驱动 */
+.hero-bg-slide.phase-entering {
+  animation: heroFadeIn 3s linear forwards;
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 停留：透明保持，缩放继续 */
+.hero-bg-slide.phase-holding {
+  opacity: 1;
+}
+
+/* 出场：仅控制透明度淡出 */
+.hero-bg-slide.phase-exiting {
+  animation: heroFadeOut 1s linear forwards;
+}
+
+@keyframes heroFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* 隐藏：复位（opacity=0 时缩放变化不可见） */
+.hero-bg-slide.phase-hidden {
+  opacity: 0;
+  transform: scale(1);
 }
 
 .hero-gradient {
@@ -51,8 +114,8 @@
 
 .hero-text {
   position: absolute;
-  left: 0;
-  top: 50%;
+  left: clamp(0px, calc(210px - (100vw - 1440px) * 0.5), 210px);
+  top: calc(50% - 20px);
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;

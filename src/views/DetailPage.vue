@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import Header from '@/components/Header.vue'
 import FooterSection from '@/components/FooterSection.vue'
 import { products } from '@/data/products'
 
 const route = useRoute()
+const router = useRouter()
 const product = computed(() => {
   const id = Number(route.params.productId)
   return products.find(p => p.id === id) || products[0]
@@ -18,6 +19,10 @@ const categoryTabMap: Record<string, number> = {
 }
 
 const categoryTabIndex = computed(() => categoryTabMap[product.value.category] ?? 0)
+
+const openChenpiTong = () => {
+  window.open('/chenpitong/', '_blank')
+}
 </script>
 
 <template>
@@ -27,7 +32,9 @@ const categoryTabIndex = computed(() => categoryTabMap[product.value.category] ?
       <!-- 面包屑导航 -->
       <div class="detail-breadcrumb">
         <div class="breadcrumb-content">
-          <img src="/images/breadcrumb-home.svg" class="breadcrumb-home-icon" alt="首页">
+          <button class="back-btn" @click="router.go(-1)" aria-label="后退">
+            <img src="/icons/arrow-left.svg" class="back-btn-icon" alt="">
+          </button>
           <router-link to="/" class="breadcrumb-item">首页</router-link>
           <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
           <router-link :to="{ name: 'Home', query: { tab: categoryTabIndex } }" class="breadcrumb-item">{{ product.category }}</router-link>
@@ -64,8 +71,8 @@ const categoryTabIndex = computed(() => categoryTabMap[product.value.category] ?
             </div>
             <div class="detail-purchase">
               <span class="purchase-section-title">购买方式</span>
-              <button class="purchase-btn purchase-btn-primary">货源联系方式</button>
-              <button class="purchase-btn purchase-btn-outline">去网点购买</button>
+              <button class="purchase-btn purchase-btn-primary" @click="openChenpiTong">货源联系方式</button>
+              <button class="purchase-btn purchase-btn-outline" @click="openChenpiTong">去网点购买</button>
             </div>
           </div>
         </div>

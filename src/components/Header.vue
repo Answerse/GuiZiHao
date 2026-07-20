@@ -24,11 +24,11 @@ const showCategoryMenu = ref(false)
 const selectedType = ref('区域公用品牌')
 const selectedRegion = ref('全部')
 
-const typeOptions = ['区域公用品牌', '农业企业品牌', '农产品品牌']
+const typeOptions = ['区域公用品牌', '农产品品牌', '农业企业品牌']
 const regionOptions = ['全部', '自治区', '南宁市', '柳州市', '桂林市', '梧州市', '北海市', '防城港市', '钦州市', '贵港市', '玉林市', '百色市', '贺州市', '河池市', '来宾市', '崇左市']
 
 // Scrolled nav tabs
-const navTabs = ['区域公用品牌', '农业企业品牌', '农产品品牌']
+const navTabs = ['区域公用品牌', '农产品品牌', '农业企业品牌']
 
 function selectTab(index) {
   selectedType.value = navTabs[index]

@@ -10,120 +10,120 @@ export const enterprises: Enterprise[] = [
     id: 1,
     name: '广西南山白毛茶茶业有限公司',
     description: '南山白毛茶系明朝建文帝卓锡在横县南山应天寿佛寺手植，亦称"圣种"白毛茶。1810年列为全国24个名茶之一，1915年巴拿马万国博览会获二等银奖，2008年列入南宁市非物质文化遗产名录，2013年获国家农产品地理标志保护登记，2015年获有机产品认证，2018年通过国家生态原产地保护产品认证。',
-    logo: '/images/enterprise/logo-1.png'
+    logo: '/images/enterprise/logo-1.webp'
   },
   {
     id: 2,
     name: '广西鸣鸣果业有限公司',
     description: '广西鸣鸣果业有限公司创建于2014年3月，经过多年发展，目前已成为一家集育苗、种植、研发、技术咨询、供应链管理、电子商务于一体的综合性现代农业企业，是南宁市农业产业化重点龙头企业。',
-    logo: '/images/enterprise/logo-2.png'
+    logo: '/images/enterprise/logo-2.webp'
   },
   {
     id: 3,
     name: '广西金花茶业有限公司',
     description: '广西金花茶业有限公司由原国营广西横县茶厂2002年改制而成，创建于1952年，为六堡茶冷水发酵技术先驱，共有六堡茶传统发酵技术创新、紧压茶自动化压制系统等几十项专利和科研成果，是国内唯一集六堡茶、茉莉花茶、横县甜玉米三大国家地理标志保护产品生产经营于一体的企业。',
-    logo: '/images/enterprise/logo-3.png'
+    logo: '/images/enterprise/logo-3.webp'
   },
   {
     id: 4,
     name: '广西桂华丝绸有限公司',
     description: '广西桂华丝绸有限公司成立于2000年6月，是集茧丝加工与研发为一体的农业产业化国家重点龙头企业，主要产品有白厂丝、捻线丝、真丝针织绸、真丝服装、绢纺纱、丝绵被等六大系列。',
-    logo: '/images/enterprise/logo-4.png'
+    logo: '/images/enterprise/logo-4.webp'
   },
   {
     id: 5,
     name: '广西农垦永新畜牧集团有限公司',
     description: '广西农垦永新畜牧集团有限公司良圻原种猪场是广西农垦永新畜牧集团下属公司，是农业产业化国家重点龙头企业、国家生猪核心育种场、国家伪狂犬病净化示范场、国家生猪无疫小区、国家畜禽养殖标准化示范场，获得国家科学技术进步奖二等奖。',
-    logo: '/images/enterprise/logo-5.png'
+    logo: '/images/enterprise/logo-5.webp'
   },
   {
     id: 6,
     name: '广西立盛茧丝绸有限公司',
     description: '广西立盛茧丝绸有限公司创建于2006年，是一家集茧、丝、绸生产加工销售为一体的综合性股份制合作企业，主要产品有各种规格的白厂丝、桑蚕丝被、真丝家纺、真丝服装面料等，是我区茧丝绸行业规模以上重点企业之一。',
-    logo: '/images/enterprise/logo-6.png'
+    logo: '/images/enterprise/logo-6.webp'
   },
   {
     id: 7,
     name: '广西金福农业有限公司',
     description: '金福农业成立于2014年9月，在隆安县丁当镇保湾村连片种植火龙果约5500亩，基地以发展火龙果种植和种苗培育为主，结合发展"五金"带农益农模式，是广西连片种植面积最大的火龙果种植基地。',
-    logo: '/images/enterprise/logo-7.png'
+    logo: '/images/enterprise/logo-7.webp'
   },
   {
     id: 8,
     name: '广西龙穗农业有限公司',
     description: '广西龙穗农业有限公司成立于2014年3月，位于南宁市隆安县那桐镇，注册资金1500万元，是一家专业从事香蕉、火龙果等特色水果种植、加工、销售于一体的现代农业企业。',
-    logo: '/images/enterprise/logo-8.png'
+    logo: '/images/enterprise/logo-8.webp'
   },
   {
     id: 9,
     name: '广西佳年农业有限公司',
     description: '广西佳年农业有限公司成立于2012年，是佳年投资集团旗下一家专业从事燕窝果、火龙果种植、生产和销售的现代农业企业，基地主要分布在南宁市隆安县和武鸣区。',
-    logo: '/images/enterprise/logo-9.png'
+    logo: '/images/enterprise/logo-9.webp'
   },
   {
     id: 10,
     name: '横县长海茶厂',
     description: '横州市长海茶厂是横州本土的一家专业从事茉莉花茶生产、加工的企业。企业于2000年建立，先后投资1亿多元，已发展成为年生产能力达5000吨的规模企业。',
-    logo: '/images/enterprise/logo-10.png'
+    logo: '/images/enterprise/logo-10.webp'
   },
   {
     id: 11,
     name: '广西皇氏乳业有限公司',
     description: '皇氏乳业品牌起源于2001年，一款发家产品——皇品乳是许多人记忆里熟悉的味道，公司经过近20年的发展，已从原始的作坊式工厂发展至今集奶牛养殖、乳品加工、销售、科研于一体，拥有三大现代化乳品加工基地和多个生态养殖基地的广西本土乳业品牌。',
-    logo: '/images/enterprise/logo-11.png'
+    logo: '/images/enterprise/logo-11.webp'
   },
   {
     id: 12,
     name: '广西石埠乳业有限责任公司',
     description: '石埠乳业成立于1995年，是广西第一家民营乳品企业、广西第一家国家级休闲观光牧场乳品企业、广西第一家通过ISO9001质量管理体系认证的乳品企业，也是广西首批通过国家优质乳工程验收的乳品企业。',
-    logo: '/images/enterprise/logo-12.png'
+    logo: '/images/enterprise/logo-12.webp'
   },
   {
     id: 13,
     name: '广西广老大食品科技有限公司',
     description: '广西广老大食品科技有限公司成立于2016年11月，现有员工30余人，已入驻脱贫地区农副产品网络销售平台（832平台），致力于广西优质农产品与互联网结合的创新型企业。',
-    logo: '/images/enterprise/logo-13.png'
+    logo: '/images/enterprise/logo-13.webp'
   },
   {
     id: 14,
     name: '广西起凤橘洲生态农业有限公司',
     description: '起凤橘洲标准化沃柑种植示范基地是南宁国家农业科技园区核心区，公司以"科技引领现代农业"理念打造现代农业种植、加工、销售等全产业链，种植面积为3000亩，年产优质沃柑600万斤。',
-    logo: '/images/enterprise/logo-14.png'
+    logo: '/images/enterprise/logo-14.webp'
   },
   {
     id: 15,
     name: '广西立腾农牧发展有限公司',
     description: '广西立腾农牧发展有限公司总部位于南宁市江南区，公司成立于2015年4月，注册资本2100万元，是一家集优质鸡育种、鸡苗孵化、肉鸡养殖、饲料生产、畜禽流通、品牌销售为一体的大型现代化农牧企业。',
-    logo: '/images/enterprise/logo-15.png'
+    logo: '/images/enterprise/logo-15.webp'
   },
   {
     id: 16,
     name: '广西马山南华糖业有限责任公司',
     description: '广西马山南华糖业有限责任公司注册成立于2002年1月，位于广西南宁市马山县白山镇金伦大道101号，主要经营甘蔗糖生产销售。',
-    logo: '/images/enterprise/logo-16.png'
+    logo: '/images/enterprise/logo-16.webp'
   },
   {
     id: 17,
     name: '横县鑫源果蔬种植专业合作社',
     description: '广西横县鑫源果蔬种植专业合作社成立于2011年，是自治区级合作社示范社。合作社采取"公司+基地+农户"的经营模式，主要种植和销售甜玉米等特色果蔬产品。',
-    logo: '/images/enterprise/logo-17.png'
+    logo: '/images/enterprise/logo-17.webp'
   },
   {
     id: 18,
     name: '广西力拓米业集团有限公司',
     description: '广西力拓米业集团有限公司传承并弘扬着祖先们的稻作文化，专注于传统优质稻中的中高端大米品牌，自主完成育种、种植、加工到销售的完整产业链闭环，是农业产业化国家重点龙头企业。',
-    logo: '/images/enterprise/logo-18.png'
+    logo: '/images/enterprise/logo-18.webp'
   },
   {
     id: 19,
     name: '广西螺霸王食品科技有限公司',
     description: '广西螺霸王食品科技有限公司成立于2015年1月，是一家以研发、生产及销售柳州预包装螺蛳粉、螺蛳鸭脚煲为主的食品企业，拥有国家专利29项，获农业产业化国家重点龙头企业等称号。',
-    logo: '/images/enterprise/logo-19.png'
+    logo: '/images/enterprise/logo-19.webp'
   },
   {
     id: 20,
     name: '广西古岭龙投资集团有限公司',
     description: '广西古岭龙集团，是一家专注于生态滋补与平衡的健康饮品生产企业，主要生产古岭龙系列保健酒、白酒、食品等，产品深受消费者喜爱。',
-    logo: '/images/enterprise/logo-20.png'
+    logo: '/images/enterprise/logo-20.webp'
   }
 ]

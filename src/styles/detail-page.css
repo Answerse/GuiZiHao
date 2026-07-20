@@ -5,9 +5,13 @@
 
 .detail-body {
   width: 1280px;
-  margin: 120px auto 40px;
-  padding: 0 40px;
-  background-color: var(--color-bg-page);
+  margin: 100px auto 40px;
+  padding: 30px 40px 40px;
+  background-color: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
 }
 
 /* ===== 面包屑导航 ===== */
@@ -20,14 +24,37 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 75px;
   padding: 0;
 }
 
-.breadcrumb-home-icon {
-  width: 24px;
-  height: 24px;
+.back-btn {
+  width: 30px;
+  height: 30px;
   flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--color-brand-green);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  padding: 0;
+  outline: none;
+}
+
+.back-btn:hover {
+  transform: scale(1.1);
+}
+
+.back-btn:active {
+  transform: scale(0.95);
+}
+
+.back-btn-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .breadcrumb-chevron {
@@ -56,23 +83,34 @@ a.breadcrumb-item {
 .detail-hero {
   display: flex;
   justify-content: center;
-  background-color: var(--color-bg-white);
-  border-radius: var(--radius-md);
-  padding: 40px;
 }
 
 .detail-hero-inner {
   max-width: 1440px;
   width: 100%;
   display: flex;
-  gap: 64px;
+  gap: 40px;
 }
 
 .detail-main-image {
   flex: 1;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   align-self: stretch;
+}
+
+/* 企业品牌详情页 - logo 居中展示 */
+.enterprise-detail-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+
+.enterprise-detail-image img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
 }
 
 .detail-main-image img {
@@ -83,7 +121,7 @@ a.breadcrumb-item {
 
 .detail-info {
   flex: none;
-  width: 400px;
+  width: 420px;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -92,7 +130,7 @@ a.breadcrumb-item {
 
 .detail-product-title {
   font-family: 'MiSans', sans-serif;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 630;
   color: #111827;
   margin: 0;
@@ -102,13 +140,14 @@ a.breadcrumb-item {
 .detail-meta {
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .detail-meta-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .meta-label {
@@ -117,6 +156,7 @@ a.breadcrumb-item {
   font-weight: 330;
   color: #111827;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .meta-value {
@@ -166,41 +206,25 @@ a.breadcrumb-item {
   border: 1px solid #15803D;
 }
 
-/* ========== 农产品品牌详情页专属样式 ========== */
-.brand-product-detail-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #FFFFFF;
-}
-
-.brand-product-detail-image img {
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
-}
-
 /* ===== 产品介绍 ===== */
 .detail-description {
   display: flex;
   justify-content: center;
-  padding: 80px 0;
 }
 
 .detail-description-inner {
   max-width: 1440px;
   width: 100%;
-  padding-left: 0;
-  padding-right: 0;
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: 32px;
+  margin-top: 48px;
 }
 
 .description-title {
   font-family: 'Altinn-DIN Condensed', sans-serif;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 630;
   color: #111827;
   margin: 0;
   line-height: 1.1;

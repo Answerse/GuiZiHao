@@ -1,7 +1,6 @@
 .recommend-section {
   width: 100%;
-  background-color: #65A30D;
-  padding: 40px 0;
+  padding: 3vh 0;
   position: relative;
 }
 
@@ -15,58 +14,50 @@
   justify-content: center;
 }
 
-/* ========== Coverflow ========== */
-.recommend-coverflow {
+/* ========== 区域公用品牌 Coverflow ========== */
+.region-coverflow {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   perspective: 2000px;
   perspective-origin: center center;
   transform-style: preserve-3d;
 }
 
-.recommend-slide {
+.region-slide {
   position: absolute;
-  width: 360px;
-  height: 450px;
+  bottom: 0;
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
   cursor: pointer;
-  transform-origin: center center;
+  transform-origin: bottom center;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   will-change: transform, opacity;
 }
 
-.recommend-slide-image {
+.region-slide-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.recommend-slide-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-}
-
-.recommend-slide.active {
+.region-slide.active {
   box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.4);
 }
 
-.recommend-slide.active:hover {
+.region-slide.active:hover {
   transform: translateX(0px) scale(1.05) !important;
   opacity: 1 !important;
   transition: transform 0.4s ease-in, opacity 0.4s ease-in;
   z-index: 1000 !important;
 }
 
-.coverflow-arrow {
+.region-coverflow-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -85,24 +76,107 @@
   color: #FFFFFF;
 }
 
-.coverflow-arrow:hover {
+.region-coverflow-arrow:hover {
   background-color: rgba(0, 0, 0, 0.35);
 }
 
-.coverflow-arrow-icon {
+.region-coverflow-arrow-icon {
   width: 20px;
   height: 18px;
 }
 
-.coverflow-arrow-left .coverflow-arrow-icon {
+.region-coverflow-arrow-left .region-coverflow-arrow-icon {
   transform: rotate(180deg);
 }
 
-.coverflow-arrow-left {
+.region-coverflow-arrow-left {
   left: -40px;
 }
 
-.coverflow-arrow-right {
+.region-coverflow-arrow-right {
+  right: -40px;
+}
+
+/* ========== 农产品品牌 Coverflow ========== */
+.brand-product-coverflow {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  perspective: 2000px;
+  perspective-origin: center center;
+}
+
+.brand-product-slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out;
+  cursor: pointer;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.brand-product-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-product-slide.active {
+  box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+.brand-product-slide.active:hover {
+  transform: translateX(0px) scale(1.05) !important;
+  opacity: 1 !important;
+  transition: transform 0.4s ease-in, opacity 0.4s ease-in;
+  z-index: 1000 !important;
+}
+
+.brand-product-coverflow-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  outline: none;
+  color: #FFFFFF;
+}
+
+.brand-product-coverflow-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.brand-product-coverflow-arrow-icon {
+  width: 20px;
+  height: 18px;
+}
+
+.brand-product-coverflow-arrow-left .brand-product-coverflow-arrow-icon {
+  transform: rotate(180deg);
+}
+
+.brand-product-coverflow-arrow-left {
+  left: -40px;
+}
+
+.brand-product-coverflow-arrow-right {
   right: -40px;
 }
 
@@ -111,7 +185,6 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  /* 蒙版渐隐：两侧淡出 */
   -webkit-mask-image: linear-gradient(90deg,
     transparent 0%,
     #000 30%,
@@ -133,7 +206,10 @@
   will-change: transform;
 }
 
-/* 一组完整网格：10列 × 2行，每列272px，总计2936×424.59 */
+.tab-enterprise .logo-grid-strip {
+  gap: 20px;
+}
+
 .logo-grid-set {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -144,7 +220,12 @@
   flex-shrink: 0;
 }
 
-/* 每格：图片填满+圆角，无白底卡片/阴影 */
+.tab-enterprise .logo-grid-set {
+  gap: 20px;
+  width: 2120px;
+  height: 306.42px;
+}
+
 .logo-grid-card {
   border-radius: 16px;
   overflow: hidden;
@@ -158,7 +239,6 @@
   display: block;
 }
 
-/* Hover 遮罩：从下往上滑入 */
 .logo-grid-overlay {
   position: absolute;
   inset: 0;
@@ -180,4 +260,36 @@
   font-size: var(--font-size-md);
   text-align: center;
   line-height: 1.4;
+}
+
+/* ========== 三个板块独立样式 ========== */
+
+.tab-region {
+  background-color: #65A30D;
+  background-image: url('/images/recommend-bg-520beb.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+
+.tab-enterprise {
+  background-color: #65A30D;
+  background-image: url('/images/recommend-bg-520beb.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.tab-brand-product {
+  background-color: #65A30D;
+  background-image: url('/images/recommend-bg-520beb.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }

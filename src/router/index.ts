@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(),
+  scrollBehavior() {
+    return { top: 0, behavior: 'smooth' }
+  },
   routes: [
     {
       path: '/',
@@ -17,6 +20,11 @@ const router = createRouter({
       path: '/brand-product/:id',
       name: 'BrandProductDetail',
       component: () => import('@/views/BrandProductDetail.vue')
+    },
+    {
+      path: '/enterprise/:id',
+      name: 'EnterpriseDetail',
+      component: () => import('@/views/EnterpriseDetail.vue')
     },
     {
       path: '/chenpitong',
