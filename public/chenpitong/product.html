@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="title-product">10-Year Vintage Chenpi - ChenPi Tong</title>
+  <link rel="stylesheet" href="css/styles.css?v=26">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Inter:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- ============================================
+         1. HEADER (identical structure to homepage)
+         ============================================ -->
+    <header class="header header--solid">
+      <div class="header__inner">
+        <a href="index.html" class="header__logo">
+          <img src="assets/icons/logo.svg" alt="ChenPi Tong Logo" width="192" height="60">
+        </a>
+
+        <nav class="header__nav">
+          <a href="index.html" class="header__nav-link" data-i18n="nav-home">Home</a>
+          <a href="index.html#products" class="header__nav-link active" data-i18n="nav-products">Products</a>
+          <a href="#stories" class="header__nav-link" data-i18n="nav-stories">Stories</a>
+          <a href="index.html#about" class="header__nav-link" data-i18n="nav-about">About Us</a>
+        </nav>
+
+        <button class="header__hamburger" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="header__right">
+          <div class="lang-selector">
+            <button class="lang-selector__btn">
+              <img src="assets/icons/lang-icon-stroke.svg" alt="Language" width="13.33" height="13.33">
+              <span class="lang-selector__current">English</span>
+              <img class="lang-selector__arrow" src="assets/icons/lang-dropdown-arrow.svg" alt="Dropdown" width="9" height="5">
+            </button>
+            <div class="lang-selector__dropdown">
+              <div class="lang-selector__option" data-lang="en">English</div>
+              <div class="lang-selector__option" data-lang="zh">中文</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================================
+         2. PRODUCT MAIN SECTION
+         ============================================ -->
+    <section class="product-detail">
+      <div class="product-detail__inner">
+
+        <!-- LEFT: Product Images Column (fill × hug, borderRadius 16px) -->
+        <!-- Figma: column, alignItems: stretch, gap 16px, fill × hug, borderRadius 16px -->
+        <div class="product-detail__images">
+          <!-- Main Image: fill width, height 640px, borderRadius 16px -->
+          <!-- Figma FRAME #28937:789: column, stretch, gap 10px, fill × fixed(640) -->
+          <div class="product-detail__main-image">
+            <img src="assets/images/product-main-01.png" alt="10-Year Vintage Chenpi" class="product-detail__main-img">
+          </div>
+          <!-- Thumbnails: row, stretch, gap 16px, fill × hug -->
+          <!-- Figma: 1st thumb = no opacity (active), 2-4th = opacity 0.2 -->
+          <div class="product-detail__thumbs" id="productThumbs">
+            <div class="product-detail__thumb product-detail__thumb--active" data-index="0" data-src="assets/images/product-main-01.png">
+              <img src="assets/images/product-main-01.png" alt="Thumb 1">
+            </div>
+            <div class="product-detail__thumb" data-index="1" data-src="assets/images/product-thumb-02.png">
+              <img src="assets/images/product-thumb-02.png" alt="Thumb 2">
+            </div>
+            <div class="product-detail__thumb" data-index="2" data-src="assets/images/product-thumb-03.png">
+              <img src="assets/images/product-thumb-03.png" alt="Thumb 3">
+            </div>
+            <div class="product-detail__thumb" data-index="3" data-src="assets/images/product-thumb-04.png">
+              <img src="assets/images/product-thumb-04.png" alt="Thumb 4">
+            </div>
+          </div>
+          <!-- Dots indicator (visible when thumbs container < 360px) -->
+          <div class="product-detail__dots" id="productDots"></div>
+        </div>
+
+        <!-- RIGHT: Product Info Column -->
+        <!-- Figma: column, stretch, gap 48px, fixed 560px × fill, bg #FFF -->
+        <div class="product-detail__info">
+
+          <!-- Title Area -->
+          <!-- Figma: column, stretch, padding 16px 0, center, gap 8px, fill × hug, border-bottom 1px #26170B -->
+          <div class="product-detail__title-area">
+            <h1 class="product-detail__name">
+              <span class="product-detail__name--large" data-i18n="pd-name-lg">10-Year</span><span class="product-detail__name--spacer"> </span><span class="product-detail__name--small" data-i18n="pd-name-sm">Vintage Chenpi</span>
+            </h1>
+            <p class="product-detail__subtitle" data-i18n="pd-subtitle">Naturally Aged Citrus Peel from Pubei, China</p>
+          </div>
+
+          <!-- Tags Row -->
+          <!-- Figma: row, stretch, gap 12px, fill × hug -->
+          <div class="product-detail__tags">
+            <span class="product-detail__tag" data-i18n="pd-tag1">SPRING FRESH</span>
+            <span class="product-detail__tag-dot"></span>
+            <span class="product-detail__tag" data-i18n="pd-tag2">CUT GRASS</span>
+            <span class="product-detail__tag-dot"></span>
+            <span class="product-detail__tag" data-i18n="pd-tag3">EDAMAME</span>
+          </div>
+
+          <!-- Benefits Row -->
+          <!-- Figma: row, stretch, center, wrap, gap 0 13px, fill × hug, 16px/400 #26170B -->
+          <div class="product-detail__benefits">
+            <span data-i18n="pd-benefit1">You'll earn points with this purchase</span>
+            <span class="product-detail__benefit-dot"></span>
+            <span data-i18n="pd-benefit2">Free UK shipping on orders over &pound;60</span>
+          </div>
+
+          <!-- Description -->
+          <!-- Figma: fill × hug, 16px/400 #26170B, CENTER align -->
+          <p class="product-detail__description" data-i18n="pd-description">
+            Bursting with sweet spring flavour, and selected for its succulent fresh taste, this is our introduction to exceptional green tea. A refreshing infusion with pleasant, sappy top notes and characterful umami depth.
+          </p>
+
+          <!-- Size Selector -->
+          <!-- Figma: column, stretch, gap 16px, fill × hug -->
+          <div class="product-detail__size-section">
+            <p class="product-detail__size-label" data-i18n="pd-size-label">Choose size:</p>
+            <!-- Figma: row, stretch, center, wrap, gap 0 24px, fill × fixed(67) -->
+            <div class="product-detail__size-options">
+              <!-- 100g active: fill, padding 16px 32px, center, height 65px, bg #26170B, radius 8 -->
+              <button class="product-detail__size-btn product-detail__size-btn--active">100g</button>
+              <!-- 250g: fill, padding 16px 32px, center, height 67px, border 1px #26170B, radius 8 -->
+              <button class="product-detail__size-btn">250g</button>
+            </div>
+          </div>
+
+          <!-- Price + Quantity Row -->
+          <!-- Figma: row, stretch, center, gap 32px, fill × hug -->
+          <div class="product-detail__price-row">
+            <!-- Price: row, center, gap 10px, fill × fixed(49) -->
+            <div class="product-detail__price">
+              <span class="product-detail__price-value">$2,000.00</span>
+              <span class="product-detail__price-unit" data-i18n="prod10-price-unit">/kg</span>
+            </div>
+            <!-- Quantity: row, padding 8px 0, center, hug × hug, border 1px #26170B, radius 8 -->
+            <div class="product-detail__quantity">
+              <button class="product-detail__qty-btn product-detail__qty-minus" style="opacity: 0.4;">
+                <img src="assets/icons/icon-minus.svg" alt="Minus" width="20" height="20">
+              </button>
+              <div class="product-detail__qty-value">
+                <div class="product-detail__qty-text-wrap">
+                  <span>1</span>
+                </div>
+              </div>
+              <button class="product-detail__qty-btn product-detail__qty-plus">
+                <img src="assets/icons/icon-plus.svg" alt="Plus" width="20" height="20">
+              </button>
+            </div>
+          </div>
+
+          <!-- Buy Button -->
+          <!-- Figma: row, stretch, padding 24px 64px, center, gap 5px, fill × hug, bg #DD5F12, radius 48 -->
+          <button class="product-detail__buy-btn" data-i18n="btn-buy">Buy</button>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         3. TASTING NOTES SECTION
+         ============================================ -->
+    <section class="tasting-notes">
+      <div class="tasting-notes__inner">
+
+        <!-- LEFT COLUMN: Title + Strength + Tasting Items -->
+        <div class="tasting-notes__left">
+
+          <h2 class="tasting-notes__title" data-i18n="tn-title">TASTING NOTES</h2>
+
+          <!-- Strength Meter -->
+          <div class="tasting-notes__strength">
+            <div class="tasting-notes__strength-heading">
+              <h3 class="tasting-notes__strength-title" data-i18n="tn-strength-title">Intensity</h3>
+            </div>
+            <div class="tasting-notes__strength-bar">
+              <div class="tasting-notes__strength-fill"></div>
+            </div>
+            <div class="tasting-notes__strength-labels">
+              <div class="tasting-notes__strength-label">
+                <span data-i18n="tn-strength-low">Fresh</span>
+              </div>
+              <div class="tasting-notes__strength-label">
+                <span data-i18n="tn-strength-medium">Mellow</span>
+              </div>
+              <div class="tasting-notes__strength-label">
+                <span data-i18n="tn-strength-high">Aged</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tasting Items: Wrapped Row Layout -->
+          <div class="tasting-notes__list">
+
+            <!-- Item 1: Appearance -->
+            <div class="tasting-notes__item">
+              <div class="tasting-notes__item-img">
+                <img src="assets/images/tasting-appearance-56586a.png" alt="Appearance">
+              </div>
+              <h3 class="tasting-notes__item-label" data-i18n="tn-appearance-label">Appearance</h3>
+              <p class="tasting-notes__item-desc" data-i18n="tn-appearance-desc">Golden brown peel with a naturally textured surface</p>
+            </div>
+
+            <!-- Item 2: Aroma -->
+            <div class="tasting-notes__item">
+              <div class="tasting-notes__item-img">
+                <img src="assets/images/tasting-aroma-56586a.png" alt="Aroma">
+              </div>
+              <h3 class="tasting-notes__item-label" data-i18n="tn-aroma-label">Aroma</h3>
+              <p class="tasting-notes__item-desc" data-i18n="tn-aroma-desc">Warm citrus zest with gentle woody and herbal notes</p>
+            </div>
+
+            <!-- Item 3: Taste -->
+            <div class="tasting-notes__item">
+              <div class="tasting-notes__item-img">
+                <img src="assets/images/tasting-taste-56586a.png" alt="Taste">
+              </div>
+              <h3 class="tasting-notes__item-label" data-i18n="tn-taste-label">Taste</h3>
+              <p class="tasting-notes__item-desc" data-i18n="tn-taste-desc">Smooth, mellow, and pleasantly lingering with balanced sweetness.</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Illustration -->
+        <div class="tasting-notes__right">
+          <div class="tasting-notes__illustration">
+            <img class="tasting-notes__illustration-bg" src="assets/images/tasting-illustration-bg-56586a.png" alt="Tasting Illustration Background">
+            <img class="tasting-notes__illustration-fg" src="assets/images/tasting-illustration-fg-15b631.png" alt="Tasting Illustration">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================
+         4. HOW TO PREPARE SECTION
+         Figma 28859:684
+         ============================================ -->
+    <section class="how-to-prepare">
+      <div class="how-to-prepare__inner">
+        <h2 class="how-to-prepare__title" data-i18n="htp-title">How to Prepare</h2>
+
+        <div class="how-to-prepare__steps">
+          <!-- Step 1: Amount — has right border -->
+          <div class="how-to-prepare__step">
+            <div class="how-to-prepare__step-icon">
+              <img src="assets/icons/icon-amount.svg" alt="Amount" width="48" height="41">
+            </div>
+            <h3 class="how-to-prepare__step-title" data-i18n="htp-amount-title">Amount</h3>
+            <p class="how-to-prepare__step-desc" data-i18n="htp-amount-desc">3&ndash;5 g Chenpi</p>
+          </div>
+
+          <!-- Step 2: Water — has right border -->
+          <div class="how-to-prepare__step">
+            <div class="how-to-prepare__step-icon">
+              <img src="assets/icons/icon-water.svg" alt="Water" width="56" height="53">
+            </div>
+            <h3 class="how-to-prepare__step-title" data-i18n="htp-water-title">Water</h3>
+            <p class="how-to-prepare__step-desc" data-i18n="htp-water-desc">95&ndash;100&deg;C</p>
+          </div>
+
+          <!-- Step 3: Infuse — has right border -->
+          <div class="how-to-prepare__step">
+            <div class="how-to-prepare__step-icon">
+              <img src="assets/icons/icon-infuse.svg" alt="Infuse" width="56" height="49">
+            </div>
+            <h3 class="how-to-prepare__step-title" data-i18n="htp-infuse-title">Infuse</h3>
+            <p class="how-to-prepare__step-desc" data-i18n="htp-infuse-desc">3&ndash;5 minutes</p>
+          </div>
+
+          <!-- Step 4: Rebrew — NO right border -->
+          <div class="how-to-prepare__step how-to-prepare__step--last">
+            <div class="how-to-prepare__step-icon">
+              <img src="assets/icons/icon-rebrew.svg" alt="Rebrew" width="52" height="52">
+            </div>
+            <h3 class="how-to-prepare__step-title" data-i18n="htp-rebrew-title">Rebrew</h3>
+            <p class="how-to-prepare__step-desc" data-i18n="htp-rebrew-desc">Suitable for multiple infusions</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         5. FROM THE HEART OF PUBEI SECTION
+         Figma 28859:650 — 浦北
+         ============================================ -->
+    <section class="pubei-story">
+      <div class="pubei-story__inner">
+        <!-- LEFT: Text Column (fill × fill) -->
+        <div class="pubei-story__text">
+          <p class="pubei-story__question" data-i18n="ps-question">Where does this cup come from?</p>
+          <h2 class="pubei-story__title" data-i18n="ps-title">From the Heart of Pubei</h2>
+          <p class="pubei-story__desc" data-i18n="ps-desc">Located in Guangxi, Pubei is one of China's renowned Chenpi-producing regions. Abundant sunshine, seasonal humidity, and patient natural aging create the distinctive aroma and character that define authentic Pubei Chenpi.</p>
+
+          <!-- Map: fill width × 387px fixed height -->
+          <!-- object-position: 70% center keeps China/East Asia visible at any width -->
+          <div class="pubei-story__map">
+            <img src="assets/images/pubei-map-bg.png" alt="Pubei Map" class="pubei-story__map-img">
+          </div>
+
+          <!-- Info rows: padding-left 5px, gap 8px, vertically centered -->
+          <!-- Bullet uses actual • character (Inter 15px, y:-4) per Figma -->
+          <div class="pubei-story__info">
+            <div class="pubei-story__info-row">
+              <div class="pubei-story__info-dot">
+                <div class="pubei-story__info-line"></div>
+                <span class="pubei-story__info-bullet">&#8226;</span>
+              </div>
+              <div class="pubei-story__info-label">
+                <span data-i18n="ps-info1">Cultivar - Chachi</span>
+              </div>
+            </div>
+            <div class="pubei-story__info-row">
+              <div class="pubei-story__info-dot">
+                <div class="pubei-story__info-line"></div>
+                <span class="pubei-story__info-bullet">&#8226;</span>
+              </div>
+              <div class="pubei-story__info-label">
+                <span data-i18n="ps-info2">Picked - April 2024</span>
+              </div>
+            </div>
+            <div class="pubei-story__info-row">
+              <div class="pubei-story__info-dot">
+                <div class="pubei-story__info-line"></div>
+                <span class="pubei-story__info-bullet">&#8226;</span>
+              </div>
+              <div class="pubei-story__info-label">
+                <span data-i18n="ps-info3">Nobile Aging Year - 10 Years</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Product Image Column (fill × fill, borderRadius 16px) -->
+        <div class="pubei-story__img">
+          <img src="assets/images/pubei-product-img.png" alt="Pubei Chenpi Closeup" class="pubei-story__img-photo">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         6. FOOTER (identical to homepage)
+         ============================================ -->
+    <footer class="footer">
+      <div class="footer__card">
+        <a href="index.html" class="footer__logo">
+          <img src="assets/icons/logo-vertical.svg" alt="ChenPi Tong Logo" width="137" height="157">
+        </a>
+
+        <div class="footer__middle-row">
+          <div class="footer__socials">
+            <a href="#" aria-label="Facebook">
+              <img src="assets/icons/facebook.svg" alt="Facebook" width="32" height="32">
+            </a>
+            <a href="#" aria-label="Instagram">
+              <img src="assets/icons/instagram.svg" alt="Instagram" width="32" height="32">
+            </a>
+            <a href="#" aria-label="TikTok">
+              <img src="assets/icons/tiktok.svg" alt="TikTok" width="32" height="32">
+            </a>
+          </div>
+
+          <nav class="footer__nav">
+            <a href="index.html" data-i18n="footer-home">Home</a>
+            <a href="index.html#products" data-i18n="footer-products">Products</a>
+            <a href="#stories" data-i18n="footer-stories">Stories</a>
+            <a href="index.html#about" data-i18n="footer-about">About Us</a>
+          </nav>
+
+          <div class="footer__lang-wrap lang-selector">
+            <button class="lang-selector__btn">
+              <img src="assets/icons/lang-icon-stroke.svg" alt="Language" width="13.33" height="13.33">
+              <span class="lang-selector__current">English</span>
+              <img class="lang-selector__arrow" src="assets/icons/lang-dropdown-arrow.svg" alt="Dropdown" width="9" height="5">
+            </button>
+            <div class="lang-selector__dropdown lang-selector__dropdown--up">
+              <div class="lang-selector__option" data-lang="en">English</div>
+              <div class="lang-selector__option" data-lang="zh">中文</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="footer__copyright" data-i18n="footer-copyright">&copy; All Rights Reserved PuBei ChenPi</p>
+    </footer>
+
+  </div><!-- /.page-wrapper -->
+
+  <script>
+  /* Product Gallery: Thumbnail click switches main image */
+  (function () {
+    'use strict';
+    var mainImg = document.querySelector('.product-detail__main-img');
+    var thumbsEl = document.getElementById('productThumbs');
+    var thumbs = thumbsEl ? thumbsEl.querySelectorAll('.product-detail__thumb') : [];
+    var dotsEl = document.getElementById('productDots');
+    if (!mainImg || thumbs.length === 0) return;
+
+    // Build dots
+    var dotItems = [];
+    for (var i = 0; i < thumbs.length; i++) {
+      (function (idx) {
+        thumbs[idx].addEventListener('click', function () {
+          var src = this.getAttribute('data-src');
+          if (!src) return;
+          mainImg.src = src;
+          // Update active state
+          for (var j = 0; j < thumbs.length; j++) {
+            thumbs[j].classList.remove('product-detail__thumb--active');
+          }
+          this.classList.add('product-detail__thumb--active');
+          updateDots(idx);
+        });
+      })(i);
+
+      // Create dot
+      if (dotsEl) {
+        var dot = document.createElement('button');
+        dot.className = 'product-detail__dot' + (i === 0 ? ' product-detail__dot--active' : '');
+        dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+        (function (idx) {
+          dot.addEventListener('click', function () {
+            // Click dot -> switch image + scroll thumb into view
+            var src = thumbs[idx].getAttribute('data-src');
+            if (src) {
+              mainImg.src = src;
+              for (var j = 0; j < thumbs.length; j++) {
+                thumbs[j].classList.remove('product-detail__thumb--active');
+              }
+              thumbs[idx].classList.add('product-detail__thumb--active');
+              updateDots(idx);
+              // Scroll thumb into view if not in narrow mode
+              if (!thumbsEl.classList.contains('product-detail__thumbs--narrow')) {
+                thumbs[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            }
+          });
+        })(i);
+        dotsEl.appendChild(dot);
+        dotItems.push(dot);
+      }
+    }
+
+    function updateDots(activeIdx) {
+      if (!dotsEl) return;
+      var dots = dotsEl.querySelectorAll('.product-detail__dot');
+      for (var k = 0; k < dots.length; k++) {
+        dots[k].classList.remove('product-detail__dot--active');
+      }
+      if (dots[activeIdx]) {
+        dots[activeIdx].classList.add('product-detail__dot--active');
+      }
+    }
+
+    // Width observer: switch thumbs <-> dots when container < 360px
+    function checkWidth() {
+      if (!thumbsEl) return;
+      var rect = thumbsEl.parentNode.getBoundingClientRect();
+      if (rect.width < 360) {
+        thumbsEl.classList.add('product-detail__thumbs--narrow');
+      } else {
+        thumbsEl.classList.remove('product-detail__thumbs--narrow');
+      }
+    }
+
+    checkWidth();
+    window.addEventListener('resize', checkWidth);
+  })();
+
+  </script>
+  <script src="js/i18n.js?v=25"></script>
+  <script>
+    // Hamburger menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      var hamburger = document.querySelector('.header__hamburger');
+      var header = document.querySelector('.header');
+      if (hamburger && header) {
+        hamburger.addEventListener('click', function() {
+          header.classList.toggle('header--nav-open');
+        });
+        // Close on nav link click
+        document.querySelectorAll('.header__nav-link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            header.classList.remove('header--nav-open');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
