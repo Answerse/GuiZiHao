@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import Header from '@/components/Header.vue'
 import FooterSection from '@/components/FooterSection.vue'
 import { brandProducts } from '@/data/brand-products'
 
 const route = useRoute()
-const router = useRouter()
 const brandProduct = computed(() => {
   const id = Number(route.params.id)
   return brandProducts.find(p => p.id === id) || brandProducts[0]

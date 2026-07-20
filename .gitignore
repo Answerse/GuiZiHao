@@ -9,3 +9,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+.image-backup/
+public/chenpitong.bak/
