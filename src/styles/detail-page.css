@@ -238,3 +238,12 @@ a.breadcrumb-item {
   line-height: 1.6;
   margin: 0;
 }
+
+.description-source {
+  font-family: 'MiSans', sans-serif;
+  font-size: 14px;
+  font-weight: 330;
+  color: var(--color-text-muted);
+  margin: 8px 0 0 0;
+  font-style: italic;
+}

@@ -1,3 +1,9 @@
+export interface BrandProductSection {
+  title: string
+  content: string
+  source?: string
+}
+
 export interface BrandProduct {
   id: number
   name: string
@@ -12,6 +18,24 @@ export interface BrandProduct {
   contact?: string
   detailImages?: string[]
   salesLink?: string
+  /** 生长特性：生长周期、适宜环境、品种特性等 */
+  growthCharacteristics?: string
+  /** 营养价值：营养成分、健康功效 */
+  nutritionalValue?: string
+  /** 种植/加工技术：标准化流程、关键技术 */
+  cultivationTech?: string
+  /** 市场应用：应用领域、消费群体、市场趋势 */
+  marketApplication?: string
+  /** 品牌背景：品牌定位、发展历程 */
+  brandBackground?: string
+  /** 质量认证：有机认证、绿色食品认证等 */
+  qualityCertification?: string
+  /** 荣誉资质 */
+  honors?: string
+  /** 生产规模 */
+  productionScale?: string
+  /** 额外内容段落 */
+  extraSections?: BrandProductSection[]
 }
 
 export const brandProducts: BrandProduct[] = [

@@ -85,6 +85,47 @@ const openChenpiTong = () => {
           <p class="description-text">{{ product.description }}</p>
         </div>
       </div>
+
+      <!-- 生长特性 -->
+      <div v-if="product.growthCharacteristics" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">生长特性</h2>
+          <p class="description-text">{{ product.growthCharacteristics }}</p>
+        </div>
+      </div>
+
+      <!-- 营养价值 -->
+      <div v-if="product.nutritionalValue" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">营养价值</h2>
+          <p class="description-text">{{ product.nutritionalValue }}</p>
+        </div>
+      </div>
+
+      <!-- 种植技术 -->
+      <div v-if="product.cultivationTech" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">种植技术</h2>
+          <p class="description-text">{{ product.cultivationTech }}</p>
+        </div>
+      </div>
+
+      <!-- 市场应用 -->
+      <div v-if="product.marketApplication" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">市场应用</h2>
+          <p class="description-text">{{ product.marketApplication }}</p>
+        </div>
+      </div>
+
+      <!-- 额外段落 -->
+      <div v-for="(section, index) in product.extraSections" :key="'extra-' + index" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">{{ section.title }}</h2>
+          <p class="description-text">{{ section.content }}</p>
+          <p v-if="section.source" class="description-source">来源：{{ section.source }}</p>
+        </div>
+      </div>
     </div>
 
     <FooterSection />

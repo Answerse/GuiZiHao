@@ -82,6 +82,79 @@ function goToChenpiTong() {
           <p class="description-text">{{ brandProduct.description }}</p>
         </div>
       </div>
+
+      <!-- 品牌背景 -->
+      <div v-if="brandProduct.brandBackground" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">品牌背景</h2>
+          <p class="description-text">{{ brandProduct.brandBackground }}</p>
+        </div>
+      </div>
+
+      <!-- 生长特性 -->
+      <div v-if="brandProduct.growthCharacteristics" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">生长特性</h2>
+          <p class="description-text">{{ brandProduct.growthCharacteristics }}</p>
+        </div>
+      </div>
+
+      <!-- 营养价值 -->
+      <div v-if="brandProduct.nutritionalValue" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">营养价值</h2>
+          <p class="description-text">{{ brandProduct.nutritionalValue }}</p>
+        </div>
+      </div>
+
+      <!-- 种植/加工技术 -->
+      <div v-if="brandProduct.cultivationTech" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">种植/加工技术</h2>
+          <p class="description-text">{{ brandProduct.cultivationTech }}</p>
+        </div>
+      </div>
+
+      <!-- 市场应用 -->
+      <div v-if="brandProduct.marketApplication" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">市场应用</h2>
+          <p class="description-text">{{ brandProduct.marketApplication }}</p>
+        </div>
+      </div>
+
+      <!-- 质量认证 -->
+      <div v-if="brandProduct.qualityCertification" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">质量认证</h2>
+          <p class="description-text">{{ brandProduct.qualityCertification }}</p>
+        </div>
+      </div>
+
+      <!-- 荣誉资质 -->
+      <div v-if="brandProduct.honors" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">荣誉资质</h2>
+          <p class="description-text">{{ brandProduct.honors }}</p>
+        </div>
+      </div>
+
+      <!-- 生产规模 -->
+      <div v-if="brandProduct.productionScale" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">生产规模</h2>
+          <p class="description-text">{{ brandProduct.productionScale }}</p>
+        </div>
+      </div>
+
+      <!-- 额外段落 -->
+      <div v-for="(section, index) in brandProduct.extraSections" :key="'extra-' + index" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">{{ section.title }}</h2>
+          <p class="description-text">{{ section.content }}</p>
+          <p v-if="section.source" class="description-source">来源：{{ section.source }}</p>
+        </div>
+      </div>
     </div>
 
     <FooterSection />

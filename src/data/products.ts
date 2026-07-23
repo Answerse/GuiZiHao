@@ -1,3 +1,10 @@
+export interface ProductSection {
+  title: string
+  content: string
+  /** 信息来源，可选 */
+  source?: string
+}
+
 export interface Product {
   id: number
   title: string
@@ -7,6 +14,16 @@ export interface Product {
   region: string
   mainProduct: string
   updateDate: string
+  /** 生长特性：生长周期、适宜环境、抗病虫害能力、品种特性等 */
+  growthCharacteristics?: string
+  /** 营养价值：营养成分含量、健康功效、科学研究结论等 */
+  nutritionalValue?: string
+  /** 种植技术：标准化种植流程、关键栽培技术、采收标准等 */
+  cultivationTech?: string
+  /** 市场应用：主要应用领域、消费群体分析、市场需求趋势等 */
+  marketApplication?: string
+  /** 额外内容段落，可用于补充历史渊源、科研进展等 */
+  extraSections?: ProductSection[]
 }
 
 export const products: Product[] = [

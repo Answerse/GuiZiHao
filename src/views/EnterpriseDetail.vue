@@ -41,7 +41,27 @@ const enterprise = computed(() => {
             <div class="detail-meta">
               <div class="detail-meta-row">
                 <span class="meta-label">品牌类别：</span>
-                <span class="meta-value">农业企业品牌</span>
+                <span class="meta-value">{{ enterprise.category }}</span>
+              </div>
+              <div class="detail-meta-row" v-if="enterprise.region">
+                <span class="meta-label">所属地区：</span>
+                <span class="meta-value">{{ enterprise.region }}</span>
+              </div>
+              <div class="detail-meta-row" v-if="enterprise.mainProduct">
+                <span class="meta-label">主营产品：</span>
+                <span class="meta-value">{{ enterprise.mainProduct }}</span>
+              </div>
+              <div class="detail-meta-row" v-if="enterprise.contact">
+                <span class="meta-label">联系方式：</span>
+                <span class="meta-value">{{ enterprise.contact }}</span>
+              </div>
+              <div class="detail-meta-row" v-if="enterprise.address">
+                <span class="meta-label">公司地址：</span>
+                <span class="meta-value">{{ enterprise.address }}</span>
+              </div>
+              <div class="detail-meta-row" v-if="enterprise.updateDate">
+                <span class="meta-label">更新日期：</span>
+                <span class="meta-value">{{ enterprise.updateDate }}</span>
               </div>
             </div>
           </div>
@@ -53,6 +73,55 @@ const enterprise = computed(() => {
         <div class="detail-description-inner">
           <h2 class="description-title">企业介绍</h2>
           <p class="description-text">{{ enterprise.description }}</p>
+        </div>
+      </div>
+
+      <!-- 品牌背景 -->
+      <div v-if="enterprise.brandBackground" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">品牌背景</h2>
+          <p class="description-text">{{ enterprise.brandBackground }}</p>
+        </div>
+      </div>
+
+      <!-- 核心产品 -->
+      <div v-if="enterprise.coreProducts" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">核心产品</h2>
+          <p class="description-text">{{ enterprise.coreProducts }}</p>
+        </div>
+      </div>
+
+      <!-- 生产规模 -->
+      <div v-if="enterprise.productionScale" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">生产规模</h2>
+          <p class="description-text">{{ enterprise.productionScale }}</p>
+        </div>
+      </div>
+
+      <!-- 质量认证 -->
+      <div v-if="enterprise.qualityCertification" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">质量认证</h2>
+          <p class="description-text">{{ enterprise.qualityCertification }}</p>
+        </div>
+      </div>
+
+      <!-- 荣誉资质 -->
+      <div v-if="enterprise.honors" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">荣誉资质</h2>
+          <p class="description-text">{{ enterprise.honors }}</p>
+        </div>
+      </div>
+
+      <!-- 额外段落 -->
+      <div v-for="(section, index) in enterprise.extraSections" :key="'extra-' + index" class="detail-description">
+        <div class="detail-description-inner">
+          <h2 class="description-title">{{ section.title }}</h2>
+          <p class="description-text">{{ section.content }}</p>
+          <p v-if="section.source" class="description-source">来源：{{ section.source }}</p>
         </div>
       </div>
     </div>
