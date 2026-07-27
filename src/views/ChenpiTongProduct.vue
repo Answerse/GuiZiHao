@@ -3,7 +3,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const currentLang = ref('en')
 const isNavOpen = ref(false)
-const isLangDropdownOpen = ref(false)
+const isHeaderLangOpen = ref(false)
+const isFooterLangOpen = ref(false)
 const activeThumbIndex = ref(0)
 const quantity = ref(1)
 const isModalOpen = ref(false)
@@ -176,15 +177,20 @@ const closeNav = () => {
   isNavOpen.value = false
 }
 
-const toggleLangDropdown = () => {
-  isLangDropdownOpen.value = !isLangDropdownOpen.value
+const toggleHeaderLang = () => {
+  isHeaderLangOpen.value = !isHeaderLangOpen.value
+}
+
+const toggleFooterLang = () => {
+  isFooterLangOpen.value = !isFooterLangOpen.value
 }
 
 const switchLang = (lang) => {
   if (lang === currentLang.value) return
   currentLang.value = lang
   localStorage.setItem('chenpitong-lang', lang)
-  isLangDropdownOpen.value = false
+  isHeaderLangOpen.value = false
+  isFooterLangOpen.value = false
 }
 
 const selectThumb = (index) => {
@@ -218,7 +224,8 @@ const handleModalClick = (e) => {
 const handleOutsideClick = (e) => {
   const target = e.target
   if (!target.closest('.lang-selector')) {
-    isLangDropdownOpen.value = false
+    isHeaderLangOpen.value = false
+    isFooterLangOpen.value = false
   }
 }
 
@@ -257,8 +264,8 @@ onUnmounted(() => {
         </button>
 
         <div class="header__right">
-          <div class="lang-selector" :class="{ 'lang-selector--open': isLangDropdownOpen }">
-            <button class="lang-selector__btn" @click.stop="toggleLangDropdown">
+          <div class="lang-selector" :class="{ 'lang-selector--open': isHeaderLangOpen }">
+            <button class="lang-selector__btn" @click.stop="toggleHeaderLang">
               <img src="/chenpitong/assets/icons/lang-icon-stroke.svg" alt="Language" width="13.33" height="13.33">
               <span class="lang-selector__current">{{ currentLangText }}</span>
               <img class="lang-selector__arrow" src="/chenpitong/assets/icons/lang-dropdown-arrow.svg" alt="Dropdown" width="9" height="5">
@@ -540,8 +547,8 @@ onUnmounted(() => {
               <a href="/chenpitong#about" @click="closeNav">{{ t('footer-about') }}</a>
             </nav>
 
-            <div class="footer__lang-wrap lang-selector" :class="{ 'lang-selector--open': isLangDropdownOpen }">
-              <button class="lang-selector__btn" @click.stop="toggleLangDropdown">
+            <div class="footer__lang-wrap lang-selector" :class="{ 'lang-selector--open': isFooterLangOpen }">
+              <button class="lang-selector__btn" @click.stop="toggleFooterLang">
                 <img src="/chenpitong/assets/icons/lang-icon-stroke.svg" alt="Language" width="13.33" height="13.33">
                 <span class="lang-selector__current">{{ currentLangText }}</span>
                 <img class="lang-selector__arrow" src="/chenpitong/assets/icons/lang-dropdown-arrow.svg" alt="Dropdown" width="9" height="5">

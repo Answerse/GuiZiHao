@@ -192,6 +192,19 @@ button {
   flex-shrink: 0;
 }
 
+.header__nav-link {
+  font-family: var(--font-primary);
+  font-size: var(--fs-nav);
+  font-weight: var(--fw-regular);
+  color: var(--primary-dark);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header__nav-link:hover {
+  color: var(--primary-brown);
+}
+
 /* ============================================
    1a. HEADER — TRANSPARENT (Homepage)
    Transparent bg, white text/icons, JS scroll gradient
@@ -200,7 +213,7 @@ button {
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  transition: backdrop-filter 0.3s ease;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Nav links: initial white, JS controls gradual transition */
@@ -213,6 +226,7 @@ button {
   display: inline-flex;
   align-items: flex-end;
   position: relative;
+  transition: color 0.3s ease;
 }
 
 .header--transparent .header__nav-link:hover {
@@ -240,20 +254,42 @@ button {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Scrolled state: backdrop blur only (JS controls all color transitions) */
+/* Scrolled state: solid background + dark colors */
 .header--transparent.header--scrolled {
+  background: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 }
 
+/* Nav links: switch to dark */
+.header--transparent.header--scrolled .header__nav-link {
+  color: var(--primary-dark);
+}
+
+.header--transparent.header--scrolled .header__nav-link:hover {
+  color: var(--primary-brown);
+}
+
+/* Logo: show dark, hide light */
+.header--transparent.header--scrolled .header__logo-light {
+  opacity: 0;
+}
+
+/* Lang icons: show dark, hide light */
+.header--transparent.header--scrolled .lang-icon-light {
+  opacity: 0;
+}
+
+/* Lang selector: dark variant */
 .header--transparent.header--scrolled .lang-selector__btn {
-  border-color: rgba(38, 23, 11, 1);
-  color: rgba(38, 23, 11, 1);
+  border-color: var(--primary-dark);
+  color: var(--primary-dark);
   background: transparent;
 }
 
 .header--transparent.header--scrolled .lang-selector__btn:hover {
-  background: rgba(38, 23, 11, 1);
+  background: var(--primary-dark);
   color: #ffffff;
 }
 
@@ -333,7 +369,7 @@ button {
   left: 0;
   z-index: 2;
   opacity: 1;
-  transition: none;
+  transition: opacity 0.3s ease;
 }
 
 /* Nav container layout (shared) */
@@ -382,10 +418,7 @@ button {
   left: 0;
   z-index: 2;
   opacity: 1;
-}
-
-.lang-selector__btn .lang-selector__arrow {
-  margin-left: auto;
+  transition: opacity 0.3s ease;
 }
 
 /* ============================================
@@ -2181,12 +2214,15 @@ a.product-card {
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   border: 1px solid;
+  color: var(--primary-dark);
 }
 
 .lang-selector__btn .lang-selector__arrow {
   width: 9px;
   height: 5px;
   flex-shrink: 0;
+  display: block;
+  margin-left: auto;
 }
 
 /* ============================================
@@ -2847,6 +2883,13 @@ a.product-card {
     top: 48px;
   }
 
+  /* Footer: override to pop upward */
+  .lang-selector__dropdown--up {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 0;
+  }
+
   /* Hero */
   .hero__slide-content {
     padding: 0 32px;
@@ -3264,14 +3307,13 @@ a.product-card {
   .header--transparent .header__nav-link,
   .header--solid .header__nav-link {
     font-size: 20px;
-    color: inherit;
     padding: 8px 16px;
   }
 
   .lang-selector__btn .lang-selector__current,
   .lang-selector__btn .lang-arrow-wrap,
   .lang-selector__btn .lang-selector__arrow {
-    display: revert;
+    display: inline-flex;
   }
 
   .lang-selector__btn {
@@ -3290,6 +3332,13 @@ a.product-card {
     left: auto;
     min-width: 160px;
     top: 100%;
+  }
+
+  /* Footer: override to pop upward */
+  .lang-selector__dropdown--up {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 0;
   }
 
   .header__right .lang-selector {

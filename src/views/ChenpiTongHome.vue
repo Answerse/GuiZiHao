@@ -3,7 +3,9 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const currentLang = ref('en')
 const isNavOpen = ref(false)
-const isLangDropdownOpen = ref(false)
+const isHeaderLangOpen = ref(false)
+const isFooterLangOpen = ref(false)
+const isScrolled = ref(false)
 const currentSlide = ref(0)
 const isAutoPlayPaused = ref(false)
 const isModalOpen = ref(false)
@@ -138,15 +140,20 @@ const closeNav = () => {
   isNavOpen.value = false
 }
 
-const toggleLangDropdown = () => {
-  isLangDropdownOpen.value = !isLangDropdownOpen.value
+const toggleHeaderLang = () => {
+  isHeaderLangOpen.value = !isHeaderLangOpen.value
+}
+
+const toggleFooterLang = () => {
+  isFooterLangOpen.value = !isFooterLangOpen.value
 }
 
 const switchLang = (lang) => {
   if (lang === currentLang.value) return
   currentLang.value = lang
   localStorage.setItem('chenpitong-lang', lang)
-  isLangDropdownOpen.value = false
+  isHeaderLangOpen.value = false
+  isFooterLangOpen.value = false
 }
 
 const nextSlide = () => {
@@ -212,8 +219,13 @@ const handleKeydown = (e) => {
 const handleOutsideClick = (e) => {
   const target = e.target
   if (!target.closest('.lang-selector')) {
-    isLangDropdownOpen.value = false
+    isHeaderLangOpen.value = false
+    isFooterLangOpen.value = false
   }
+}
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > window.innerHeight * 0.75
 }
 
 onMounted(() => {
@@ -224,18 +236,21 @@ onMounted(() => {
   startAutoPlay()
   window.addEventListener('keydown', handleKeydown)
   document.addEventListener('click', handleOutsideClick)
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  handleScroll()
 })
 
 onUnmounted(() => {
   stopAutoPlay()
   window.removeEventListener('keydown', handleKeydown)
   document.removeEventListener('click', handleOutsideClick)
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
 
 <template>
   <div class="chenpi-tong-wrapper">
-    <header class="header header--transparent" :class="{ 'header--nav-open': isNavOpen }">
+    <header class="header header--transparent" :class="{ 'header--nav-open': isNavOpen, 'header--scrolled': isScrolled }">
       <div class="header__inner">
         <a href="#" class="header__logo">
           <img class="header__logo-dark" src="/chenpitong/assets/icons/logo.svg" alt="ChenPi Tong Logo" width="192" height="60">
@@ -256,8 +271,8 @@ onUnmounted(() => {
         </button>
 
         <div class="header__right">
-          <div class="lang-selector" :class="{ 'lang-selector--open': isLangDropdownOpen }">
-            <button class="lang-selector__btn" @click.stop="toggleLangDropdown">
+          <div class="lang-selector" :class="{ 'lang-selector--open': isHeaderLangOpen }">
+            <button class="lang-selector__btn" @click.stop="toggleHeaderLang">
               <span class="lang-icon-wrap">
                 <img class="lang-icon-dark" src="/chenpitong/assets/icons/lang-icon-stroke.svg" alt="Language" width="13.33" height="13.33">
                 <img class="lang-icon-light" src="/chenpitong/assets/icons/lang-icon-stroke-light.svg" alt="Language" width="13.33" height="13.33">
@@ -525,8 +540,8 @@ onUnmounted(() => {
               <a href="#about" @click="closeNav">{{ t('footer-about') }}</a>
             </nav>
 
-            <div class="footer__lang-wrap lang-selector" :class="{ 'lang-selector--open': isLangDropdownOpen }">
-              <button class="lang-selector__btn" @click.stop="toggleLangDropdown">
+            <div class="footer__lang-wrap lang-selector" :class="{ 'lang-selector--open': isFooterLangOpen }">
+              <button class="lang-selector__btn" @click.stop="toggleFooterLang">
                 <img src="/chenpitong/assets/icons/lang-icon-stroke.svg" alt="Language" width="13.33" height="13.33">
                 <span class="lang-selector__current">{{ currentLangText }}</span>
                 <img class="lang-selector__arrow" src="/chenpitong/assets/icons/lang-dropdown-arrow.svg" alt="Dropdown" width="9" height="5">
