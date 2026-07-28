@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const props = defineProps({
   alwaysWhite: {
@@ -13,6 +14,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['tabChange'])
+const router = useRouter()
+const route = useRoute()
 
 const isScrolled = ref(false)
 let scrollHandler = null
@@ -29,12 +32,32 @@ const regionOptions = ['全部', '自治区', '南宁市', '柳州市', '桂林�
 
 // Scrolled nav tabs
 const navTabs = ['区域公用品牌', '农产品品牌', '农业企业品牌']
+const secondaryNavTabs = ['首页', ...navTabs]
 
 function selectTab(index) {
-  selectedType.value = navTabs[index]
-  emit('tabChange', index)
+  // 首页 → 跳转首页
+  if (index === 0) {
+    router.push('/')
+    return
+  }
+  // 品牌标签 (1-3)
+  const brandIndex = index - 1
+  selectedType.value = navTabs[brandIndex]
+  emit('tabChange', brandIndex)
+  if (route.name !== 'Home') {
+    router.push({ name: 'Home', query: { tab: brandIndex } })
+    return
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
+// 当前高亮标签在 4 项中的索引：首页永不激活，品牌标签 +1
+const activeTabIndex = computed(() => {
+  if (route.name === 'Home') {
+    return props.activeTab + 1
+  }
+  return -1
+})
 
 function toggleTypeMenu() {
   showTypeMenu.value = !showTypeMenu.value
@@ -72,6 +95,7 @@ function closeMenus() {
 onMounted(() => {
   if (props.alwaysWhite) {
     isScrolled.value = true
+    document.addEventListener('click', closeMenus)
     return
   }
   scrollHandler = () => {
@@ -90,18 +114,65 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header :class="['header', { 'header-scrolled': isScrolled }]">
-    <div class="header-nav">
-      <div class="header-logo">
-        <img src="/icons/header-ribbon.svg" class="header-ribbon" alt="ribbon">
-        <div class="header-logo-content">
-          <img src="/icons/header-logo.svg" class="header-logo-icon" alt="logo">
-          <span class="header-logo-text">桂字号</span>
+  <!-- ===== 二级页面：Figma 1:1 还原的白色顶栏 ===== -->
+  <header v-if="alwaysWhite" class="header header--secondary">
+    <div class="header-secondary-nav">
+      <!-- Logo 绿底区域 -->
+      <div class="header-secondary-logo">
+        <div class="header-secondary-logo-row">
+          <img src="/icons/header-logo.svg" class="header-secondary-logo-icon" alt="logo">
+          <span class="header-secondary-logo-text">桂字号</span>
         </div>
       </div>
 
-      <!-- ===== 未滚动：透明状态（原样） ===== -->
+      <!-- 导航标签（4 项：首页 + 3 品牌） -->
+      <div class="header-secondary-tabs">
+        <button
+          v-for="(tab, i) in secondaryNavTabs"
+          :key="tab"
+          :class="['header-secondary-tab', { 'header-secondary-tab--active': i === activeTabIndex }]"
+          @click="selectTab(i)"
+        >{{ tab }}</button>
+      </div>
+
+      <!-- 地区选择器 -->
+      <div class="header-secondary-region-wrapper">
+        <div class="header-secondary-region" @click.stop="toggleRegionMenu">
+          <span class="header-secondary-region-label">区域：</span>
+          <span class="header-secondary-region-value">{{ selectedRegion }}</span>
+          <img src="/icons/chevron-down.svg" class="header-secondary-region-arrow" alt="▾">
+        </div>
+        <div v-if="showRegionMenu" class="region-popup--secondary" @click.stop>
+          <div class="dropdown-popup-inner">
+            <button
+              v-for="opt in regionOptions"
+              :key="opt"
+              :class="['dropdown-chip', { 'dropdown-chip-active': opt === selectedRegion }]"
+              @click="selectRegion(opt)"
+            >{{ opt }}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 搜索按钮 -->
+      <div class="header-secondary-search">
+        <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== 首页：透明/滚动顶栏（原样不动） ===== -->
+  <header v-else :class="['header', { 'header-scrolled': isScrolled }]">
+    <div class="header-nav">
+      <!-- ===== 未滚动：透明状态（原样保留） ===== -->
       <template v-if="!isScrolled">
+        <div class="header-logo">
+          <img src="/icons/header-ribbon.svg" class="header-ribbon" alt="ribbon">
+          <div class="header-logo-content">
+            <img src="/icons/header-logo.svg" class="header-logo-icon" alt="logo">
+            <span class="header-logo-text">桂字号</span>
+          </div>
+        </div>
         <div class="header-search-bar">
           <div class="search-bar-row">
             <div class="search-bar-item search-bar-dropdown search-bar-type" @click.stop="toggleTypeMenu">
@@ -149,70 +220,69 @@ onUnmounted(() => {
         </div>
       </template>
 
-      <!-- ===== 滚动后：新设计 ===== -->
+      <!-- ===== 滚动后：Figma 统一风格 ===== -->
       <template v-else>
-        <div class="scrolled-nav-section">
-          <div class="scrolled-category-tabs">
-            <button
-              v-for="(tab, i) in navTabs"
-              :key="tab"
-              :class="['scrolled-category-tab', { 'scrolled-category-tab-active': i === props.activeTab }]"
-              @click="selectTab(i)"
-            >{{ tab }}</button>
+        <!-- Figma 绿底 Logo -->
+        <div class="header-secondary-logo">
+          <div class="header-secondary-logo-row">
+            <img src="/icons/header-logo.svg" class="header-secondary-logo-icon" alt="logo">
+            <span class="header-secondary-logo-text">桂字号</span>
           </div>
-          <!-- 窄屏：分类下拉菜单 -->
-          <div class="scrolled-category-wrapper">
-            <div class="scrolled-category-dropdown" @click.stop="toggleCategoryMenu">
-              <span class="scrolled-category-label">分类：</span>
-              <span class="scrolled-category-value">{{ navTabs[props.activeTab] }}</span>
-              <img src="/icons/chevron-down.svg" class="scrolled-category-chevron" alt="▾">
-            </div>
-            <div v-if="showCategoryMenu" class="dropdown-popup category-popup" @click.stop>
-              <div class="dropdown-popup-inner">
-                <button
-                  v-for="(tab, i) in navTabs"
-                  :key="tab"
-                  :class="['dropdown-chip', { 'dropdown-chip-active': i === props.activeTab }]"
-                  @click="selectTab(i); showCategoryMenu = false"
-                >{{ tab }}</button>
-              </div>
-            </div>
+        </div>
+        <!-- Figma 导航标签（4 项：首页 + 3 品牌） -->
+        <div class="header-secondary-tabs">
+          <button
+            v-for="(tab, i) in secondaryNavTabs"
+            :key="tab"
+            :class="['header-secondary-tab', { 'header-secondary-tab--active': i === activeTabIndex }]"
+            @click="selectTab(i)"
+          >{{ tab }}</button>
+        </div>
+        <!-- 窄屏：分类下拉菜单 -->
+        <div class="scrolled-category-wrapper">
+          <div class="scrolled-category-dropdown" @click.stop="toggleCategoryMenu">
+            <span class="scrolled-category-label">分类：</span>
+            <span class="scrolled-category-value">{{ navTabs[props.activeTab] }}</span>
+            <img src="/icons/chevron-down.svg" class="scrolled-category-chevron" alt="▾">
           </div>
-          <div class="scrolled-region-wrapper">
-            <div class="scrolled-region-pill" @click.stop="toggleRegionMenu">
-              <span class="scrolled-region-label">区域：</span>
-              <span class="scrolled-region-value">{{ selectedRegion }}</span>
-              <img src="/icons/chevron-down.svg" class="scrolled-region-chevron" alt="▾">
-            </div>
-            <!-- 地区下拉菜单 -->
-            <div v-if="showRegionMenu" class="dropdown-popup region-popup" @click.stop>
-              <div class="dropdown-popup-inner region-grid">
-                <button
-                  v-for="opt in regionOptions"
-                  :key="opt"
-                  :class="['dropdown-chip', { 'dropdown-chip-active': opt === selectedRegion }]"
-                  @click="selectRegion(opt)"
-                >{{ opt }}</button>
-              </div>
+          <div v-if="showCategoryMenu" class="dropdown-popup category-popup" @click.stop>
+            <div class="dropdown-popup-inner">
+              <button
+                v-for="(tab, i) in navTabs"
+                :key="tab"
+                :class="['dropdown-chip', { 'dropdown-chip-active': i === props.activeTab }]"
+                @click="selectTab(i); showCategoryMenu = false"
+              >{{ tab }}</button>
             </div>
           </div>
-          <div class="scrolled-search-btn">
-            <img src="/icons/search-icon.svg" class="scrolled-search-icon" alt="搜索">
+        </div>
+        <!-- 地区选择器 -->
+        <div class="header-secondary-region-wrapper">
+          <div class="header-secondary-region" @click.stop="toggleRegionMenu">
+            <span class="header-secondary-region-label">区域：</span>
+            <span class="header-secondary-region-value">{{ selectedRegion }}</span>
+            <img src="/icons/chevron-down.svg" class="header-secondary-region-arrow" alt="▾">
           </div>
+          <div v-if="showRegionMenu" class="region-popup--secondary" @click.stop>
+            <div class="dropdown-popup-inner">
+              <button
+                v-for="opt in regionOptions"
+                :key="opt"
+                :class="['dropdown-chip', { 'dropdown-chip-active': opt === selectedRegion }]"
+                @click="selectRegion(opt)"
+              >{{ opt }}</button>
+            </div>
+          </div>
+        </div>
+        <!-- 搜索按钮 -->
+        <div class="header-secondary-search">
+          <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
         </div>
       </template>
 
-      <div class="header-language">
-        <div class="lang-switch">
-          <div class="lang-content">
-            <img :src="isScrolled ? '/icons/lang-icon-dark.svg' : '/icons/lang-icon.svg'" class="lang-icon" alt="icon">
-            <span :class="['lang-text', { 'lang-text-dark': isScrolled }]">English</span>
-          </div>
-          <svg class="lang-arrow" width="9" height="5" viewBox="0 0 9 5">
-            <polygon :fill="isScrolled ? '#101215' : 'white'" points="0,0 9,0 4.5,5"/>
-          </svg>
-        </div>
-      </div>
+      <!-- 隐藏翻译按钮 -->
+
+      <!-- end隐藏翻译按钮 -->
     </div>
   </header>
 </template>

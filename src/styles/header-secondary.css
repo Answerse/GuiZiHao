@@ -1,0 +1,242 @@
+/* ===== 二级页面 Header（Figma 1:1 还原） ===== */
+
+.header--secondary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  width: 100%;
+  height: 80px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max-width: 100%;
+}
+
+.header-secondary-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 48px;
+}
+
+/* ===== Logo 绿底区域 ===== */
+.header-secondary-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  padding: 24px 40px;
+  gap: 10px;
+  background-color: #15803D;
+  flex-shrink: 0;
+}
+
+.header-secondary-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-secondary-logo-icon {
+  width: 59px;
+  height: 60px;
+}
+
+.header-secondary-logo-text {
+  font-family: 'MiSans', sans-serif;
+  font-size: 30px;
+  font-weight: 630;
+  color: #FFFFFF;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ===== 导航标签区域 ===== */
+.header-secondary-tabs {
+  display: flex;
+  align-self: stretch;
+  justify-content: center;
+  align-items: stretch;
+  gap: 32px;
+  flex: 1;
+}
+
+.header-secondary-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 10px;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #111827;
+  cursor: pointer;
+  align-self: stretch;
+  transition: all 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.header-secondary-tab--active {
+  font-weight: 630;
+  font-size: 24px;
+  border-bottom: 2px solid #15803D;
+  color: #111827;
+}
+
+.header-secondary-tab:not(.header-secondary-tab--active):hover {
+  color: #15803D;
+}
+
+/* ===== 地区选择器 ===== */
+.header-secondary-region {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 8px;
+  width: 200px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.header-secondary-region-label {
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 630;
+  color: #101215;
+  white-space: nowrap;
+}
+
+.header-secondary-region-value {
+  font-family: 'MiSans', sans-serif;
+  font-size: 20px;
+  font-weight: 330;
+  color: #101215;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.header-secondary-region-arrow {
+  width: 14px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+/* 地区下拉菜单 */
+.header-secondary-region-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+.region-popup--secondary {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1000;
+}
+
+.region-popup--secondary .dropdown-popup-inner {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 480px;
+}
+
+/* ===== 搜索按钮 ===== */
+.header-secondary-search {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  padding: 0 40px;
+  cursor: pointer;
+}
+
+.header-secondary-search-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* ===== 窄屏适配 ===== */
+@media (max-width: 1280px) {
+  .header-secondary-nav {
+    gap: 24px;
+  }
+
+  .header-secondary-tabs {
+    display: none;
+  }
+
+  .header-secondary-logo {
+    padding: 24px 40px;
+  }
+
+  .header-secondary-logo-icon {
+    width: 44px;
+    height: 45px;
+  }
+
+  .header-secondary-logo-text {
+    font-size: 24px;
+  }
+
+  .header-secondary-region {
+    width: 160px;
+  }
+
+  .header-secondary-search {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header--secondary {
+    height: 60px;
+  }
+
+  .header-secondary-nav {
+    gap: 12px;
+  }
+
+  .header-secondary-logo {
+    padding: 12px 16px;
+  }
+
+  .header-secondary-logo-icon {
+    width: 32px;
+    height: 33px;
+  }
+
+  .header-secondary-logo-text {
+    font-size: 18px;
+  }
+
+  .header-secondary-region {
+    width: 120px;
+    gap: 4px;
+  }
+
+  .header-secondary-region-label {
+    font-size: 14px;
+  }
+
+  .header-secondary-region-value {
+    font-size: 14px;
+  }
+
+  .header-secondary-search {
+    padding: 0 12px;
+  }
+}
