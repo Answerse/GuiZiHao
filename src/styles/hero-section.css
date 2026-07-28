@@ -157,7 +157,7 @@
 .hero-filter-tabs {
   display: flex;
   width: 100%;
-  height: 50px;
+  height: 60px;
   background-color: rgba(16, 18, 21, 0.6);
   border-radius: 4px 4px 0 0;
 }

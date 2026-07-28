@@ -150,9 +150,10 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   padding: 24px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, auto);
   gap: 12px;
-  width: 480px;
+  width: max-content;
+  max-width: 90vw;
 }
 
 /* ===== 搜索按钮 ===== */
