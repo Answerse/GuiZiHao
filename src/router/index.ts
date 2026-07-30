@@ -35,6 +35,11 @@ const router = createRouter({
       path: '/chenpitong/product',
       name: 'ChenpiTongProduct',
       component: () => import('@/views/ChenpiTongProduct.vue')
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: () => import('@/views/SearchPage.vue')
     }
   ]
 })

@@ -16,6 +16,8 @@ import './styles/header-secondary.css'
 import './styles/footer-section.css'
 import './styles/detail-page.css'
 import './styles/chenpi-tong.css'
+import './styles/page-layout.css'
+import './styles/search-page.css'
 
 const app = createApp(App)
 const pinia = createPinia()

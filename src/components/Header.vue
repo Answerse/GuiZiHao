@@ -30,6 +30,17 @@ const selectedRegion = ref('全部')
 const typeOptions = ['区域公用品牌', '农产品品牌', '农业企业品牌']
 const regionOptions = ['全部', '自治区', '南宁市', '柳州市', '桂林市', '梧州市', '北海市', '防城港市', '钦州市', '贵港市', '玉林市', '百色市', '贺州市', '河池市', '来宾市', '崇左市']
 
+const searchQuery = ref('')
+
+function goSearch() {
+  const q = searchQuery.value.trim()
+  if (q) {
+    router.push({ name: 'Search', query: { q } })
+  } else {
+    router.push({ name: 'Search' })
+  }
+}
+
 // Scrolled nav tabs
 const navTabs = ['区域公用品牌', '农产品品牌', '农业企业品牌']
 const secondaryNavTabs = ['首页', ...navTabs]
@@ -155,7 +166,7 @@ onUnmounted(() => {
       </div>
 
       <!-- 搜索按钮 -->
-      <div class="header-secondary-search">
+      <div class="header-secondary-search" @click="goSearch">
         <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
       </div>
     </div>
@@ -188,11 +199,11 @@ onUnmounted(() => {
               </svg>
             </div>
             <div class="search-bar-item search-bar-input-box">
-              <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+              <svg width="24" height="24" viewBox="0 0 32 32" fill="none" style="cursor:pointer" @click="goSearch">
                 <path d="M14.5 24C19.7467 24 24 19.7467 24 14.5C24 9.25329 19.7467 5 14.5 5C9.25329 5 5 9.25329 5 14.5C5 19.7467 9.25329 24 14.5 24Z" stroke="rgba(16, 18, 21, 0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M21 21L27 27" stroke="rgba(16, 18, 21, 0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <input class="search-input" type="text" placeholder="请输入关键词搜索">
+              <input class="search-input" type="text" placeholder="请输入关键词搜索" v-model="searchQuery" @keydown.enter="goSearch">
             </div>
           </div>
           <!-- 类型下拉菜单 -->
@@ -217,6 +228,21 @@ onUnmounted(() => {
               >{{ opt }}</button>
             </div>
           </div>
+        </div>
+
+        <!-- 右上角搜索框 -->
+        <div class="header-banner-search">
+          <svg class="header-banner-search-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" @click="goSearch">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9287 0C21.6213 0 27.8573 6.23608 27.8573 13.9287C27.8573 17.0017 26.8602 19.8409 25.1746 22.1444L29.3724 26.3423C30.2092 27.1791 30.2092 28.5356 29.3724 29.3724C28.5356 30.2092 27.1791 30.2091 26.3423 29.3724L22.1444 25.1746C19.8409 26.8602 17.0017 27.8573 13.9287 27.8573C6.23608 27.8573 0 21.6213 0 13.9287C0 6.23608 6.23608 0 13.9287 0ZM13.9287 4.28574C8.60303 4.28574 4.28574 8.60303 4.28574 13.9287C4.28574 19.2543 8.60303 23.5716 13.9287 23.5716C19.2543 23.5716 23.5716 19.2543 23.5716 13.9287C23.5716 8.60303 19.2543 4.28574 13.9287 4.28574Z" fill="currentColor"/>
+          </svg>
+          <input
+            class="header-banner-search-input"
+            type="text"
+            placeholder="搜索"
+            v-model="searchQuery"
+            @keydown.enter="goSearch"
+            @click="goSearch"
+          >
         </div>
       </template>
 
@@ -275,7 +301,7 @@ onUnmounted(() => {
           </div>
         </div>
         <!-- 搜索按钮 -->
-        <div class="header-secondary-search">
+        <div class="header-secondary-search" @click="goSearch">
           <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
         </div>
       </template>

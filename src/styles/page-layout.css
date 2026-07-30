@@ -1,0 +1,81 @@
+/* ===== 通用二级页面布局 ===== */
+/* 适用于搜索页、详情页等所有二级页面，提供统一的白色圆角容器 + 面包屑导航 */
+
+/* 页面背景层 */
+.page-bg {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg-page);
+}
+
+/* 白色圆角内容容器 */
+.page-container {
+  width: 1280px;
+  margin: 100px auto 40px;
+  padding: 30px 40px 40px;
+  background-color: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* ===== 面包屑导航 ===== */
+.page-breadcrumb-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* 返回按钮 */
+.page-back-btn {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--color-brand-green);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  padding: 0;
+  outline: none;
+}
+
+.page-back-btn:hover {
+  transform: scale(1.1);
+}
+
+.page-back-btn:active {
+  transform: scale(0.95);
+}
+
+.page-back-btn-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.page-breadcrumb-chevron {
+  width: 7px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.page-breadcrumb-item {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: 330;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+a.page-breadcrumb-item {
+  text-decoration: none;
+}
+
+.page-breadcrumb-current {
+  font-weight: 630;
+}

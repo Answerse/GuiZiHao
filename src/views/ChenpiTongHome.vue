@@ -9,6 +9,7 @@ const isScrolled = ref(false)
 const currentSlide = ref(0)
 const isAutoPlayPaused = ref(false)
 const isModalOpen = ref(false)
+const showVideoModal = ref(false)
 
 const translations = {
   en: {
@@ -56,7 +57,7 @@ const translations = {
     'prod30-desc-head': 'The Collector\'s Pinnacle',
     'prod30-desc': 'Rare, intense, and ultra-smooth. The ultimate "liquid gold" investment.',
     'prod30-price-unit': '/kg',
-    'btn-buy': 'Buy',
+    'btn-buy': 'Learn More',
     'heritage-subtitle': 'OUR HERITAGE',
     'heritage-title': 'The Story Of Time',
     'heritage-text': 'True Chenpi cannot be made overnight.\nIt begins with carefully selected mandarins, continues through sunshine and changing seasons, and reaches its finest expression only after years of natural aging.\nEvery year adds depth.\nEvery season leaves its mark.\nThis is the story of time.',
@@ -111,7 +112,7 @@ const translations = {
     'prod30-desc-head': '收藏家巅峰之选',
     'prod30-desc': '稀有、浓郁、超级顺滑。极致的"液体黄金"收藏品。',
     'prod30-price-unit': '/公斤',
-    'btn-buy': '购买',
+    'btn-buy': '了解更多',
     'heritage-subtitle': '我们的传承',
     'heritage-title': '时间的故事',
     'heritage-text': '真正的陈皮并非一朝一夕可以制成。\n它始于精心挑选的橘子，历经阳光与四季更迭，唯有经过多年自然陈化，方能达到最极致的表达。\n每一年都在增加深度。\n每一季都在留下印记。\n这就是时间的故事。',
@@ -403,8 +404,35 @@ onUnmounted(() => {
               <span class="why__stat-label">{{ t('why-stat3-label') }}</span>
             </div>
           </div>
+
+          <!-- 视频播放区域 -->
+          <div class="why__video" @click="showVideoModal = true">
+            <div class="why__video-thumb">
+              <div class="why__video-play">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="23" fill="white" fill-opacity="0.9"/>
+                  <path d="M20 16v16l14-8-14-8z" fill="#26170B"/>
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      <!-- 视频弹窗遮罩层 -->
+      <div v-if="showVideoModal" class="video-overlay" @click="showVideoModal = false"></div>
+
+      <!-- 视频弹窗 -->
+      <div v-if="showVideoModal" class="video-modal">
+        <button class="video-modal-close" @click="showVideoModal = false" aria-label="关闭">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="video-modal-player">
+          <!-- 视频源将在此处添加 -->
+        </div>
+      </div>
 
       <section class="products" id="products">
         <div class="products__inner">
@@ -437,7 +465,7 @@ onUnmounted(() => {
                       <span class="product-card__price-unit">{{ t('prod10-price-unit') }}</span>
                     </div>
                   </div>
-                  <button class="product-card__buy" @click.stop="openModal">{{ t('btn-buy') }}</button>
+                  <button class="product-card__buy">{{ t('btn-buy') }}</button>
                 </div>
               </div>
             </a>
@@ -465,7 +493,7 @@ onUnmounted(() => {
                       <span class="product-card__price-unit">{{ t('prod20-price-unit') }}</span>
                     </div>
                   </div>
-                  <button class="product-card__buy" @click.stop="openModal">{{ t('btn-buy') }}</button>
+                  <button class="product-card__buy">{{ t('btn-buy') }}</button>
                 </div>
               </div>
             </a>
@@ -493,7 +521,7 @@ onUnmounted(() => {
                       <span class="product-card__price-unit">{{ t('prod30-price-unit') }}</span>
                     </div>
                   </div>
-                  <button class="product-card__buy" @click.stop="openModal">{{ t('btn-buy') }}</button>
+                  <button class="product-card__buy">{{ t('btn-buy') }}</button>
                 </div>
               </div>
             </a>

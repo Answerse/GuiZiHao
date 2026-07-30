@@ -124,17 +124,10 @@
   width: 100%;
   height: 80px;
   display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 48px;
   padding: 0;
-}
-
-/* 窄屏减少导航间距 */
-@media (max-width: 1280px) {
-  .header-scrolled .header-nav {
-    gap: 16px;
-  }
 }
 
 /* 窄屏：分类下拉菜单（默认隐藏，窄屏显示） */
@@ -196,14 +189,6 @@
   flex-direction: column;
   gap: 14px;
   width: 280px;
-}
-
-/* 窄屏：隐藏标签按钮，显示下拉菜单 */
-@media (max-width: 1280px) {
-  .scrolled-category-wrapper {
-    display: block;
-    flex: 1;
-  }
 }
 
 /* 下拉弹出菜单 */
@@ -374,4 +359,45 @@
   background-color: #15803D;
   color: #F9FAFB;
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== 首页 Banner 右上角搜索框 ===== */
+
+.header-banner-search {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 200px;
+  height: 48px;
+  background-color: var(--color-bg-white-70);
+  border-radius: var(--radius-full);
+  padding: 0 var(--spacing-lg);
+  margin-left: auto;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.header-banner-search-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.header-banner-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: 330;
+  color: var(--color-text-secondary);
+  background: transparent;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.header-banner-search-input::placeholder {
+  color: var(--color-text-secondary);
 }

@@ -70,7 +70,6 @@ export const brandProducts: BrandProduct[] = [
       'https://aka.doubaocdn.com/s/nyau1wnBAB',
       'https://aka.doubaocdn.com/s/motE1wnBAB'
     ],
-    salesLink: 'https://nynct.gxzf.gov.cn/gxfb/products/details?id=ef30a5f5-b72e-4eb7-8b37-51c2cd13d033',
     brandBackground: '"故乡"有机茶隶属于广西将军峰茶业集团全资子公司——广西昭平县故乡茶业有限公司。公司成立于2008年，注册资本1200万元，是国有独资企业。品牌以全产业链模式经营，自建有机茶种植基地和加工厂，茶园选址在无污染的边远山区，秉持"绿色、优质、高效、领先"的质量方针。2010年11月通过有机食品认证，构建了从田间到消费者的完整产业链条。',
     growthCharacteristics: '基地位于昭平县高山云雾区域，种植内质优异、氨基酸含量较高的小叶茶树品种，香更浓、味更醇。茶园选用没有任何污染的边远山区，种植全过程完全不施用化肥、农药、植物生长调节剂等化学合成物质。茶树在海拔较高、云雾缭绕、昼夜温差大的环境中生长，鲜叶品质优异。',
     nutritionalValue: '茶叶富含茶多酚、氨基酸、维生素等多种营养成分，其中氨基酸含量较高，具有抗氧化、提神醒脑、降脂减肥等保健功效。有机茶不含农药残留和化学添加剂，更加安全健康。',
