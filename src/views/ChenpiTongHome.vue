@@ -430,7 +430,13 @@ onUnmounted(() => {
           </svg>
         </button>
         <div class="video-modal-player">
-          <!-- 视频源将在此处添加 -->
+          <video
+            src="/chenpitong/assets/videos/陈皮通介绍_2.mp4"
+            controls
+            autoplay
+            playsinline
+            style="width: 100%; height: 100%; object-fit: contain;"
+          ></video>
         </div>
       </div>
 
