@@ -900,6 +900,7 @@ button {
 
 /* ===== 视频播放区域 ===== */
 .why__video {
+  display: none;
   width: 480px;
   border-radius: 16px;
   overflow: hidden;
