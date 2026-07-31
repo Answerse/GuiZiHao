@@ -1844,25 +1844,27 @@ a.product-card {
 }
 
 /* --- Buy Button --- */
-/* Figma #28844:4936: row, stretch, padding 24px 64px, center, gap 5px, fill × hug, bg #DD5F12, radius 48 */
-.product-detail__buy-btn {
-  width: 100%;
-  padding: 24px 64px;
+.product-detail__info .product-detail__buy-btn {
+  width: 56px;
+  height: 56px;
+  padding: 0;
   background: #DD5F12;
   border-radius: 48px;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
-  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   border: none;
-  font-family: var(--font-primary);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .product-detail__buy-btn:hover {
   opacity: 0.85;
   transform: translateY(-2px);
+}
+
+.product-detail__buy-btn img {
+  filter: brightness(0) invert(1);
 }
 
 /* ============================================
@@ -2853,8 +2855,8 @@ a.product-card {
   }
 
   .product-detail__buy-btn {
-    padding: 18px 40px;
-    font-size: 22px;
+    width: 56px;
+    height: 56px;
   }
 
   /* Tasting Notes */
@@ -3275,8 +3277,8 @@ a.product-card {
   }
 
   .product-detail__buy-btn {
-    padding: 20px 48px;
-    font-size: 24px;
+    width: 56px;
+    height: 56px;
   }
 
   /* Tasting Notes */
@@ -3672,11 +3674,10 @@ a.product-card {
   }
 
   .product-detail__buy-btn {
-    padding: 22px 56px;
-    font-size: 28px;
+    width: 56px;
+    height: 56px;
   }
 
-  /* Tasting Notes */
   .tasting-notes {
     padding: 40px 0;
   }
@@ -3883,7 +3884,8 @@ a.product-card {
   }
 
   .product-detail__buy-btn {
-    font-size: 32px;
+    width: 56px;
+    height: 56px;
   }
 
   /* Tasting Notes */

@@ -370,7 +370,9 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <button class="product-detail__buy-btn" @click="openModal">{{ t('btn-buy') }}</button>
+            <button class="product-detail__buy-btn" aria-label="加入购物车">
+              <img src="/chenpitong/assets/icons/icon-cart.svg" alt="购物车" width="32" height="32">
+            </button>
           </div>
         </div>
       </section>
