@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-const currentLang = ref('en')
+const currentLang = ref('zh')
 const isNavOpen = ref(false)
 const isHeaderLangOpen = ref(false)
 const isFooterLangOpen = ref(false)
@@ -120,20 +120,20 @@ const translations = {
     'nav-about': '关于我们',
     'pd-name-lg': 'AAA',
     'pd-name-sm': '陈皮',
-    'pd-subtitle': '来自中国浦北，自然陈化橘皮',
-    'pd-tag1': '春日清香',
-    'pd-tag2': '青草气息',
-    'pd-tag3': '毛豆清香',
-    'pd-description': '这款茶口感鲜甜，带有清新春日的气息，果肉饱满多汁。这是我们对优质绿茶的初次呈现，清新怡人，带有清新的青草香调和浓郁的鲜味深度。',
+    'pd-subtitle': '来自中国浦北，自然陈化的优质柑橘皮',
+    'pd-tag1': '春日新收',
+    'pd-tag2': '陈香馥郁',
+    'pd-tag3': '天然日晒',
+    'pd-description': '精选浦北优质茶枝柑果皮，经自然晾晒与多年陈化而成。其性温润，兼具理气健脾、燥湿化痰之功效，既是养生饮品，亦是烹饪调味的上佳之选。',
     'prod10-price-unit': '/公斤',
-    'btn-buy': '购买',
+    'btn-buy': '了解更多',
     'tn-title': '品赏记录',
     'tn-strength-title': '强度',
     'tn-strength-low': '清新',
     'tn-strength-medium': '柔和',
     'tn-strength-high': '陈年',
     'tn-appearance-label': '外观',
-    'tn-appearance-desc': '金黄色陈皮，天然纹理表面',
+    'tn-appearance-desc': '色泽金黄，表面纹理自然',
     'tn-aroma-label': '香气',
     'tn-aroma-desc': '温暖橘香，伴有淡淡的木质和草本气息',
     'tn-taste-label': '口感',
@@ -149,7 +149,7 @@ const translations = {
     'htp-rebrew-desc': '适合多次冲泡',
     'ps-question': '这杯茶来自哪里？',
     'ps-title': '来自浦北之心',
-    'ps-desc': '浦北位于广西，是中国著名的陈皮产区之一。充足的日照、季节性的湿度和耐心的自然陈化，创造了定义正宗浦北陈皮的独特香气和风味。',
+    'ps-desc': '浦北地处广西，是中国著名的陈皮核心产区之一。充足的日照、适宜的湿度与耐心的自然陈化过程，造就了正宗浦北陈皮独特的香气与风味。',
     'ps-info1': '品种 - 茶枝柑',
     'ps-info2': '采摘 - 2024年4月',
     'ps-info3': '陈化年份 - 十年',

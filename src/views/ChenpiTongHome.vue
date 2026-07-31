@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-const currentLang = ref('en')
+const currentLang = ref('zh')
 const isNavOpen = ref(false)
 const isHeaderLangOpen = ref(false)
 const isFooterLangOpen = ref(false)
@@ -81,7 +81,7 @@ const translations = {
     'hero2-cta': '了解我们的传承',
     'about-subtitle': '认识陈皮',
     'about-title': '什么是陈皮？',
-    'about-body': '陈皮是成熟橘子的干果皮，经过精心采摘、自然晒干和多年陈化而成。\n随着时间推移，其香气、颜色和风味不断演变，成为独一无二的天然珍品。',
+    'about-body': '陈皮是成熟柑橘的干燥果皮，经精心采摘、自然晾晒并多年陈化而成。\n随着时间推移，其香气、色泽与风味持续演变，最终成就独一无二的天然珍品。',
     'enjoy-subtitle': '品赏方式',
     'enjoy-title': '如何品赏陈皮',
     'enjoy-card1-title': '冲泡饮用',
@@ -92,30 +92,30 @@ const translations = {
     'enjoy-card3-desc': '将陈皮用于甜点、糕点或创意料理中，增添天然橘香。',
     'why-subtitle': '为什么选择浦北',
     'why-title': '优质陈皮的发源地',
-    'why-stat1-label': '亩核心种植园',
-    'why-stat2-label': '吨储存容量',
+    'why-stat1-label': '核心种植基地',
+    'why-stat2-label': '大型仓储容量',
     'why-stat3-label': '可追溯体系',
     'products-subtitle': '年份系列',
     'products-title': '按年份探索',
     'prod10-lg': 'AAA',
     'prod10-sm': '陈皮',
     'prod10-desc-head': '日常臻选',
-    'prod10-desc': '口感均衡顺滑的陈皮茶，适合日常养生与送礼。',
+    'prod10-desc': '口感均衡、香气清雅，适合日常养生品饮与送礼。',
     'prod10-price-unit': '/公斤',
     'prod20-lg': 'AAAA',
     'prod20-sm': '陈皮',
     'prod20-desc-head': '鉴赏家之选',
-    'prod20-desc': '更为浓郁深沉，带木质香气，适合茶艺爱好者与烹调使用。',
+    'prod20-desc': '香气浓郁、滋味醇厚，带自然木质幽香，专为品茶爱好者与烹饪调味而造。',
     'prod20-price-unit': '/公斤',
     'prod30-lg': 'AAAAA',
     'prod30-sm': '陈皮',
     'prod30-desc-head': '收藏家巅峰之选',
-    'prod30-desc': '稀有、浓郁、超级顺滑。极致的"液体黄金"收藏品。',
+    'prod30-desc': '稀有珍贵、陈香馥郁、滋味醇厚，堪称收藏级珍品。',
     'prod30-price-unit': '/公斤',
     'btn-buy': '了解更多',
     'heritage-subtitle': '我们的传承',
     'heritage-title': '时间的故事',
-    'heritage-text': '真正的陈皮并非一朝一夕可以制成。\n它始于精心挑选的橘子，历经阳光与四季更迭，唯有经过多年自然陈化，方能达到最极致的表达。\n每一年都在增加深度。\n每一季都在留下印记。\n这就是时间的故事。',
+    'heritage-text': '真正的陈皮并非一朝一夕所能成就。\n它始于精心挑选的优质柑橘，历经阳光沐浴与四季更迭的洗礼，唯有经过多年自然陈化，方能达到风味的极致表达。\n每一年都沉淀着岁月的厚度。\n每一季都镌刻着时光的印记。\n这便是时间赋予陈皮的故事。',
     'footer-home': '首页',
     'footer-products': '产品',
     'footer-stories': '故事',
