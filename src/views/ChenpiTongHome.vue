@@ -333,7 +333,7 @@ onUnmounted(() => {
             <p class="about__body" v-html="t('about-body')"></p>
           </div>
           <div class="about__image-area">
-            <img class="about__image" src="/chenpitong/assets/images/about-img.webp" alt="Chenpi">
+            <img class="about__image" loading="lazy" src="/chenpitong/assets/images/about-img.webp" alt="Chenpi">
           </div>
         </div>
       </section>
@@ -348,7 +348,7 @@ onUnmounted(() => {
           <div class="enjoy__grid">
             <div class="enjoy__card">
               <div class="enjoy__card-img">
-                <img src="/chenpitong/assets/images/enjoy-brew-crop-39e639.webp" alt="Brew as Tea">
+                <img loading="lazy" src="/chenpitong/assets/images/enjoy-brew-crop-39e639.webp" alt="Brew as Tea">
                 <div class="enjoy__card-overlay"></div>
               </div>
               <div class="enjoy__card-info">
@@ -359,7 +359,7 @@ onUnmounted(() => {
 
             <div class="enjoy__card">
               <div class="enjoy__card-img">
-                <img src="/chenpitong/assets/images/enjoy-cook-crop-6e4b94.webp" alt="Cook with Flavor">
+                <img loading="lazy" src="/chenpitong/assets/images/enjoy-cook-crop-6e4b94.webp" alt="Cook with Flavor">
                 <div class="enjoy__card-overlay"></div>
               </div>
               <div class="enjoy__card-info">
@@ -370,7 +370,7 @@ onUnmounted(() => {
 
             <div class="enjoy__card">
               <div class="enjoy__card-img">
-                <img src="/chenpitong/assets/images/enjoy-bake-cover.webp" alt="Bake and Create">
+                <img loading="lazy" src="/chenpitong/assets/images/enjoy-bake-cover.webp" alt="Bake and Create">
                 <div class="enjoy__card-overlay"></div>
               </div>
               <div class="enjoy__card-info">
@@ -383,7 +383,7 @@ onUnmounted(() => {
       </section>
 
       <section class="why">
-        <img class="why__bg" src="/chenpitong/assets/images/why-bg-header.webp" alt="Why Pu Bei Background">
+        <img class="why__bg" loading="lazy" src="/chenpitong/assets/images/why-bg-header.webp" alt="Why Pu Bei Background">
         <div class="why__inner">
           <div class="why__title-group">
             <p class="why__subtitle">{{ t('why-subtitle') }}</p>
@@ -450,7 +450,7 @@ onUnmounted(() => {
           <div class="products__list">
             <a href="/chenpitong/product?v=10" class="product-card">
               <div class="product-card__image-wrapper">
-                <img class="product-card__image" src="/chenpitong/assets/images/product-10year-figma.webp" alt="AAA Vintage Chenpi">
+                <img class="product-card__image" loading="lazy" src="/chenpitong/assets/images/product-10year-figma.webp" alt="AAA Vintage Chenpi">
               </div>
               <div class="product-card__info product-card__info--gold">
                 <div class="product-card__info-row product-card__info-row--title">
@@ -478,7 +478,7 @@ onUnmounted(() => {
 
             <a href="/chenpitong/product?v=20" class="product-card product-card--reversed">
               <div class="product-card__image-wrapper">
-                <img class="product-card__image" src="/chenpitong/assets/images/product-20year-figma.webp" alt="AAAA Vintage Chenpi">
+                <img class="product-card__image" loading="lazy" src="/chenpitong/assets/images/product-20year-figma.webp" alt="AAAA Vintage Chenpi">
               </div>
               <div class="product-card__info product-card__info--brown">
                 <div class="product-card__info-row product-card__info-row--title">
@@ -506,7 +506,7 @@ onUnmounted(() => {
 
             <a href="/chenpitong/product?v=30" class="product-card">
               <div class="product-card__image-wrapper">
-                <img class="product-card__image" src="/chenpitong/assets/images/product-30year-figma.webp" alt="AAAAA Vintage Chenpi">
+                <img class="product-card__image" loading="lazy" src="/chenpitong/assets/images/product-30year-figma.webp" alt="AAAAA Vintage Chenpi">
               </div>
               <div class="product-card__info product-card__info--dark">
                 <div class="product-card__info-row product-card__info-row--title">
@@ -600,7 +600,7 @@ onUnmounted(() => {
         </button>
 
         <div class="modal__decor">
-          <img class="modal__decor-img" src="/chenpitong/assets/icons/modal-bg.webp" alt="">
+          <img class="modal__decor-img" loading="lazy" src="/chenpitong/assets/icons/modal-bg.webp" alt="">
         </div>
 
         <div class="modal__brand">

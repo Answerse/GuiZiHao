@@ -403,7 +403,7 @@ onUnmounted(() => {
             <div class="tasting-notes__list">
               <div class="tasting-notes__item">
                 <div class="tasting-notes__item-img">
-                  <img src="/chenpitong/assets/images/tasting-appearance-56586a.webp" alt="Appearance">
+                  <img loading="lazy" src="/chenpitong/assets/images/tasting-appearance-56586a.webp" alt="Appearance">
                 </div>
                 <h3 class="tasting-notes__item-label">{{ t('tn-appearance-label') }}</h3>
                 <p class="tasting-notes__item-desc">{{ t('tn-appearance-desc') }}</p>
@@ -411,7 +411,7 @@ onUnmounted(() => {
 
               <div class="tasting-notes__item">
                 <div class="tasting-notes__item-img">
-                  <img src="/chenpitong/assets/images/tasting-aroma-56586a.webp" alt="Aroma">
+                  <img loading="lazy" src="/chenpitong/assets/images/tasting-aroma-56586a.webp" alt="Aroma">
                 </div>
                 <h3 class="tasting-notes__item-label">{{ t('tn-aroma-label') }}</h3>
                 <p class="tasting-notes__item-desc">{{ t('tn-aroma-desc') }}</p>
@@ -419,7 +419,7 @@ onUnmounted(() => {
 
               <div class="tasting-notes__item">
                 <div class="tasting-notes__item-img">
-                  <img src="/chenpitong/assets/images/tasting-taste-56586a.webp" alt="Taste">
+                  <img loading="lazy" src="/chenpitong/assets/images/tasting-taste-56586a.webp" alt="Taste">
                 </div>
                 <h3 class="tasting-notes__item-label">{{ t('tn-taste-label') }}</h3>
                 <p class="tasting-notes__item-desc">{{ t('tn-taste-desc') }}</p>
@@ -429,8 +429,8 @@ onUnmounted(() => {
 
           <div class="tasting-notes__right">
             <div class="tasting-notes__illustration">
-              <img class="tasting-notes__illustration-bg" src="/chenpitong/assets/images/tasting-illustration-bg-56586a.webp" alt="Tasting Illustration Background">
-              <img class="tasting-notes__illustration-fg" src="/chenpitong/assets/images/tasting-illustration-fg-15b631.webp" alt="Tasting Illustration">
+              <img class="tasting-notes__illustration-bg" loading="lazy" src="/chenpitong/assets/images/tasting-illustration-bg-56586a.webp" alt="Tasting Illustration Background">
+              <img class="tasting-notes__illustration-fg" loading="lazy" src="/chenpitong/assets/images/tasting-illustration-fg-15b631.webp" alt="Tasting Illustration">
             </div>
           </div>
         </div>
@@ -484,7 +484,7 @@ onUnmounted(() => {
             <p class="pubei-story__desc">{{ t('ps-desc') }}</p>
 
             <div class="pubei-story__map">
-              <img src="/chenpitong/assets/images/pubei-map-bg.webp" alt="Pubei Map" class="pubei-story__map-img">
+              <img loading="lazy" src="/chenpitong/assets/images/pubei-map-bg.webp" alt="Pubei Map" class="pubei-story__map-img">
             </div>
 
             <div class="pubei-story__info">
@@ -516,7 +516,7 @@ onUnmounted(() => {
           </div>
 
           <div class="pubei-story__img">
-            <img src="/chenpitong/assets/images/pubei-product-img.webp" alt="Pubei Chenpi Closeup" class="pubei-story__img-photo">
+            <img loading="lazy" src="/chenpitong/assets/images/pubei-product-img.webp" alt="Pubei Chenpi Closeup" class="pubei-story__img-photo">
           </div>
         </div>
       </section>
@@ -572,7 +572,7 @@ onUnmounted(() => {
         </button>
 
         <div class="modal__decor">
-          <img class="modal__decor-img" src="/chenpitong/assets/icons/modal-bg.webp" alt="">
+          <img class="modal__decor-img" loading="lazy" src="/chenpitong/assets/icons/modal-bg.webp" alt="">
         </div>
 
         <div class="modal__brand">

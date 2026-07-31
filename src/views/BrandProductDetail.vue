@@ -288,7 +288,7 @@ function goToStore() {
       </button>
       <template v-if="hasSalesLink">
         <div class="detail-website-preview">
-          <img class="detail-website-screenshot" src="/images/chenpitong-screenshot.png" alt="电商网站截图">
+          <img class="detail-website-screenshot" loading="lazy" src="/images/chenpitong-screenshot.webp" alt="电商网站截图">
         </div>
         <a class="detail-website-url" :href="salesUrl" target="_blank">
           <span class="detail-url-label">网址：</span>

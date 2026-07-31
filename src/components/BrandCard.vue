@@ -8,7 +8,7 @@ defineProps<{
 <template>
   <div class="brand-card">
     <div class="brand-card-image">
-      <img src="/images/product-card.webp" alt="Product Image" />
+      <img loading="lazy" src="/images/product-card.webp" alt="Product Image" />
     </div>
     <div class="brand-card-content">
       <h3 class="brand-card-title">{{ title }}</h3>

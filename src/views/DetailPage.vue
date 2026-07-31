@@ -270,7 +270,7 @@ function goToStore() {
         <div class="detail-website-preview">
           <img
             class="detail-website-screenshot"
-            src="/images/chenpitong-screenshot.png"
+            loading="lazy" src="/images/chenpitong-screenshot.webp"
             alt="陈皮通电商网站截图"
           >
         </div>

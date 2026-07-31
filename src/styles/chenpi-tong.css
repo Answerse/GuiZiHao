@@ -911,7 +911,7 @@ button {
   width: 100%;
   aspect-ratio: 16 / 9;
   background-color: #26170B;
-  background-image: url('/chenpitong/assets/images/video-poster.jpg');
+  background-image: url('/chenpitong/assets/images/video-poster.webp');
   background-size: cover;
   background-position: center;
   display: flex;
