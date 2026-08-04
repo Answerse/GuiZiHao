@@ -351,28 +351,10 @@ onUnmounted(() => {
                 <span class="product-detail__price-value">{{ currentProduct.price }}</span>
                 <span class="product-detail__price-unit">{{ t('prod10-price-unit') }}</span>
               </div>
-              <div class="product-detail__quantity">
-                <button 
-                  class="product-detail__qty-btn product-detail__qty-minus" 
-                  :style="{ opacity: quantity <= 1 ? '0.4' : '1' }"
-                  @click="decreaseQuantity"
-                >
-                  <img src="/chenpitong/assets/icons/icon-minus.svg" alt="Minus" width="20" height="20">
-                </button>
-                <div class="product-detail__qty-value">
-                  <div class="product-detail__qty-text-wrap">
-                    <span>{{ quantity }}</span>
-                  </div>
-                </div>
-                <button class="product-detail__qty-btn product-detail__qty-plus" @click="increaseQuantity">
-                  <img src="/chenpitong/assets/icons/icon-plus.svg" alt="Plus" width="20" height="20">
-                </button>
-              </div>
+              <button class="product-detail__buy-btn" aria-label="加入购物车">
+                <img src="/chenpitong/assets/icons/icon-cart.svg" alt="购物车" width="32" height="32">
+              </button>
             </div>
-
-            <button class="product-detail__buy-btn" aria-label="加入购物车">
-              <img src="/chenpitong/assets/icons/icon-cart.svg" alt="购物车" width="32" height="32">
-            </button>
           </div>
         </div>
       </section>

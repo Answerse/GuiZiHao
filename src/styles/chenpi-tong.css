@@ -1742,7 +1742,7 @@ a.product-card {
 .product-detail__price-row {
   display: flex;
   align-items: center;
-  gap: 32px;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -1784,13 +1784,7 @@ a.product-card {
 /* --- Quantity Selector --- */
 /* Figma #28844:4925: row, padding 8px 0, center, hug × hug, border 1px #26170B, radius 8 */
 .product-detail__quantity {
-  width: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #26170B;
-  border-radius: 8px;
-  padding: 8px 0;
+  display: none;
 }
 
 /* Figma: fixed 42×44 */
@@ -1845,8 +1839,8 @@ a.product-card {
 
 /* --- Buy Button --- */
 .product-detail__info .product-detail__buy-btn {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   padding: 0;
   background: #DD5F12;
   border-radius: 48px;
@@ -1855,6 +1849,7 @@ a.product-card {
   justify-content: center;
   cursor: pointer;
   border: none;
+  flex-shrink: 0;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
