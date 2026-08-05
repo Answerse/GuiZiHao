@@ -131,8 +131,8 @@ onUnmounted(() => {
       <!-- Logo 绿底区域 -->
       <div class="header-secondary-logo">
         <div class="header-secondary-logo-row">
-          <img src="/icons/header-logo.svg" class="header-secondary-logo-icon" alt="logo">
-          <span class="header-secondary-logo-text">桂字号</span>
+          <img src="/icons/header-secondary-logomark.svg" class="header-secondary-logo-mark" alt="logo">
+          <img src="/icons/header-secondary-logotype.svg" class="header-secondary-logo-type" alt="桂字号">
         </div>
       </div>
 
@@ -167,7 +167,7 @@ onUnmounted(() => {
 
       <!-- 搜索按钮 -->
       <div class="header-secondary-search" @click="goSearch">
-        <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
+        <img src="/icons/header-search-icon.svg" class="header-secondary-search-icon" alt="搜索">
       </div>
     </div>
   </header>
@@ -178,11 +178,8 @@ onUnmounted(() => {
       <!-- ===== 未滚动：透明状态（原样保留） ===== -->
       <template v-if="!isScrolled">
         <div class="header-logo">
-          <img src="/icons/header-ribbon.svg" class="header-ribbon" alt="ribbon">
-          <div class="header-logo-content">
-            <img src="/icons/header-logo.svg" class="header-logo-icon" alt="logo">
-            <span class="header-logo-text">桂字号</span>
-          </div>
+          <img src="/icons/header-logomark-white.svg" class="header-logo-mark" alt="logo">
+          <img src="/icons/header-logotype-white.svg" class="header-logo-type" alt="桂字号">
         </div>
         <div class="header-search-bar">
           <div class="search-bar-row">
@@ -230,19 +227,9 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <!-- 右上角搜索框 -->
-        <div class="header-banner-search">
-          <svg class="header-banner-search-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" @click="goSearch">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9287 0C21.6213 0 27.8573 6.23608 27.8573 13.9287C27.8573 17.0017 26.8602 19.8409 25.1746 22.1444L29.3724 26.3423C30.2092 27.1791 30.2092 28.5356 29.3724 29.3724C28.5356 30.2092 27.1791 30.2091 26.3423 29.3724L22.1444 25.1746C19.8409 26.8602 17.0017 27.8573 13.9287 27.8573C6.23608 27.8573 0 21.6213 0 13.9287C0 6.23608 6.23608 0 13.9287 0ZM13.9287 4.28574C8.60303 4.28574 4.28574 8.60303 4.28574 13.9287C4.28574 19.2543 8.60303 23.5716 13.9287 23.5716C19.2543 23.5716 23.5716 19.2543 23.5716 13.9287C23.5716 8.60303 19.2543 4.28574 13.9287 4.28574Z" fill="currentColor"/>
-          </svg>
-          <input
-            class="header-banner-search-input"
-            type="text"
-            placeholder="搜索"
-            v-model="searchQuery"
-            @keydown.enter="goSearch"
-            @click="goSearch"
-          >
+        <!-- 右上角搜索按钮（与滚动后搜索按钮样式一致） -->
+        <div class="header-banner-search" @click="goSearch">
+          <img src="/icons/header-search-icon.svg" class="header-banner-search-icon" alt="搜索">
         </div>
       </template>
 
@@ -251,8 +238,8 @@ onUnmounted(() => {
         <!-- Figma 绿底 Logo -->
         <div class="header-secondary-logo">
           <div class="header-secondary-logo-row">
-            <img src="/icons/header-logo.svg" class="header-secondary-logo-icon" alt="logo">
-            <span class="header-secondary-logo-text">桂字号</span>
+            <img src="/icons/header-secondary-logomark.svg" class="header-secondary-logo-mark" alt="logo">
+            <img src="/icons/header-secondary-logotype.svg" class="header-secondary-logo-type" alt="桂字号">
           </div>
         </div>
         <!-- Figma 导航标签（4 项：首页 + 3 品牌） -->
@@ -302,7 +289,7 @@ onUnmounted(() => {
         </div>
         <!-- 搜索按钮 -->
         <div class="header-secondary-search" @click="goSearch">
-          <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
+          <img src="/icons/header-search-icon.svg" class="header-secondary-search-icon" alt="搜索">
         </div>
       </template>
 

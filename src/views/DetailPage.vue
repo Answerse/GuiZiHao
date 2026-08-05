@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import Header from '@/components/Header.vue'
 import FooterSection from '@/components/FooterSection.vue'
 import { products } from '@/data/products'
 
 const route = useRoute()
 const router = useRouter()
+
 const product = computed(() => {
   const id = Number(route.params.productId)
   return products.find(p => p.id === id) || products[0]
@@ -20,56 +23,315 @@ const categoryTabMap: Record<string, number> = {
 
 const categoryTabIndex = computed(() => categoryTabMap[product.value.category] ?? 0)
 
-// 弹窗状态
-const showContactModal = ref(false)
-const showPurchaseModal = ref(false)
+// ---- 订单分布：时间筛选 ----
+const timeRanges = ['近 7 日', '近 30 天', '近 3 月', '近 1 年', '自定义']
+const activeRange = ref(1)
 
-// 根据产品生成拟真联系方式
-const contactInfo = computed(() => {
-  const p = product.value
-  const region = p.region || '广西'
-  const name = p.title.replace(/[区域公用品牌|农产品品牌|农业企业品牌]/g, '').trim()
+// ---- 订单分布：图例 ----
+type LegendKey = 'green' | 'orange' | 'blue' | 'purple' | 'red'
+
+interface LegendItem {
+  key: LegendKey
+  label: string
+  dot: string
+  visible: boolean
+}
+
+const legends = ref<LegendItem[]>([
+  { key: 'green', label: '1-99 单', dot: '#22C55E', visible: true },
+  { key: 'orange', label: '100-999 单', dot: '#EA580C', visible: true },
+  { key: 'blue', label: '1000-4999 单', dot: '#1D4ED8', visible: true },
+  { key: 'purple', label: '5000-9999 单', dot: '#5B21B6', visible: true },
+  { key: 'red', label: '10000-99999 单', dot: '#991B1B', visible: false }
+])
+
+interface Bubble {
+  x: number
+  y: number
+  size: number
+  color: string
+  value: string
+  cat: LegendKey
+}
+
+// 气泡坐标 = 设计稿气泡组(200, 8) + 组内位置
+const BUBBLES: Bubble[] = [
+  // red 10000单 90px
+  { x: 725, y: 492, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
+  { x: 382, y: 416, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
+  { x: 465, y: 603, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
+  { x: 514, y: 507, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
+  { x: 349, y: 522, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
+  { x: 425, y: 486, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
+  // blue 4999 70px
+  { x: 674, y: 282, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
+  { x: 596, y: 390, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
+  { x: 674, y: 387, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
+  { x: 682, y: 564, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
+  { x: 520, y: 399, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
+  { x: 925, y: 547, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
+  // purple 9999 80px
+  { x: 808, y: 315, size: 80, color: 'var(--color-chart-purple-80)', value: '9999', cat: 'purple' },
+  { x: 741, y: 284, size: 80, color: 'var(--color-chart-purple-80)', value: '9999', cat: 'purple' },
+  { x: 752, y: 572, size: 80, color: 'var(--color-chart-purple-80)', value: '9999', cat: 'purple' },
+  // orange 999 60px
+  { x: 503, y: 329, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
+  { x: 200, y: 132, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
+  { x: 425, y: 8, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
+  { x: 371, y: 27, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
+  // green 99 50px
+  { x: 478, y: 447, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 554, y: 282, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 571, y: 459, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 786, y: 390, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 836, y: 370, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 225, y: 13, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 351, y: 86, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 298, y: 34, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
+  { x: 293, y: 134, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' }
+]
+
+const bubbles = ref<Bubble[]>(BUBBLES)
+
+const visibleBubbles = computed(() =>
+  bubbles.value.filter(b => legends.value.find(l => l.key === b.cat)?.visible)
+)
+
+function toggleLegend(index: number) {
+  legends.value[index].visible = !legends.value[index].visible
+  renderMarkers()
+}
+
+// ---- 订单分布：Leaflet 真实地图 ----
+const mapEl = ref<HTMLDivElement | null>(null)
+let map: L.Map | null = null
+let markerLayer: L.LayerGroup | null = null
+
+// 设计稿地图容器 1200×640 线性映射到广西经纬度范围
+const MAP_WIDTH = 1200
+const LngMin = 104.5
+const LngMax = 112
+const LatMin = 20.9
+const LatMax = 26.4
+
+function toLatLng(x: number, y: number): [number, number] {
+  const lng = LngMin + (x / MAP_WIDTH) * (LngMax - LngMin)
+  const lat = LatMax - (y / 640) * (LatMax - LatMin)
+  return [lat, lng]
+}
+
+function renderMarkers() {
+  if (!map) return
+  if (markerLayer) {
+    map.removeLayer(markerLayer)
+    markerLayer = null
+  }
+  const layer = L.layerGroup()
+  visibleBubbles.value.forEach(b => {
+    const [lat, lng] = toLatLng(b.x, b.y)
+    const size = b.size + 16 + 4 // 内层数值区 + padding 8×2 + border 2×2
+    const icon = L.divIcon({
+      className: 'detail-map-icon',
+      html: `<div class="map-bubble" style="width:${size}px;height:${size}px;background-color:${b.color};">
+        <div class="bubble-value" style="width:${b.size}px;height:${b.size}px;">
+          <span class="bubble-num">${b.value}</span><span class="bubble-unit">单</span>
+        </div>
+      </div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2]
+    })
+    const marker = L.marker([lat, lng], { icon })
+    marker.on('mouseover', () => {
+      hoveredBubble.value = b
+      updateTooltipPos()
+    })
+    marker.on('mouseout', () => {
+      hoveredBubble.value = null
+    })
+    marker.addTo(layer)
+  })
+  markerLayer = layer
+  layer.addTo(map)
+}
+
+function initMap() {
+  if (!mapEl.value || map) return
+  map = L.map(mapEl.value, {
+    center: [23.65, 108.3], // 广西中心
+    zoom: 7, // 放大到广西区内
+    zoomSnap: 0.5,
+    scrollWheelZoom: false
+  })
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }).addTo(map)
+  map.on('move zoom', updateTooltipPos)
+  renderMarkers()
+  window.addEventListener('resize', onMapResize)
+}
+
+function onMapResize() {
+  if (map) map.invalidateSize()
+}
+
+onMounted(initMap)
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onMapResize)
+  if (map) {
+    map.remove()
+    map = null
+    markerLayer = null
+  }
+})
+
+// ---- 订单分布：悬停详情 ----
+const TOOLTIP_WIDTH = 560
+const TOOLTIP_HEIGHT = 150
+
+const hoveredBubble = ref<Bubble | null>(null)
+const tooltipPos = ref({ left: 0, top: 0 })
+
+// 根据气泡在真实地图容器中的实时位置定位弹窗（气泡上方居中）
+function updateTooltipPos() {
+  const b = hoveredBubble.value
+  if (!b || !map) return
+  const [lat, lng] = toLatLng(b.x, b.y)
+  const point = map.latLngToContainerPoint([lat, lng])
+  const size = map.getSize()
+  tooltipPos.value = {
+    left: Math.max(0, Math.min(point.x - TOOLTIP_WIDTH / 2, size.x - TOOLTIP_WIDTH)),
+    top: Math.max(0, point.y - b.size / 2 - TOOLTIP_HEIGHT)
+  }
+}
+
+// 悬停详情 mock 数据：由设计稿示例（4999 单 → 56,330.20 元 / 1,020.50 公斤）推导单均价与单重，
+// 悬停不同气泡时按气泡订单数动态计算
+const AMOUNT_PER_ORDER = 56330.2 / 4999
+const WEIGHT_PER_ORDER = 1020.5 / 4999
+
+function formatMoney(n: number) {
+  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+const hoveredStats = computed(() => {
+  const orders = hoveredBubble.value ? Number(hoveredBubble.value.value) : 4999
   return {
-    company: `${region}${name.slice(0, 2)}农业科技有限公司`,
-    contact: '陈经理',
-    phone: '0771-5812xxx',
-    mobile: '139 7886 9xxx',
-    address: `广西${region}${name}产业园区A区1号`,
-    email: 'info@' + name.slice(0, 2) + 'agri.cn'
+    orders: orders.toLocaleString('en-US'),
+    amount: formatMoney(orders * AMOUNT_PER_ORDER),
+    weight: formatMoney(orders * WEIGHT_PER_ORDER)
   }
 })
 
-function openContactModal() {
-  showContactModal.value = true
+// ---- 订单记录 ----
+interface OrderRecord {
+  id: string
+  time: string
+  product: string
+  totalAmount: number
+  unitPrice: number
+  weight: number
+  purchaser: string
+  purchaserName: string
+  sellerName: string
 }
 
-function openPurchaseModal() {
-  showPurchaseModal.value = true
+// 生成 200 条 mock 订单记录
+const PURCHASERS = [
+  '浦北县来好运业有限公司',
+  '广西中皮健康产业有限公司',
+  '广西浦北县桂柑健康产业...',
+  '浦北县桂龙农产品购销部',
+  '广西陈皮王农业开发有限公司'
+]
+const PURCHASER_NAMES = ['陈肇鑫', '陈肇锟', '陈妹凤', '陈启威', '龙波', '吴成娟', '李青梅']
+const SELLER_NAMES = ['吴成娟', '余传祥', '吴福明', '吴朝兰', '黄荣', '谭彩明', '李青梅', '吴远志', '赵传作', '吴伟军', '王秀英', '刘建国']
+
+function pad(n: number, len = 2): string {
+  return String(n).padStart(len, '0')
 }
 
-// 是否有电商销售链接
-const hasSalesLink = computed(() => !!product.value.salesLink)
+function genOrderRecords(count: number): OrderRecord[] {
+  const records: OrderRecord[] = []
+  // 基准时间：2026-08-04 15:10:21，逐条递减分钟
+  const baseTime = new Date('2026-08-04T15:10:21+08:00').getTime()
+  for (let i = 0; i < count; i++) {
+    const unitPrice = Math.random() < 0.7 ? 1.0 : 0.5
+    const weight = Math.round(Math.random() * 1450 + 50)
+    const totalAmount = +(weight * unitPrice).toFixed(2)
+    const time = new Date(baseTime - i * 3 * 60 * 1000) // 每条间隔 3 分钟
+    const t = time
+    const timeStr = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`
+    records.push({
+      id: 'GG' + (2084537408207798272n + BigInt(i)).toString(),
+      time: timeStr,
+      product: '柑果',
+      totalAmount,
+      unitPrice,
+      weight,
+      purchaser: PURCHASERS[i % PURCHASERS.length],
+      purchaserName: PURCHASER_NAMES[i % PURCHASER_NAMES.length],
+      sellerName: SELLER_NAMES[i % SELLER_NAMES.length]
+    })
+  }
+  return records
+}
 
-// 电商网站完整 URL（补全协议和域名）
-const salesUrl = computed(() => {
-  const link = product.value.salesLink
-  if (!link) return ''
-  if (link.startsWith('http')) return link
-  // 相对路径，补全当前域名
-  return window.location.origin + link
+const orderRecords = ref<OrderRecord[]>(genOrderRecords(200))
+
+const orderColumns = [
+  { key: 'id', label: '订单编号', width: '180px' },
+  { key: 'time', label: '订单时间', width: '160px' },
+  { key: 'product', label: '商品', width: '80px' },
+  { key: 'totalAmount', label: '总金额(元)', width: '120px' },
+  { key: 'unitPrice', label: '单价(元)', width: '100px' },
+  { key: 'weight', label: '重量(斤)', width: '100px' },
+  { key: 'purchaser', label: '收购企业', width: '200px' },
+  { key: 'purchaserName', label: '收购员', width: '100px' },
+  { key: 'sellerName', label: '卖果人', width: '100px' }
+]
+
+// ---- 订单记录：分页 ----
+const PAGE_SIZE = 30
+const currentPage = ref(1)
+
+const totalCount = computed(() => orderRecords.value.length)
+const totalPages = computed(() => Math.max(1, Math.ceil(totalCount.value / PAGE_SIZE)))
+
+const pagedRecords = computed(() => {
+  const start = (currentPage.value - 1) * PAGE_SIZE
+  return orderRecords.value.slice(start, start + PAGE_SIZE)
 })
 
-function closeModals() {
-  showContactModal.value = false
-  showPurchaseModal.value = false
+// 页码按钮：始终展示首页与末页，当前页前后各 2 页，其余用省略号
+const pageNumbers = computed<(number | '...')[]>(() => {
+  const cur = currentPage.value
+  const total = totalPages.value
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1)
+  }
+  const pages: (number | '...')[] = [1]
+  const left = Math.max(2, cur - 1)
+  const right = Math.min(total - 1, cur + 1)
+  if (left > 2) pages.push('...')
+  for (let i = left; i <= right; i++) pages.push(i)
+  if (right < total - 1) pages.push('...')
+  pages.push(total)
+  return pages
+})
+
+function goToPage(page: number) {
+  if (page < 1 || page > totalPages.value || page === currentPage.value) return
+  currentPage.value = page
 }
 
-function goToStore() {
-  const link = product.value.salesLink
-  if (link) {
-    window.open(link, '_blank')
-  }
-  closeModals()
+function prevPage() {
+  goToPage(currentPage.value - 1)
+}
+
+function nextPage() {
+  goToPage(currentPage.value + 1)
 }
 </script>
 
@@ -79,228 +341,215 @@ function goToStore() {
     <div class="detail-body">
       <!-- 面包屑导航 -->
       <div class="detail-breadcrumb">
-        <div class="breadcrumb-content">
+        <div class="breadcrumb-row">
           <button class="back-btn" @click="router.go(-1)" aria-label="后退">
-            <img src="/icons/arrow-left.svg" class="back-btn-icon" alt="">
+            <img src="/icons/arrow-back-green.svg" class="back-btn-icon" alt="">
           </button>
-          <router-link to="/" class="breadcrumb-item">首页</router-link>
-          <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-          <router-link :to="{ name: 'Home', query: { tab: categoryTabIndex } }" class="breadcrumb-item">{{ product.category }}</router-link>
-          <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-          <span class="breadcrumb-item breadcrumb-current">{{ product.title }}</span>
+          <div class="breadcrumb-items">
+            <router-link to="/" class="breadcrumb-item">首页</router-link>
+            <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
+            <router-link :to="{ name: 'Home', query: { tab: categoryTabIndex } }" class="breadcrumb-item">{{ product.category }}</router-link>
+            <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
+            <span class="breadcrumb-item breadcrumb-current">{{ product.title }}</span>
+          </div>
         </div>
       </div>
 
-      <!-- 主图 + 购买信息 -->
-      <div class="detail-hero">
-        <div class="detail-hero-inner">
-          <div class="detail-main-image">
-            <img :src="product.image" :alt="product.title">
+      <!-- 信息 -->
+      <div class="detail-info-section">
+        <h1 class="detail-product-title">{{ product.title }}</h1>
+
+        <!-- 统计 -->
+        <div class="detail-stats">
+          <div class="stat-item">
+            <span class="stat-label">总金额 (单)</span>
+            <span class="stat-value">4999</span>
           </div>
-          <div class="detail-info">
-            <h1 class="detail-product-title">{{ product.title }}</h1>
-            <div class="detail-meta">
-              <div class="detail-meta-row">
-                <span class="meta-label">品牌类别：</span>
-                <span class="meta-value">{{ product.category }}</span>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-label">总重量 (元)</span>
+            <span class="stat-value">56,330.20</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-label">总开票金额 (公斤)</span>
+            <span class="stat-value">256,330.20</span>
+          </div>
+        </div>
+
+        <!-- 产品信息 -->
+        <div class="detail-product">
+          <div class="product-main-image">
+            <img src="/images/detail-product-main-211962.png" :alt="product.title">
+          </div>
+          <div class="product-info">
+            <div class="info-row">
+              <span class="info-label">品牌类别：</span>
+              <span class="info-value">{{ product.category }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">所属地区：</span>
+              <span class="info-value">{{ product.region }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">主营产品：</span>
+              <span class="info-value">{{ product.mainProduct }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">更新日期：</span>
+              <span class="info-value">{{ product.updateDate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单分布 -->
+      <div class="detail-orders">
+        <!-- 筛选栏 -->
+        <div class="orders-filter">
+          <h2 class="orders-title">订单分布</h2>
+          <div class="orders-toolbar">
+            <div class="segmented-control">
+              <button
+                v-for="(range, i) in timeRanges"
+                :key="range"
+                class="segment-btn"
+                :class="{ 'segment-btn-active': activeRange === i }"
+                @click="activeRange = i"
+              >{{ range }}</button>
+            </div>
+            <button class="date-range-picker" type="button">
+              <svg class="dp-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1.5" y="2" width="13" height="12" rx="1.5" fill="#101215"/>
+                <rect x="3" y="0.5" width="1.6" height="3" rx="0.8" fill="#101215"/>
+                <rect x="11.4" y="0.5" width="1.6" height="3" rx="0.8" fill="#101215"/>
+              </svg>
+              <span class="dp-range">
+                <span class="dp-date">2025-04-01</span>
+                <span class="dp-separator">~</span>
+                <span class="dp-date">2025-04-30</span>
+              </span>
+              <svg class="dp-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3.5 6.5 8 11l4.5-4.5" stroke="#101215" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- 地图 -->
+        <div class="orders-map">
+          <div ref="mapEl" class="map-canvas"></div>
+
+          <!-- 悬停详情（悬停气泡时显示） -->
+          <div v-show="hoveredBubble" class="map-tooltip" :style="{ left: tooltipPos.left + 'px', top: tooltipPos.top + 'px' }">
+            <div class="tooltip-stats">
+              <div class="tooltip-stat">
+                <span class="tooltip-label">订单数 (单)</span>
+                <span class="tooltip-value">{{ hoveredStats.orders }}</span>
               </div>
-              <div class="detail-meta-row">
-                <span class="meta-label">所属地区：</span>
-                <span class="meta-value">{{ product.region }}</span>
+              <div class="tooltip-divider"></div>
+              <div class="tooltip-stat">
+                <span class="tooltip-label">订单总金额 (元)</span>
+                <span class="tooltip-value">{{ hoveredStats.amount }}</span>
               </div>
-              <div class="detail-meta-row">
-                <span class="meta-label">主营产品：</span>
-                <span class="meta-value">{{ product.mainProduct }}</span>
-              </div>
-              <div class="detail-meta-row">
-                <span class="meta-label">更新日期：</span>
-                <span class="meta-value">{{ product.updateDate }}</span>
+              <div class="tooltip-divider"></div>
+              <div class="tooltip-stat">
+                <span class="tooltip-label">重量 (公斤)</span>
+                <span class="tooltip-value">{{ hoveredStats.weight }}</span>
               </div>
             </div>
-            <div class="detail-purchase">
-              <span class="purchase-section-title">购买方式</span>
-              <button class="purchase-btn purchase-btn-primary" @click="openContactModal">货源联系方式</button>
-              <button class="purchase-btn purchase-btn-outline" @click="openPurchaseModal">浏览电商网站</button>
+            <svg class="tooltip-arrow" width="30" height="15" viewBox="0 0 30 15" aria-hidden="true">
+              <path d="M0 0h30L15 15z" fill="#fff"/>
+            </svg>
+          </div>
+
+          <!-- 图例栏 -->
+          <div class="map-legend">
+            <div v-for="(item, i) in legends" :key="item.key" class="legend-item">
+              <span class="legend-dot" :style="{ backgroundColor: item.dot }"></span>
+              <span class="legend-text">{{ item.label }}</span>
+              <button class="legend-toggle" type="button" :aria-label="item.visible ? '隐藏' : '显示'" @click="toggleLegend(i)">
+                <svg v-if="item.visible" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M10 4C4.5 4 1.5 10 1.5 10s3 6 8.5 6 8.5-6 8.5-6-3-6-8.5-6z" fill="rgba(16,18,21,0.5)"/>
+                  <circle cx="10" cy="10" r="2.2" fill="#fff"/>
+                </svg>
+                <template v-else>
+                  <!-- 隐藏状态：设计稿 隐藏-面性 图标（fill-opacity 0.3，颜色更浅） -->
+                  <img class="legend-eye-off legend-eye-off-eye" src="/icons/icon-eye-off-1.svg" alt="">
+                  <img class="legend-eye-off legend-eye-off-line" src="/icons/icon-eye-off-2.svg" alt="">
+                </template>
+              </button>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 产品介绍 -->
-      <div class="detail-description">
-        <div class="detail-description-inner">
-          <h2 class="description-title">产品介绍</h2>
-          <p class="description-text">{{ product.description }}</p>
-        </div>
-      </div>
+        <!-- 订单记录 -->
+        <div class="orders-records">
+          <h2 class="records-title">订单记录</h2>
+          <div class="records-table-wrapper">
+            <table class="records-table">
+              <thead>
+                <tr>
+                  <th v-for="col in orderColumns" :key="col.key" :style="{ width: col.width }">
+                    {{ col.label }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="record in pagedRecords" :key="record.id">
+                  <td class="cell-id">{{ record.id }}</td>
+                  <td>{{ record.time }}</td>
+                  <td>{{ record.product }}</td>
+                  <td class="cell-amount">{{ record.totalAmount.toFixed(2) }}</td>
+                  <td class="cell-mask">***</td>
+                  <td>{{ record.weight.toFixed(2) }}</td>
+                  <td>{{ record.purchaser }}</td>
+                  <td>{{ record.purchaserName }}</td>
+                  <td>{{ record.sellerName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <!-- 生长特性 -->
-      <div v-if="product.growthCharacteristics" class="detail-description">
-        <div class="detail-description-inner">
-          <h2 class="description-title">生长特性</h2>
-          <p class="description-text">{{ product.growthCharacteristics }}</p>
-        </div>
-      </div>
-
-      <!-- 营养价值 -->
-      <div v-if="product.nutritionalValue" class="detail-description">
-        <div class="detail-description-inner">
-          <h2 class="description-title">营养价值</h2>
-          <p class="description-text">{{ product.nutritionalValue }}</p>
-        </div>
-      </div>
-
-      <!-- 种植技术 -->
-      <div v-if="product.cultivationTech" class="detail-description">
-        <div class="detail-description-inner">
-          <h2 class="description-title">种植技术</h2>
-          <p class="description-text">{{ product.cultivationTech }}</p>
-        </div>
-      </div>
-
-      <!-- 市场应用 -->
-      <div v-if="product.marketApplication" class="detail-description">
-        <div class="detail-description-inner">
-          <h2 class="description-title">市场应用</h2>
-          <p class="description-text">{{ product.marketApplication }}</p>
-        </div>
-      </div>
-
-      <!-- 额外段落 -->
-      <div v-for="(section, index) in product.extraSections" :key="'extra-' + index" class="detail-description">
-        <div class="detail-description-inner">
-          <h2 class="description-title">{{ section.title }}</h2>
-          <p class="description-text">{{ section.content }}</p>
-          <p v-if="section.source" class="description-source">来源：{{ section.source }}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 弹窗遮罩层 -->
-    <div v-if="showContactModal || showPurchaseModal" class="detail-overlay" @click="closeModals"></div>
-
-    <!-- 货源联系方式弹窗 -->
-    <div v-if="showContactModal" class="detail-modal">
-      <div class="detail-modal-header">
-        <div class="detail-modal-title">{{ product.title }}</div>
-        <button class="detail-modal-close" @click="closeModals" aria-label="关闭">
-          <img src="/icons/close-icon.svg" alt="关闭">
-        </button>
-      </div>
-      <div class="detail-contact-card">
-        <div class="detail-contact-row">
-          <svg class="detail-contact-icon" width="32" height="32" viewBox="0 0 20 20" fill="none">
-            <rect x="3" y="2" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 6h14" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M7 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <div class="detail-contact-content">
-            <span class="detail-contact-label">企业名称</span>
-            <span class="detail-contact-value">{{ contactInfo.company }}</span>
+          <!-- 分页控件 -->
+          <div class="records-pagination">
+            <span class="pagination-total">共 {{ totalCount }} 条</span>
+            <div class="pagination-controls">
+              <button
+                class="page-btn page-nav"
+                type="button"
+                :disabled="currentPage === 1"
+                @click="prevPage"
+                aria-label="上一页"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M9 2 4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <template v-for="(page, idx) in pageNumbers" :key="idx">
+                <span v-if="page === '...'" class="page-ellipsis">…</span>
+                <button
+                  v-else
+                  class="page-btn"
+                  type="button"
+                  :class="{ 'page-btn-active': page === currentPage }"
+                  @click="goToPage(page)"
+                >{{ page }}</button>
+              </template>
+              <button
+                class="page-btn page-nav"
+                type="button"
+                :disabled="currentPage === totalPages"
+                @click="nextPage"
+                aria-label="下一页"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="detail-contact-row">
-          <svg class="detail-contact-icon" width="32" height="32" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="5.5" r="3.5" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 18c0-3.5 3.5-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <div class="detail-contact-content">
-            <span class="detail-contact-label">联系人</span>
-            <span class="detail-contact-value">{{ contactInfo.contact }}</span>
-          </div>
-        </div>
-        <div class="detail-contact-row">
-          <svg class="detail-contact-icon" width="32" height="32" viewBox="0 0 20 20" fill="none">
-            <path d="M17.5 14.5v2a1.5 1.5 0 01-1.5 1.5A13 13 0 012 4a1.5 1.5 0 011.5-1.5h2A1.5 1.5 0 017 3.5c.12.93.4 1.83.82 2.68a1.5 1.5 0 01-.34 1.63l-.7.7a10.5 10.5 0 005 5l.7-.7a1.5 1.5 0 011.63-.34c.85.42 1.75.7 2.68.82A1.5 1.5 0 0117.5 14.5z" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <div class="detail-contact-content">
-            <span class="detail-contact-label">联系电话</span>
-            <span class="detail-contact-value">{{ contactInfo.phone }}</span>
-          </div>
-        </div>
-        <div class="detail-contact-row">
-          <svg class="detail-contact-icon" width="32" height="32" viewBox="0 0 20 20" fill="none">
-            <path d="M17.5 14.5v2a1.5 1.5 0 01-1.5 1.5A13 13 0 012 4a1.5 1.5 0 011.5-1.5h2A1.5 1.5 0 017 3.5c.12.93.4 1.83.82 2.68a1.5 1.5 0 01-.34 1.63l-.7.7a10.5 10.5 0 005 5l.7-.7a1.5 1.5 0 011.63-.34c.85.42 1.75.7 2.68.82A1.5 1.5 0 0117.5 14.5z" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M14 2.5a4 4 0 014 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M14 5.5a1 1 0 011 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <div class="detail-contact-content">
-            <span class="detail-contact-label">手机号码</span>
-            <span class="detail-contact-value">{{ contactInfo.mobile }}</span>
-          </div>
-        </div>
-        <div class="detail-contact-row">
-          <svg class="detail-contact-icon" width="32" height="32" viewBox="0 0 20 20" fill="none">
-            <rect x="2" y="3.5" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M2 7l8 5 8-5" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <div class="detail-contact-content">
-            <span class="detail-contact-label">电子邮箱</span>
-            <span class="detail-contact-value">{{ contactInfo.email }}</span>
-          </div>
-        </div>
-        <div class="detail-contact-row">
-          <svg class="detail-contact-icon" width="32" height="32" viewBox="0 0 20 20" fill="none">
-            <path d="M10 18s6-5.5 6-9.5a6 6 0 10-12 0c0 4 6 9.5 6 9.5z" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="10" cy="8.5" r="2" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <div class="detail-contact-content">
-            <span class="detail-contact-label">公司地址</span>
-            <span class="detail-contact-value">{{ contactInfo.address }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="detail-modal-footer">
-        <button class="detail-modal-btn detail-modal-btn-outline" @click="closeModals">关闭</button>
-        <button class="detail-modal-btn detail-modal-btn-primary">立刻联系</button>
-      </div>
-    </div>
-
-    <!-- 浏览电商网站弹窗 -->
-    <div v-if="showPurchaseModal" class="detail-modal">
-      <div class="detail-modal-header">
-        <div class="detail-modal-title">{{ product.title }}</div>
-        <button class="detail-modal-close" @click="closeModals" aria-label="关闭">
-          <img src="/icons/close-icon.svg" alt="关闭">
-        </button>
-      </div>
-      <!-- 有电商链接：嵌入网站预览 -->
-      <template v-if="hasSalesLink">
-        <div class="detail-website-preview">
-          <img
-            class="detail-website-screenshot"
-            loading="lazy" src="/images/chenpitong-screenshot.webp"
-            alt="陈皮通电商网站截图"
-          >
-        </div>
-        <a class="detail-website-url" :href="salesUrl" target="_blank">
-          <span class="detail-url-label">网址：</span>
-          <span class="detail-url-value">{{ salesUrl }}</span>
-        </a>
-      </template>
-
-      <!-- 无电商链接：建设中空状态 -->
-      <template v-else>
-        <div class="detail-website-empty">
-          <svg class="detail-empty-icon" width="64" height="64" viewBox="0 0 64 64" fill="none">
-            <rect x="8" y="12" width="48" height="40" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
-            <path d="M8 20h48" stroke="currentColor" stroke-width="2"/>
-            <circle cx="14" cy="16.5" r="1.5" fill="currentColor"/>
-            <circle cx="19" cy="16.5" r="1.5" fill="currentColor"/>
-            <circle cx="24" cy="16.5" r="1.5" fill="currentColor"/>
-            <path d="M26 36l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M38 34l4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M26 42l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="detail-empty-title">电商网站正在建设中</div>
-          <div class="detail-empty-desc">该品牌电商网站正在筹备中，敬请期待</div>
-        </div>
-      </template>
-
-      <div class="detail-modal-footer">
-        <button class="detail-modal-btn detail-modal-btn-outline" @click="closeModals">关闭</button>
-        <button v-if="hasSalesLink" class="detail-modal-btn detail-modal-btn-primary" @click="goToStore">前往</button>
       </div>
     </div>
 

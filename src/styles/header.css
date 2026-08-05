@@ -21,46 +21,30 @@
 
 .header-logo {
   position: absolute;
+  top: 0;
   left: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px 32px 40px;
+  padding: 8px 16px 40px;
   gap: 10px;
-  height: 75px;
+  background-color: var(--color-brand-green);
+  border-bottom: 10px solid var(--color-brand-lime-light);
 }
 
-.header-ribbon {
-  position: absolute;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 143px;
-  height: 179px;
+.header-logo-mark {
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+  display: block;
 }
 
-.header:not(.header-scrolled) .header-logo-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding-top: 80px;
-}
-
-.header-logo-icon {
-  width: 79px;
-  height: 80px;
-}
-
-.header-logo-text {
-  font-family: 'MiSans', sans-serif;
-  font-size: 20px;
-  font-weight: 630;
-  color: #FFFFFF;
-  text-align: center;
+.header-logo-type {
+  width: 89px;
+  height: 25px;
+  flex-shrink: 0;
+  display: block;
 }
 
 .header-language {
@@ -361,43 +345,26 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* ===== 首页 Banner 右上角搜索框 ===== */
+/* ===== 首页 Banner 右上角搜索按钮（与滚动后搜索按钮样式一致） ===== */
 
 .header-banner-search {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  width: 200px;
-  height: 48px;
-  background-color: var(--color-bg-white-70);
-  border-radius: var(--radius-full);
-  padding: 0 var(--spacing-lg);
-  margin-left: auto;
-  flex-shrink: 0;
+  justify-content: center;
+  width: 80px;
+  height: 100%;
+  gap: 10px;
+  background-color: var(--color-brand-lime);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .header-banner-search-icon {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
-  cursor: pointer;
-  color: var(--color-text-secondary);
-}
-
-.header-banner-search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-family: var(--font-family-sans);
-  font-size: var(--font-size-base);
-  font-weight: 330;
-  color: var(--color-text-secondary);
-  background: transparent;
-  min-width: 0;
-  cursor: pointer;
-}
-
-.header-banner-search-input::placeholder {
-  color: var(--color-text-secondary);
+  display: block;
 }
