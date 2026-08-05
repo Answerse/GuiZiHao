@@ -27,6 +27,38 @@ const categoryTabIndex = computed(() => categoryTabMap[product.value.category] ?
 const timeRanges = ['近 7 日', '近 30 天', '近 3 月', '近 1 年', '自定义']
 const activeRange = ref(1)
 
+// 各时间范围对应的日期范围（用于日期选择器展示）
+const rangeDates = ref([
+  { start: '2025-04-24', end: '2025-04-30' },
+  { start: '2025-04-01', end: '2025-04-30' },
+  { start: '2025-02-01', end: '2025-04-30' },
+  { start: '2024-05-01', end: '2025-04-30' },
+  { start: '2025-04-01', end: '2025-04-30' }
+])
+
+const shownRangeDates = computed(() => {
+  const i = Math.min(activeRange.value, rangeDates.value.length - 1)
+  return rangeDates.value[i]
+})
+
+// 自定义日期下拉
+const showDatePicker = ref(false)
+const customStart = ref('2025-04-01')
+const customEnd = ref('2025-04-30')
+
+function toggleDatePicker() {
+  showDatePicker.value = !showDatePicker.value
+}
+
+function applyCustomRange() {
+  if (!customStart.value || !customEnd.value) return
+  rangeDates.value[4] = { start: customStart.value, end: customEnd.value }
+  showDatePicker.value = false
+  activeRange.value = 4
+  drillStack.value = []
+  renderMarkers()
+}
+
 // ---- 订单分布：图例 ----
 type LegendKey = 'green' | 'orange' | 'blue' | 'purple' | 'red'
 
@@ -42,7 +74,7 @@ const legends = ref<LegendItem[]>([
   { key: 'orange', label: '100-999 单', dot: '#EA580C', visible: true },
   { key: 'blue', label: '1000-4999 单', dot: '#1D4ED8', visible: true },
   { key: 'purple', label: '5000-9999 单', dot: '#5B21B6', visible: true },
-  { key: 'red', label: '10000-99999 单', dot: '#991B1B', visible: false }
+  { key: 'red', label: '10000-99999 单', dot: '#991B1B', visible: true }
 ])
 
 interface Bubble {
@@ -54,55 +86,111 @@ interface Bubble {
   cat: LegendKey
 }
 
-// 气泡坐标 = 设计稿气泡组(200, 8) + 组内位置
-const BUBBLES: Bubble[] = [
-  // red 10000单 90px
-  { x: 725, y: 492, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
-  { x: 382, y: 416, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
-  { x: 465, y: 603, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
-  { x: 514, y: 507, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
-  { x: 349, y: 522, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
-  { x: 425, y: 486, size: 90, color: 'var(--color-chart-red-80)', value: '10000', cat: 'red' },
-  // blue 4999 70px
-  { x: 674, y: 282, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
-  { x: 596, y: 390, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
-  { x: 674, y: 387, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
-  { x: 682, y: 564, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
-  { x: 520, y: 399, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
-  { x: 925, y: 547, size: 70, color: 'var(--color-chart-blue-80)', value: '4999', cat: 'blue' },
-  // purple 9999 80px
-  { x: 808, y: 315, size: 80, color: 'var(--color-chart-purple-80)', value: '9999', cat: 'purple' },
-  { x: 741, y: 284, size: 80, color: 'var(--color-chart-purple-80)', value: '9999', cat: 'purple' },
-  { x: 752, y: 572, size: 80, color: 'var(--color-chart-purple-80)', value: '9999', cat: 'purple' },
-  // orange 999 60px
-  { x: 503, y: 329, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
-  { x: 200, y: 132, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
-  { x: 425, y: 8, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
-  { x: 371, y: 27, size: 60, color: 'var(--color-chart-orange-80)', value: '999', cat: 'orange' },
-  // green 99 50px
-  { x: 478, y: 447, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 554, y: 282, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 571, y: 459, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 786, y: 390, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 836, y: 370, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 225, y: 13, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 351, y: 86, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 298, y: 34, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' },
-  { x: 293, y: 134, size: 50, color: 'var(--color-chart-green-80)', value: '99', cat: 'green' }
+type BubbleNode = Bubble & { children?: BubbleNode[] }
+
+// ---- 多层级气泡树：子节点数值之和恒等于父节点 ----
+// 数值 → 图例类别
+function catForValue(v: number): LegendKey {
+  if (v >= 10000) return 'red'
+  if (v >= 5000) return 'purple'
+  if (v >= 1000) return 'blue'
+  if (v >= 100) return 'orange'
+  return 'green'
+}
+
+function colorForCat(cat: LegendKey): string {
+  const map: Record<LegendKey, string> = {
+    red: 'var(--color-chart-red-80)',
+    purple: 'var(--color-chart-purple-80)',
+    blue: 'var(--color-chart-blue-80)',
+    orange: 'var(--color-chart-orange-80)',
+    green: 'var(--color-chart-green-80)'
+  }
+  return map[cat]
+}
+
+function sizeForCat(cat: LegendKey): number {
+  const map: Record<LegendKey, number> = { red: 90, purple: 80, blue: 70, orange: 60, green: 50 }
+  return map[cat]
+}
+
+// 递归构建气泡树：父值按 weights 拆分给子节点，子节点之和恒等于父值
+function buildNode(
+  x: number,
+  y: number,
+  value: number,
+  weights: number[],
+  radius: number,
+  depth: number
+): BubbleNode {
+  const cat = catForValue(value)
+  const node: BubbleNode = {
+    x,
+    y,
+    size: sizeForCat(cat),
+    color: colorForCat(cat),
+    value: String(value),
+    cat
+  }
+  if (depth > 0 && weights.length) {
+    const sum = weights.reduce((a, b) => a + b, 0)
+    node.children = weights.map((w, i) => {
+      const childValue = Math.round((value * w) / sum)
+      const angle = (i / weights.length) * Math.PI * 2 + 0.4
+      const dist = radius
+      return buildNode(
+        x + Math.cos(angle) * dist,
+        y + Math.sin(angle) * dist,
+        childValue,
+        [2, 1],
+        radius * 0.45,
+        depth - 1
+      )
+    })
+    // 尾差修正，保证子节点之和 = 父节点数值
+    const childSum = node.children.reduce((a, c) => a + Number(c.value), 0)
+    const last = node.children[node.children.length - 1]
+    if (last) last.value = String(Number(last.value) + (value - childSum))
+  }
+  return node
+}
+
+// 各时间范围订单量系数（相对近 30 天）
+const RANGE_RATIO = [0.3, 1, 2.2, 4, 1]
+
+// 树根定义：坐标、基准值、子节点权重（父值按权重拆分，和=父值）
+const TREE_ROOTS: { x: number; y: number; value: number; weights: number[] }[] = [
+  { x: 440, y: 260, value: 32000, weights: [3, 3, 2, 2] },
+  { x: 560, y: 330, value: 45000, weights: [4, 3, 3, 2, 3] },
+  { x: 680, y: 300, value: 28000, weights: [3, 2, 2, 2] },
+  { x: 610, y: 430, value: 35000, weights: [3, 3, 2, 2] },
+  { x: 380, y: 350, value: 18000, weights: [3, 2, 2] },
+  { x: 730, y: 380, value: 15000, weights: [3, 2, 2] }
 ]
 
-const bubbles = ref<Bubble[]>(BUBBLES)
+// 当前时间范围下的气泡树（随时间筛选联动）
+const BUBBLE_TREE = computed<BubbleNode[]>(() => {
+  const ratio = RANGE_RATIO[Math.min(activeRange.value, RANGE_RATIO.length - 1)]
+  return TREE_ROOTS.map(r => buildNode(r.x, r.y, Math.round(r.value * ratio), r.weights, 70, 2))
+})
 
-const visibleBubbles = computed(() =>
-  bubbles.value.filter(b => legends.value.find(l => l.key === b.cat)?.visible)
-)
+function selectRange(i: number) {
+  activeRange.value = i
+  if (i === 4) {
+    showDatePicker.value = true
+  } else {
+    showDatePicker.value = false
+    drillStack.value = []
+    renderMarkers()
+  }
+}
 
 function toggleLegend(index: number) {
   legends.value[index].visible = !legends.value[index].visible
   renderMarkers()
 }
 
-// ---- 订单分布：Leaflet 真实地图 ----
+// ---- 订单分布：Leaflet 真实地图（多层级下钻） ----
 const mapEl = ref<HTMLDivElement | null>(null)
 let map: L.Map | null = null
 let markerLayer: L.LayerGroup | null = null
@@ -120,15 +208,55 @@ function toLatLng(x: number, y: number): [number, number] {
   return [lat, lng]
 }
 
+// ---- 多层级气泡：zoom 越大层级越细 ----
+// 层级配置：minZoom 为该层级开始显示的缩放级别
+const BUBBLE_LEVELS = computed(() => {
+  const tree = BUBBLE_TREE.value
+  const level1 = tree.flatMap(r => r.children || [])
+  const level2 = level1.flatMap(n => n.children || [])
+  return [
+    { minZoom: 7, bubbles: tree },
+    { minZoom: 9, bubbles: level1 },
+    { minZoom: 11, bubbles: level2 }
+  ]
+})
+
+// 下钻退出阈值：第 1 级下钻（显示子圆点）缩放到低于 9 时退回根层，第 2 级（显示孙圆点）低于 10.5 退回第 1 级
+const DRILL_MIN_ZOOM = [9, 10.5]
+
+// 下钻路径：空数组 = 未下钻（按 zoom 显示对应层级）；非空 = 只显示路径顶端节点的子圆点
+const drillStack = ref<BubbleNode[]>([])
+
+// 未下钻时按缩放级别取对应层级的圆点
+function getLevelBubbles(zoom: number): BubbleNode[] {
+  let idx = 0
+  for (let i = 0; i < BUBBLE_LEVELS.value.length; i++) {
+    if (zoom >= BUBBLE_LEVELS.value[i].minZoom) idx = i
+  }
+  return BUBBLE_LEVELS.value[idx].bubbles
+}
+
+// 当前应显示的圆点：下钻后只显示该节点的子圆点（数值之和 = 父圆点，且不混入其他分支）
+const currentBubbles = computed<BubbleNode[]>(() => {
+  if (drillStack.value.length > 0) {
+    const parent = drillStack.value[drillStack.value.length - 1]
+    return parent.children || []
+  }
+  return getLevelBubbles(map ? map.getZoom() : 7)
+})
+
 function renderMarkers() {
   if (!map) return
   if (markerLayer) {
     map.removeLayer(markerLayer)
     markerLayer = null
   }
+  const levelBubbles = currentBubbles.value
   const layer = L.layerGroup()
-  visibleBubbles.value.forEach(b => {
+  levelBubbles.forEach(b => {
     const [lat, lng] = toLatLng(b.x, b.y)
+    // 仅显示图例中可见类别的圆点
+    if (!legends.value.find(l => l.key === b.cat)?.visible) return
     const size = b.size + 16 + 4 // 内层数值区 + padding 8×2 + border 2×2
     const icon = L.divIcon({
       className: 'detail-map-icon',
@@ -148,10 +276,32 @@ function renderMarkers() {
     marker.on('mouseout', () => {
       hoveredBubble.value = null
     })
+    marker.on('click', () => drillDown(b))
     marker.addTo(layer)
   })
   markerLayer = layer
   layer.addTo(map)
+}
+
+// 点击圆点：记录下钻路径，flyToBounds 缩放到包含所有下级圆点的区域
+function drillDown(bubble: BubbleNode) {
+  if (!map) return
+  const children = bubble.children
+  if (!children || !children.length) return // 已是最细层级
+  drillStack.value = [...drillStack.value, bubble]
+  hoveredBubble.value = null
+  const bounds = L.latLngBounds(children.map(c => toLatLng(c.x, c.y)))
+  map.flyToBounds(bounds, { padding: [50, 50], duration: 0.8 })
+}
+
+// 缩放结束：手动缩小到低于当前下钻层级所需缩放时，逐级退回上层
+function onZoomEnd() {
+  if (!map) return
+  const zoom = map.getZoom()
+  while (drillStack.value.length > 0 && zoom < DRILL_MIN_ZOOM[drillStack.value.length - 1]) {
+    drillStack.value = drillStack.value.slice(0, -1)
+  }
+  renderMarkers()
 }
 
 function initMap() {
@@ -160,13 +310,15 @@ function initMap() {
     center: [23.65, 108.3], // 广西中心
     zoom: 7, // 放大到广西区内
     zoomSnap: 0.5,
-    scrollWheelZoom: false
+    scrollWheelZoom: true,
+    zoomControl: true
   })
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map)
   map.on('move zoom', updateTooltipPos)
+  map.on('zoomend', onZoomEnd)
   renderMarkers()
   window.addEventListener('resize', onMapResize)
 }
@@ -175,9 +327,20 @@ function onMapResize() {
   if (map) map.invalidateSize()
 }
 
-onMounted(initMap)
+onMounted(() => {
+  initMap()
+  document.addEventListener('click', closeDatePicker)
+})
+
+function closeDatePicker(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  // 点击筛选栏内部（分段控件 / 日期选择器区域）时不关闭，便于切换/展开
+  if (target.closest('.orders-toolbar')) return
+  showDatePicker.value = false
+}
 
 onBeforeUnmount(() => {
+  document.removeEventListener('click', closeDatePicker)
   window.removeEventListener('resize', onMapResize)
   if (map) {
     map.remove()
@@ -359,29 +522,12 @@ function nextPage() {
       <div class="detail-info-section">
         <h1 class="detail-product-title">{{ product.title }}</h1>
 
-        <!-- 统计 -->
-        <div class="detail-stats">
-          <div class="stat-item">
-            <span class="stat-label">总金额 (单)</span>
-            <span class="stat-value">4999</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-label">总重量 (元)</span>
-            <span class="stat-value">56,330.20</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-label">总开票金额 (公斤)</span>
-            <span class="stat-value">256,330.20</span>
-          </div>
-        </div>
-
         <!-- 产品信息 -->
         <div class="detail-product">
           <div class="product-main-image">
-            <img src="/images/detail-product-main-211962.png" :alt="product.title">
+            <img :src="product.image" :alt="product.title">
           </div>
+          <div class="product-divider"></div>
           <div class="product-info">
             <div class="info-row">
               <span class="info-label">品牌类别：</span>
@@ -400,6 +546,29 @@ function nextPage() {
               <span class="info-value">{{ product.updateDate }}</span>
             </div>
           </div>
+          <div class="product-divider"></div>
+          <div class="product-actions">
+            <button class="product-action-btn product-action-btn--solid" type="button">货源联系方式</button>
+            <button class="product-action-btn product-action-btn--outline" type="button">去网点购买</button>
+          </div>
+        </div>
+
+        <!-- 统计 -->
+        <div class="detail-stats">
+          <div class="stat-item">
+            <span class="stat-label">总金额 (单)</span>
+            <span class="stat-value">4999</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-label">总重量 (元)</span>
+            <span class="stat-value">56,330.20</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-label">总开票金额 (公斤)</span>
+            <span class="stat-value">256,330.20</span>
+          </div>
         </div>
       </div>
 
@@ -415,24 +584,38 @@ function nextPage() {
                 :key="range"
                 class="segment-btn"
                 :class="{ 'segment-btn-active': activeRange === i }"
-                @click="activeRange = i"
+                @click="selectRange(i)"
               >{{ range }}</button>
             </div>
-            <button class="date-range-picker" type="button">
-              <svg class="dp-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <rect x="1.5" y="2" width="13" height="12" rx="1.5" fill="#101215"/>
-                <rect x="3" y="0.5" width="1.6" height="3" rx="0.8" fill="#101215"/>
-                <rect x="11.4" y="0.5" width="1.6" height="3" rx="0.8" fill="#101215"/>
-              </svg>
-              <span class="dp-range">
-                <span class="dp-date">2025-04-01</span>
-                <span class="dp-separator">~</span>
-                <span class="dp-date">2025-04-30</span>
-              </span>
-              <svg class="dp-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3.5 6.5 8 11l4.5-4.5" stroke="#101215" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
+            <div class="date-range-wrapper">
+              <button class="date-range-picker" type="button" @click="toggleDatePicker">
+                <svg class="dp-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="1.5" y="2" width="13" height="12" rx="1.5" fill="#101215"/>
+                  <rect x="3" y="0.5" width="1.6" height="3" rx="0.8" fill="#101215"/>
+                  <rect x="11.4" y="0.5" width="1.6" height="3" rx="0.8" fill="#101215"/>
+                </svg>
+                <span class="dp-range">
+                  <span class="dp-date">{{ shownRangeDates.start }}</span>
+                  <span class="dp-separator">~</span>
+                  <span class="dp-date">{{ shownRangeDates.end }}</span>
+                </span>
+                <svg class="dp-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3.5 6.5 8 11l4.5-4.5" stroke="#101215" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <!-- 自定义日期下拉 -->
+              <div v-if="showDatePicker" class="date-picker-popup" @click.stop>
+                <div class="date-picker-field">
+                  <label class="date-picker-label" for="dp-start">开始日期</label>
+                  <input id="dp-start" v-model="customStart" class="date-picker-input" type="date">
+                </div>
+                <div class="date-picker-field">
+                  <label class="date-picker-label" for="dp-end">结束日期</label>
+                  <input id="dp-end" v-model="customEnd" class="date-picker-input" type="date">
+                </div>
+                <button class="date-picker-apply" type="button" @click="applyCustomRange">确定</button>
+              </div>
+            </div>
           </div>
         </div>
 

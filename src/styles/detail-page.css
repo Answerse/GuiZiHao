@@ -94,7 +94,7 @@ a.breadcrumb-item {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
 }
 
 .detail-product-title {
@@ -106,12 +106,16 @@ a.breadcrumb-item {
   line-height: 1.1;
 }
 
-/* 统计 */
+/* 统计（Figma #2209:2278：白底 1px 边框、圆角 16px、padding 24px 16px） */
 .detail-stats {
   display: flex;
   align-items: stretch;
   gap: 24px;
   width: 100%;
+  padding: 24px 16px;
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
 }
 
 .stat-item {
@@ -130,7 +134,7 @@ a.breadcrumb-item {
 
 .stat-value {
   font-family: var(--font-family-display);
-  font-size: 40px;
+  font-size: var(--font-size-huge);
   font-weight: 700;
   color: var(--color-text-primary);
   line-height: 1;
@@ -143,7 +147,7 @@ a.breadcrumb-item {
   flex-shrink: 0;
 }
 
-/* 产品信息 */
+/* 产品信息（Figma #2209:2320：row + 垂直线 + 按钮区） */
 .detail-product {
   display: flex;
   align-items: center;
@@ -152,8 +156,8 @@ a.breadcrumb-item {
 }
 
 .product-main-image {
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   flex-shrink: 0;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -164,6 +168,13 @@ a.breadcrumb-item {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.product-divider {
+  width: 1px;
+  align-self: stretch;
+  background-color: var(--color-border-light);
+  flex-shrink: 0;
 }
 
 .product-info {
@@ -197,6 +208,46 @@ a.breadcrumb-item {
   font-weight: 330;
   color: var(--color-text-primary);
   text-align: right;
+}
+
+/* 产品操作按钮（Figma #2223:2737） */
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex-shrink: 0;
+}
+
+.product-action-btn {
+  width: 240px;
+  height: 65px;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  font-weight: 330;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.product-action-btn--solid {
+  background-color: var(--color-brand-green);
+  border: none;
+  color: var(--color-bg-white);
+}
+
+.product-action-btn--outline {
+  background-color: transparent;
+  border: 1px solid var(--color-brand-green);
+  color: var(--color-brand-green-bright);
+}
+
+.product-action-btn:hover {
+  opacity: 0.85;
 }
 
 /* ===== 订单分布 ===== */
@@ -261,12 +312,12 @@ a.breadcrumb-item {
 }
 
 .segment-btn-active {
-  background-color: var(--color-chart-green);
+  background-color: var(--color-brand-green);
   color: var(--color-chart-active-text);
 }
 
 .segment-btn-active:hover {
-  background-color: var(--color-chart-green);
+  background-color: var(--color-brand-green);
 }
 
 .date-range-picker {
@@ -306,6 +357,73 @@ a.breadcrumb-item {
 .dp-separator {
   color: var(--color-text-muted);
   font-size: 16px;
+}
+
+/* 自定义日期下拉 */
+.date-range-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.date-picker-popup {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-picker-label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 330;
+  color: var(--color-text-muted);
+}
+
+.date-picker-input {
+  width: 220px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 330;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-white);
+  outline: none;
+}
+
+.date-picker-input:focus {
+  border-color: var(--color-brand-green);
+}
+
+.date-picker-apply {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-xs);
+  background-color: var(--color-brand-green);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-bg-white);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.date-picker-apply:hover {
+  background-color: var(--color-brand-green-deep);
 }
 
 /* 地图 */
@@ -627,19 +745,19 @@ a.breadcrumb-item {
 
 .page-btn:hover:not(:disabled):not(.page-btn-active) {
   background-color: var(--color-bg-hover);
-  border-color: var(--color-chart-green);
-  color: var(--color-chart-green);
+  border-color: var(--color-brand-green);
+  color: var(--color-brand-green);
 }
 
 .page-btn-active {
-  background-color: var(--color-chart-green);
-  border-color: var(--color-chart-green);
+  background-color: var(--color-brand-green);
+  border-color: var(--color-brand-green);
   color: var(--color-chart-active-text);
   cursor: default;
 }
 
 .page-btn-active:hover {
-  background-color: var(--color-chart-green);
+  background-color: var(--color-brand-green);
   color: var(--color-chart-active-text);
 }
 
