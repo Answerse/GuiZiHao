@@ -159,12 +159,13 @@ function buildNode(
 const RANGE_RATIO = [0.3, 1, 2.2, 4, 1]
 
 // 树根定义：坐标、基准值、子节点权重（父值按权重拆分，和=父值）
+// 基准值覆盖各数量级：红(≥1万)/紫(≥5千)/蓝(≥1千)/橙(≥百)/绿(<百)，保证首次进入各种颜色圆点都有
 const TREE_ROOTS: { x: number; y: number; value: number; weights: number[] }[] = [
   { x: 440, y: 260, value: 32000, weights: [3, 3, 2, 2] },
-  { x: 560, y: 330, value: 45000, weights: [4, 3, 3, 2, 3] },
-  { x: 680, y: 300, value: 28000, weights: [3, 2, 2, 2] },
-  { x: 610, y: 430, value: 35000, weights: [3, 3, 2, 2] },
-  { x: 380, y: 350, value: 18000, weights: [3, 2, 2] },
+  { x: 560, y: 330, value: 8000, weights: [4, 3, 3, 2, 3] },
+  { x: 680, y: 300, value: 3000, weights: [3, 2, 2, 2] },
+  { x: 610, y: 430, value: 500, weights: [3, 3, 2, 2] },
+  { x: 380, y: 350, value: 50, weights: [3, 2, 2] },
   { x: 730, y: 380, value: 15000, weights: [3, 2, 2] }
 ]
 
@@ -313,9 +314,11 @@ function initMap() {
     scrollWheelZoom: true,
     zoomControl: true
   })
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  // 高德中文标注瓦片（浅色街道图，替换 CARTO 英文标注）
+  L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    subdomains: ['1', '2', '3', '4'],
+    maxZoom: 18,
+    attribution: '&copy; <a href="https://www.autonavi.com/">高德地图</a>'
   }).addTo(map)
   map.on('move zoom', updateTooltipPos)
   map.on('zoomend', onZoomEnd)
@@ -556,18 +559,18 @@ function nextPage() {
         <!-- 统计 -->
         <div class="detail-stats">
           <div class="stat-item">
-            <span class="stat-label">总金额 (单)</span>
-            <span class="stat-value">4999</span>
+            <span class="stat-label">总金额（元）</span>
+            <span class="stat-value">22,106,215.66</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
-            <span class="stat-label">总重量 (元)</span>
-            <span class="stat-value">56,330.20</span>
+            <span class="stat-label">总重量（斤）</span>
+            <span class="stat-value">2,744,917.75</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
-            <span class="stat-label">总开票金额 (公斤)</span>
-            <span class="stat-value">256,330.20</span>
+            <span class="stat-label">总开票金额（元）</span>
+            <span class="stat-value">13,925,062.41</span>
           </div>
         </div>
       </div>

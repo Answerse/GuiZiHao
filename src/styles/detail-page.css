@@ -430,7 +430,7 @@ a.breadcrumb-item {
 .orders-map {
   position: relative;
   width: 100%;
-  height: 640px;
+  height: 600px;
   overflow: hidden;
   border-radius: var(--radius-md);
 }

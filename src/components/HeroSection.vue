@@ -127,7 +127,7 @@ onUnmounted(() => {
         <div class="hero-content">
           <div class="hero-text">
             <h1 class="hero-title">汇聚八桂优品</h1>
-            <p class="hero-subtitle">广西优质农产品品牌平台</p>
+            <p class="hero-subtitle">广西优质农产品原产地采购平台</p>
           </div>
         </div>
         <div class="hero-filter">
