@@ -1,6 +1,6 @@
 /* ===== 二级页面 Header（Figma 1:1 还原） ===== */
 
-.header--secondary {
+.header.header--secondary {
   position: fixed;
   top: 0;
   left: 0;
