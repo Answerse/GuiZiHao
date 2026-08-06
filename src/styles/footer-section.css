@@ -6,7 +6,8 @@
 
 .footer-content {
   width: 100%;
-  padding: 0 240px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .footer-columns {

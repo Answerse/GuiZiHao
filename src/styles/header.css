@@ -355,7 +355,7 @@
   align-items: center;
   justify-content: center;
   width: 80px;
-  height: 100%;
+  height: 80px;
   gap: 10px;
   background-color: var(--color-brand-lime);
   cursor: pointer;

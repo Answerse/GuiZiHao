@@ -23,6 +23,13 @@ const categoryTabMap: Record<string, number> = {
 
 const categoryTabIndex = computed(() => categoryTabMap[product.value.category] ?? 0)
 
+// 更新日期：显示当前日期
+const today = computed(() => {
+  const d = new Date()
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+})
+
 // ---- 订单分布：时间筛选 ----
 const timeRanges = ['近 7 日', '近 30 天', '近 3 月', '近 1 年', '自定义']
 const activeRange = ref(1)
@@ -546,7 +553,7 @@ function nextPage() {
             </div>
             <div class="info-row">
               <span class="info-label">更新日期：</span>
-              <span class="info-value">{{ product.updateDate }}</span>
+              <span class="info-value">{{ today }}</span>
             </div>
           </div>
           <div class="product-divider"></div>
