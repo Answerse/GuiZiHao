@@ -1,7 +1,7 @@
 {
   "name": "guizhihao",
   "version": "1.0.0",
-  "description": "桂字号后台管理平台",
+  "description": "桂农易采后台管理平台",
   "type": "module",
   "scripts": {
     "dev": "vite",

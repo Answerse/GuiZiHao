@@ -1,0 +1,81 @@
+- generic [ref=f1e3]:
+  - banner [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e7]:
+        - img "logo" [ref=f1e8]
+        - img "桂字号" [ref=f1e9]
+      - generic [ref=f1e10]:
+        - button "首页" [ref=f1e11] [cursor=pointer]
+        - button "区域公用品牌" [ref=f1e12] [cursor=pointer]
+        - button "农产品品牌" [ref=f1e13] [cursor=pointer]
+        - button "农业企业品牌" [ref=f1e14] [cursor=pointer]
+      - generic [ref=f1e15]:
+        - img "搜索" [ref=f1e17] [cursor=pointer]
+        - button "登录/注册" [ref=f1e18] [cursor=pointer]
+  - generic [ref=f1e19]:
+    - generic [ref=f1e21]:
+      - button "后退" [ref=f1e22] [cursor=pointer]
+      - link "首页" [ref=f1e23] [cursor=pointer]:
+        - /url: /
+      - img ">" [ref=f1e24]
+      - link "农业企业品牌" [ref=f1e25] [cursor=pointer]:
+        - /url: /?tab=1
+      - img ">" [ref=f1e26]
+      - generic [ref=f1e27]: 广西南山白毛茶茶业有限公司
+    - generic [ref=f1e29]:
+      - img "广西南山白毛茶茶业有限公司" [ref=f1e31]
+      - generic [ref=f1e32]:
+        - heading "广西南山白毛茶茶业有限公司" [level=1] [ref=f1e33]
+        - generic [ref=f1e34]:
+          - generic [ref=f1e35]:
+            - generic [ref=f1e36]: 品牌类别：
+            - generic [ref=f1e37]: 农业企业品牌
+          - generic [ref=f1e38]:
+            - generic [ref=f1e39]: 所属地区：
+            - generic [ref=f1e40]: 南宁市
+          - generic [ref=f1e41]:
+            - generic [ref=f1e42]: 主营产品：
+            - generic [ref=f1e43]: 南山白毛茶
+          - generic [ref=f1e44]:
+            - generic [ref=f1e45]: 更新日期：
+            - generic [ref=f1e46]: 2024-12-08
+        - generic [ref=f1e47]:
+          - generic [ref=f1e48]: 购买方式
+          - button "货源联系方式" [ref=f1e49] [cursor=pointer]
+          - button "浏览电商网站" [ref=f1e50] [cursor=pointer]
+    - generic [ref=f1e52]:
+      - heading "企业介绍" [level=2] [ref=f1e53]
+      - paragraph [ref=f1e54]: 南山白毛茶系明朝建文帝卓锡在横县南山应天寿佛寺手植，亦称"圣种"白毛茶。1810年列为全国24个名茶之一，1915年巴拿马万国博览会获二等银奖，2008年列入南宁市非物质文化遗产名录，2013年获国家农产品地理标志保护登记，2015年获有机产品认证，2018年通过国家生态原产地保护产品认证。
+    - generic [ref=f1e56]:
+      - heading "品牌背景" [level=2] [ref=f1e57]
+      - paragraph [ref=f1e58]: 广西南山白毛茶茶业有限公司成立于2006年，位于广西横州市那阳镇南山宝华村，是一家专业从事'南山白毛茶'繁育、种植、加工、销售、科研、茶文化传播及茶山生态旅游于一体的综合性企业。南山白毛茶历史悠久，据《中国茶经》记载，明朝建文帝卓锡下江南避难时携白毛茶七株种于横县南山应天寺，故名'圣种'，传种至今六百余年。清嘉庆十五年（1810年）列为全国24种名茶之一；清道光二年（1822年）于巴拿马国际农产品展览会上获银质奖，是中国茶叶在国际博览会上最早获奖的名茶。公司注册'圣种'商标，拥有南山白毛茶和广西六堡茶四金钱冷发酵工艺两项非物质文化遗产制作技艺，被认定为广西农业产业化重点龙头企业和国家级高新技术企业。
+    - generic [ref=f1e60]:
+      - heading "核心产品" [level=2] [ref=f1e61]
+      - paragraph [ref=f1e62]: 公司开发有'圣种'牌南山白毛茶（绿茶）、圣种红茶、圣种岩茶、圣种六堡茶和圣种茉莉毛尖茶四大类数十个产品。南山白毛茶绿茶'色味胜龙井'、伴有荷花香；南山红茶'品胜武夷'，以南山白毛茶茶树鲜叶为原料研发，填补了广西本地茶树品种不能制作岩茶（乌龙茶）的空白；南山六堡茶具有'红、浓、陈、醇'四绝特色。
+    - generic [ref=f1e64]:
+      - heading "生产规模" [level=2] [ref=f1e65]
+      - paragraph [ref=f1e66]: 公司自有茶园基地2200亩以上，其中276亩已通过有机茶认证，年产优质茶叶520吨以上。采用'公司＋专业合作社＋农户'的运作模式，辐射带动横县那阳、校椅等乡镇发展南山白毛茶种植基地近6000亩，直接带动1550户农户。
+    - generic [ref=f1e68]:
+      - heading "质量认证" [level=2] [ref=f1e69]
+      - paragraph [ref=f1e70]: 生产基地自2007年起持续获得中国农业部质量认证中心有机茶认证；公司产品获国家地理标志保护产品认证；通过有机茶标准化栽培关键技术研究与示范项目省级审评，获国内先进科技成果。
+    - generic [ref=f1e72]:
+      - heading "荣誉资质" [level=2] [ref=f1e73]
+      - paragraph [ref=f1e74]: 南山白毛茶于1822年和1915年两次荣获巴拿马国际博览会银质奖，1945年在新加坡国际茶叶展览会获金质奖；公司被评为南宁市农业产业化重点龙头企业、广西农业产业化重点龙头企业、国家级高新技术企业；'圣种'牌南山红茶2007年、2008年荣膺中国东盟博览会唯一指定红茶和国宾礼用茶；获评全国休闲农业与乡村旅游四星级示范企业；入选央视《中国制造2025》百强之列；南山白毛茶制作技艺被列为广西壮族自治区非物质文化遗产。
+    - generic [ref=f1e76]:
+      - heading "数据来源" [level=2] [ref=f1e77]
+      - paragraph [ref=f1e78]: http://nynct.gxzf.gov.cn/gxfb/enterprise/details?id=9ec073f0-e6e4-4364-bc5a-8173e6072960 https://ncpsfhc.gxape.com.cn/ExhibitionHall/Detail_Product/2667 http://nsbm.gxnongmu.com/pageView.aspx?catId=45 http://www.hzswhg.org.cn/center/zzqj/336.html
+  - generic [ref=f1e82]:
+    - generic [ref=f1e83]:
+      - img "桂农易采" [ref=f1e84]
+      - generic [ref=f1e85]:
+        - img "桂农易采" [ref=f1e86]
+        - paragraph [ref=f1e87]: 广西优质农产品原产地采购平台
+    - generic [ref=f1e89]:
+      - generic [ref=f1e90]:
+        - link "桂ICP备19006652号" [ref=f1e91] [cursor=pointer]:
+          - /url: https://beian.miit.gov.cn/#/Integrated/index
+        - text: 网站标识码：4500000028
+      - generic [ref=f1e92]: 桂公网安备45010802000562号
+      - generic [ref=f1e93]:
+        - generic [ref=f1e94]: 技术支持：
+        - generic [ref=f1e95]: 广西计算机公司有限责任公司

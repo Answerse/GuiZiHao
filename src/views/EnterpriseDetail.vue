@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Header from '@/components/Header.vue'
 import FooterSection from '@/components/FooterSection.vue'
+import Breadcrumb from '@/components/Breadcrumb.vue'
 import { enterprises } from '@/data/enterprises'
 
 const route = useRoute()
@@ -49,18 +50,11 @@ function closeModals() {
     <Header alwaysWhite />
     <div class="detail-body">
       <!-- 面包屑导航 -->
-      <div class="detail-breadcrumb">
-        <div class="breadcrumb-content">
-          <button class="back-btn" @click="$router.go(-1)" aria-label="后退">
-            <img src="/icons/arrow-left.svg" class="back-btn-icon" alt="">
-          </button>
-          <router-link to="/" class="breadcrumb-item">首页</router-link>
-          <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-          <router-link :to="{ name: 'Home', query: { tab: 1 } }" class="breadcrumb-item">农业企业品牌</router-link>
-          <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-          <span class="breadcrumb-item breadcrumb-current">{{ enterprise.name }}</span>
-        </div>
-      </div>
+      <Breadcrumb :items="[
+        { label: '首页', to: '/' },
+        { label: '农业企业品牌', to: { name: 'Home', query: { tab: 1 } } },
+        { label: enterprise.name }
+      ]" />
 
       <!-- 主图 + 信息 -->
       <div class="detail-hero">

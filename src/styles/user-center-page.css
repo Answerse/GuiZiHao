@@ -1,0 +1,334 @@
+/* ============ 个人中心页（二级页通用框架内） ============ */
+.user-center-page {
+  background-color: var(--color-bg-white);
+}
+
+/* 左侧栏 + 右侧内容布局 */
+.uc-layout {
+  display: flex;
+  gap: 40px;
+  padding-top: 32px;
+}
+
+/* 左侧栏 */
+.uc-sidebar {
+  flex-shrink: 0;
+  width: 220px;
+}
+
+.uc-sidebar-title {
+  font-family: var(--font-family-sans);
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: 20px;
+  padding-left: 16px;
+}
+
+.uc-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uc-menu-item {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-sans);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uc-menu-item:hover {
+  background-color: rgba(22, 163, 74, 0.06);
+  color: var(--color-brand-green);
+}
+
+.uc-menu-item.active {
+  background-color: var(--color-brand-green);
+  color: var(--color-bg-white);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 右侧内容区 */
+.uc-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.uc-section {
+  width: 100%;
+}
+
+.uc-section-title {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-huge);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0 0 24px;
+}
+
+/* 个人信息：信息卡片网格 */
+.uc-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.uc-info-card {
+  padding: 20px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-white);
+}
+
+.uc-info-title {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.uc-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.uc-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-sans);
+}
+
+.uc-info-label {
+  color: var(--color-text-secondary);
+}
+
+.uc-info-value {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 操作按钮 */
+.uc-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.uc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uc-btn-primary {
+  border: none;
+  background-color: var(--color-brand-green);
+  color: var(--color-bg-white);
+}
+
+.uc-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.uc-btn-outline {
+  border: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-white);
+  color: var(--color-text-secondary);
+}
+
+.uc-btn-outline:hover {
+  border-color: var(--color-brand-green);
+  color: var(--color-brand-green);
+}
+
+.uc-btn-sm {
+  height: 36px;
+  padding: 0 16px;
+  font-size: var(--font-size-sm);
+}
+
+/* 空状态 */
+.uc-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  border: 1px dashed var(--color-border-default);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.uc-empty-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(22, 163, 74, 0.08);
+  color: var(--color-brand-green);
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.uc-empty-text {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+.uc-empty-sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* 履约订单：身份切换 */
+.uc-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.uc-section-header .uc-section-title {
+  margin: 0;
+}
+
+.uc-role-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.uc-role-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-white);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uc-role-btn:hover {
+  border-color: var(--color-brand-green);
+  color: var(--color-brand-green);
+}
+
+.uc-role-btn.active {
+  border-color: var(--color-brand-green);
+  background-color: rgba(22, 163, 74, 0.06);
+  color: var(--color-brand-green);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 订单卡片 */
+.uc-order-card {
+  padding: 20px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-white);
+}
+
+.uc-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.uc-order-no {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.uc-order-status {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(22, 163, 74, 0.08);
+  color: var(--color-brand-green);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.uc-order-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.uc-order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.uc-order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+  .uc-layout {
+    flex-direction: column;
+  }
+
+  .uc-sidebar {
+    width: 100%;
+  }
+
+  .uc-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .uc-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .uc-order-body {
+    flex-direction: column;
+  }
+
+  .uc-order-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}

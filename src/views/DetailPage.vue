@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import Header from '@/components/Header.vue'
 import FooterSection from '@/components/FooterSection.vue'
+import Breadcrumb from '@/components/Breadcrumb.vue'
 import { products } from '@/data/products'
 
 const route = useRoute()
@@ -29,6 +30,36 @@ const today = computed(() => {
   const pad = (n: number) => String(n).padStart(2, '0')
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 })
+
+// ---- 基于产品 id 的确定性 mock 数据（mulberry32 伪随机，刷新不变且各产品不同） ----
+function mulberry32(seed: number) {
+  let a = seed
+  return () => {
+    a |= 0
+    a = (a + 0x6d2b79f5) | 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+// 统计栏数值：浦北陈皮（id=17）使用真实数据，其他产品按 id 生成确定性数值
+const STATS_OVERRIDE: Record<number, { amount: number; weight: number; invoice: number }> = {
+  17: { amount: 22106215.66, weight: 2744917.75, invoice: 13925062.41 }
+}
+
+function buildStats(pid: number) {
+  const o = STATS_OVERRIDE[pid]
+  if (o) return o
+  const rnd = mulberry32(pid * 7919 + 13)
+  const amount = Math.round((1_000_000 + rnd() * 20_000_000) * 100) / 100
+  const pricePerJin = 6 + rnd() * 8 // 6~14 元/斤
+  const weight = Math.round((amount / pricePerJin) * 100) / 100
+  const invoice = Math.round(amount * (0.5 + rnd() * 0.25) * 100) / 100
+  return { amount, weight, invoice }
+}
+
+const stats = computed(() => buildStats(product.value.id))
 
 // ---- 订单分布：时间筛选 ----
 const timeRanges = ['近 7 日', '近 30 天', '近 3 月', '近 1 年', '自定义']
@@ -167,19 +198,54 @@ const RANGE_RATIO = [0.3, 1, 2.2, 4, 1]
 
 // 树根定义：坐标、基准值、子节点权重（父值按权重拆分，和=父值）
 // 基准值覆盖各数量级：红(≥1万)/紫(≥5千)/蓝(≥1千)/橙(≥百)/绿(<百)，保证首次进入各种颜色圆点都有
-const TREE_ROOTS: { x: number; y: number; value: number; weights: number[] }[] = [
-  { x: 440, y: 260, value: 32000, weights: [3, 3, 2, 2] },
-  { x: 560, y: 330, value: 8000, weights: [4, 3, 3, 2, 3] },
-  { x: 680, y: 300, value: 3000, weights: [3, 2, 2, 2] },
-  { x: 610, y: 430, value: 500, weights: [3, 3, 2, 2] },
-  { x: 380, y: 350, value: 50, weights: [3, 2, 2] },
-  { x: 730, y: 380, value: 15000, weights: [3, 2, 2] }
+interface TreeRoot { x: number; y: number; value: number; weights: number[] }
+
+const TREE_ROOTS_OVERRIDE: Record<number, TreeRoot[]> = {
+  17: [
+    { x: 440, y: 260, value: 32000, weights: [3, 3, 2, 2] },
+    { x: 560, y: 330, value: 8000, weights: [4, 3, 3, 2, 3] },
+    { x: 680, y: 300, value: 3000, weights: [3, 2, 2, 2] },
+    { x: 610, y: 430, value: 500, weights: [3, 3, 2, 2] },
+    { x: 380, y: 350, value: 50, weights: [3, 2, 2] },
+    { x: 730, y: 380, value: 15000, weights: [3, 2, 2] }
+  ]
+}
+
+const TREE_ROOT_POSITIONS = [
+  { x: 440, y: 260 },
+  { x: 560, y: 330 },
+  { x: 680, y: 300 },
+  { x: 610, y: 430 },
+  { x: 380, y: 350 },
+  { x: 730, y: 380 }
 ]
+
+// 按产品 id 生成 6 个根圆点：每个数量级锚点取区间内确定性随机值，保证各颜色齐全且产品间不同
+function buildTreeRoots(pid: number): TreeRoot[] {
+  const fixed = TREE_ROOTS_OVERRIDE[pid]
+  if (fixed) return fixed
+  const rnd = mulberry32(pid * 104729 + 7)
+  const ranges: { min: number; max: number; weights: number[] }[] = [
+    { min: 20000, max: 40000, weights: [3, 3, 2, 2] }, // 红
+    { min: 5000, max: 9900, weights: [4, 3, 3, 2, 3] }, // 紫
+    { min: 1000, max: 4900, weights: [3, 2, 2, 2] }, // 蓝
+    { min: 100, max: 990, weights: [3, 3, 2, 2] }, // 橙
+    { min: 1, max: 99, weights: [3, 2, 2] }, // 绿
+    { min: 10000, max: 30000, weights: [3, 2, 2] } // 红
+  ]
+  return TREE_ROOT_POSITIONS.map((p, i) => {
+    const r = ranges[i]
+    const value = Math.round(r.min + rnd() * (r.max - r.min))
+    return { x: p.x, y: p.y, value, weights: r.weights }
+  })
+}
+
+const TREE_ROOTS = computed(() => buildTreeRoots(product.value.id))
 
 // 当前时间范围下的气泡树（随时间筛选联动）
 const BUBBLE_TREE = computed<BubbleNode[]>(() => {
   const ratio = RANGE_RATIO[Math.min(activeRange.value, RANGE_RATIO.length - 1)]
-  return TREE_ROOTS.map(r => buildNode(r.x, r.y, Math.round(r.value * ratio), r.weights, 70, 2))
+  return TREE_ROOTS.value.map(r => buildNode(r.x, r.y, Math.round(r.value * ratio), r.weights, 70, 2))
 })
 
 function selectRange(i: number) {
@@ -421,29 +487,48 @@ const PURCHASERS = [
 const PURCHASER_NAMES = ['陈肇鑫', '陈肇锟', '陈妹凤', '陈启威', '龙波', '吴成娟', '李青梅']
 const SELLER_NAMES = ['吴成娟', '余传祥', '吴福明', '吴朝兰', '黄荣', '谭彩明', '李青梅', '吴远志', '赵传作', '吴伟军', '王秀英', '刘建国']
 
+// 通用收购企业名后缀：按产品所属地区生成，避免跨产品串用浦北数据
+const PURCHASER_SUFFIXES = [
+  '农产品购销有限公司',
+  '特色农业开发有限公司',
+  '农产品购销专业合作社',
+  '生态农业发展有限公司',
+  '农副产品购销部'
+]
+
+function buildPurchasers(pid: number, region: string): string[] {
+  if (pid === 17) return PURCHASERS
+  return PURCHASER_SUFFIXES.map(s => `${region}${s}`)
+}
+
 function pad(n: number, len = 2): string {
   return String(n).padStart(len, '0')
 }
 
-function genOrderRecords(count: number): OrderRecord[] {
+// 按产品生成确定性订单记录（浦北陈皮保留原数据特征，其他产品商品列显示各自主营产品）
+function genOrderRecords(pid: number, region: string, mainProduct: string, count: number): OrderRecord[] {
+  const rnd = mulberry32(pid * 13 + 7)
+  const purchasers = buildPurchasers(pid, region)
+  const productName = pid === 17 ? '柑果' : mainProduct
+  const baseId = 2084537408207798272n + BigInt(pid * 1000000 + 7)
   const records: OrderRecord[] = []
   // 基准时间：2026-08-04 15:10:21，逐条递减分钟
   const baseTime = new Date('2026-08-04T15:10:21+08:00').getTime()
   for (let i = 0; i < count; i++) {
-    const unitPrice = Math.random() < 0.7 ? 1.0 : 0.5
-    const weight = Math.round(Math.random() * 1450 + 50)
+    const unitPrice = rnd() < 0.7 ? 1.0 : 0.5
+    const weight = Math.round(rnd() * 1450 + 50)
     const totalAmount = +(weight * unitPrice).toFixed(2)
     const time = new Date(baseTime - i * 3 * 60 * 1000) // 每条间隔 3 分钟
     const t = time
     const timeStr = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`
     records.push({
-      id: 'GG' + (2084537408207798272n + BigInt(i)).toString(),
+      id: 'GG' + (baseId + BigInt(i)).toString(),
       time: timeStr,
-      product: '柑果',
+      product: productName,
       totalAmount,
       unitPrice,
       weight,
-      purchaser: PURCHASERS[i % PURCHASERS.length],
+      purchaser: purchasers[i % purchasers.length],
       purchaserName: PURCHASER_NAMES[i % PURCHASER_NAMES.length],
       sellerName: SELLER_NAMES[i % SELLER_NAMES.length]
     })
@@ -451,7 +536,18 @@ function genOrderRecords(count: number): OrderRecord[] {
   return records
 }
 
-const orderRecords = ref<OrderRecord[]>(genOrderRecords(200))
+const orderRecords = computed<OrderRecord[]>(() =>
+  genOrderRecords(product.value.id, product.value.region, product.value.mainProduct, 200)
+)
+
+// 切换产品时重置分页与地图下钻状态
+watch(
+  () => product.value.id,
+  () => {
+    currentPage.value = 1
+    drillStack.value = []
+  }
+)
 
 const orderColumns = [
   { key: 'id', label: '订单编号', width: '180px' },
@@ -499,6 +595,15 @@ function goToPage(page: number) {
   currentPage.value = page
 }
 
+// 陈皮通独立项目地址（陈皮通已抽为独立项目，部署后替换为正式域名）
+const CHENPITONG_BASE_URL = 'http://localhost:5175'
+
+// 去网点购买：有销售链接的产品在新标签页打开电商页面（如浦北陈皮 → 陈皮通独立项目）
+function goSales() {
+  const link = product.value.salesLink
+  if (link) window.open(CHENPITONG_BASE_URL + link, '_blank')
+}
+
 function prevPage() {
   goToPage(currentPage.value - 1)
 }
@@ -513,20 +618,11 @@ function nextPage() {
     <Header alwaysWhite />
     <div class="detail-body">
       <!-- 面包屑导航 -->
-      <div class="detail-breadcrumb">
-        <div class="breadcrumb-row">
-          <button class="back-btn" @click="router.go(-1)" aria-label="后退">
-            <img src="/icons/arrow-back-green.svg" class="back-btn-icon" alt="">
-          </button>
-          <div class="breadcrumb-items">
-            <router-link to="/" class="breadcrumb-item">首页</router-link>
-            <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-            <router-link :to="{ name: 'Home', query: { tab: categoryTabIndex } }" class="breadcrumb-item">{{ product.category }}</router-link>
-            <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-            <span class="breadcrumb-item breadcrumb-current">{{ product.title }}</span>
-          </div>
-        </div>
-      </div>
+      <Breadcrumb :items="[
+        { label: '首页', to: '/' },
+        { label: product.category, to: { name: 'Home', query: { tab: categoryTabIndex } } },
+        { label: product.title }
+      ]" />
 
       <!-- 信息 -->
       <div class="detail-info-section">
@@ -559,7 +655,7 @@ function nextPage() {
           <div class="product-divider"></div>
           <div class="product-actions">
             <button class="product-action-btn product-action-btn--solid" type="button">货源联系方式</button>
-            <button class="product-action-btn product-action-btn--outline" type="button">去网点购买</button>
+            <button class="product-action-btn product-action-btn--outline" type="button" @click="goSales">去网点购买</button>
           </div>
         </div>
 
@@ -567,17 +663,17 @@ function nextPage() {
         <div class="detail-stats">
           <div class="stat-item">
             <span class="stat-label">总金额（元）</span>
-            <span class="stat-value">22,106,215.66</span>
+            <span class="stat-value">{{ formatMoney(stats.amount) }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="stat-label">总重量（斤）</span>
-            <span class="stat-value">2,744,917.75</span>
+            <span class="stat-value">{{ formatMoney(stats.weight) }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="stat-label">总开票金额（元）</span>
-            <span class="stat-value">13,925,062.41</span>
+            <span class="stat-value">{{ formatMoney(stats.invoice) }}</span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useLoginModal } from '../composables/useLoginModal'
 
 const props = defineProps({
   alwaysWhite: {
@@ -16,19 +17,17 @@ const props = defineProps({
 const emit = defineEmits(['tabChange'])
 const router = useRouter()
 const route = useRoute()
+const { openLoginModal } = useLoginModal()
 
 const isScrolled = ref(false)
 let scrollHandler = null
 
 // Dropdown state
 const showTypeMenu = ref(false)
-const showRegionMenu = ref(false)
 const showCategoryMenu = ref(false)
 const selectedType = ref('区域公用品牌')
-const selectedRegion = ref('全部')
 
 const typeOptions = ['区域公用品牌', '农产品品牌', '农业企业品牌']
-const regionOptions = ['全部', '自治区', '南宁市', '柳州市', '桂林市', '梧州市', '北海市', '防城港市', '钦州市', '贵港市', '玉林市', '百色市', '贺州市', '河池市', '来宾市', '崇左市']
 
 const searchQuery = ref('')
 
@@ -39,6 +38,10 @@ function goSearch() {
   } else {
     router.push({ name: 'Search' })
   }
+}
+
+function goAccount() {
+  openLoginModal()
 }
 
 // Scrolled nav tabs
@@ -72,19 +75,11 @@ const activeTabIndex = computed(() => {
 
 function toggleTypeMenu() {
   showTypeMenu.value = !showTypeMenu.value
-  showRegionMenu.value = false
-}
-
-function toggleRegionMenu() {
-  showRegionMenu.value = !showRegionMenu.value
-  showTypeMenu.value = false
-  showCategoryMenu.value = false
 }
 
 function toggleCategoryMenu() {
   showCategoryMenu.value = !showCategoryMenu.value
   showTypeMenu.value = false
-  showRegionMenu.value = false
 }
 
 function selectType(opt) {
@@ -92,14 +87,8 @@ function selectType(opt) {
   showTypeMenu.value = false
 }
 
-function selectRegion(opt) {
-  selectedRegion.value = opt
-  showRegionMenu.value = false
-}
-
 function closeMenus() {
   showTypeMenu.value = false
-  showRegionMenu.value = false
   showCategoryMenu.value = false
 }
 
@@ -146,28 +135,12 @@ onUnmounted(() => {
         >{{ tab }}</button>
       </div>
 
-      <!-- 地区选择器 -->
-      <div class="header-secondary-region-wrapper">
-        <div class="header-secondary-region" @click.stop="toggleRegionMenu">
-          <span class="header-secondary-region-label">区域：</span>
-          <span class="header-secondary-region-value">{{ selectedRegion }}</span>
-          <img src="/icons/chevron-down.svg" class="header-secondary-region-arrow" alt="▾">
+      <!-- 账号操作区：搜索按钮 + 账号区（间隔由组内 gap 控制，不受 nav 48px gap 影响） -->
+      <div class="header-actions">
+        <div class="header-secondary-search" @click="goSearch">
+          <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
         </div>
-        <div v-if="showRegionMenu" class="region-popup--secondary" @click.stop>
-          <div class="dropdown-popup-inner">
-            <button
-              v-for="opt in regionOptions"
-              :key="opt"
-              :class="['dropdown-chip', { 'dropdown-chip-active': opt === selectedRegion }]"
-              @click="selectRegion(opt)"
-            >{{ opt }}</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 搜索按钮 -->
-      <div class="header-secondary-search" @click="goSearch">
-        <img src="/icons/header-search-icon.svg" class="header-secondary-search-icon" alt="搜索">
+        <button class="header-account-btn" @click="goAccount">登录/注册</button>
       </div>
     </div>
   </header>
@@ -185,12 +158,6 @@ onUnmounted(() => {
           <div class="search-bar-row">
             <div class="search-bar-item search-bar-dropdown search-bar-type" @click.stop="toggleTypeMenu">
               <span class="dropdown-label">{{ selectedType }}</span>
-              <svg class="dropdown-chevron" width="12" height="8" viewBox="0 0 12 8">
-                <path d="M1 1.5L6 6.5L11 1.5" stroke="#101215" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="search-bar-item search-bar-dropdown search-bar-region" @click.stop="toggleRegionMenu">
-              <span class="dropdown-label">{{ selectedRegion }}</span>
               <svg class="dropdown-chevron" width="12" height="8" viewBox="0 0 12 8">
                 <path d="M1 1.5L6 6.5L11 1.5" stroke="#101215" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -214,22 +181,14 @@ onUnmounted(() => {
               >{{ opt }}</button>
             </div>
           </div>
-          <!-- 地区下拉菜单 -->
-          <div v-if="showRegionMenu" class="dropdown-popup region-popup" @click.stop>
-            <div class="dropdown-popup-inner region-grid">
-              <button
-                v-for="opt in regionOptions"
-                :key="opt"
-                :class="['dropdown-chip', { 'dropdown-chip-active': opt === selectedRegion }]"
-                @click="selectRegion(opt)"
-              >{{ opt }}</button>
-            </div>
-          </div>
         </div>
 
-        <!-- 右上角搜索按钮（与滚动后搜索按钮样式一致） -->
-        <div class="header-banner-search" @click="goSearch">
-          <img src="/icons/header-search-icon.svg" class="header-banner-search-icon" alt="搜索">
+        <!-- 右上角操作区：搜索按钮 → 登录/注册（与设计稿顺序一致） -->
+        <div class="header-banner-actions">
+          <div class="header-banner-search" @click="goSearch">
+            <img src="/icons/search-icon.svg" class="header-banner-search-icon" alt="搜索">
+          </div>
+          <button class="header-account-btn" @click="goAccount">登录/注册</button>
         </div>
       </template>
 
@@ -269,27 +228,12 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
-        <!-- 地区选择器 -->
-        <div class="header-secondary-region-wrapper">
-          <div class="header-secondary-region" @click.stop="toggleRegionMenu">
-            <span class="header-secondary-region-label">区域：</span>
-            <span class="header-secondary-region-value">{{ selectedRegion }}</span>
-            <img src="/icons/chevron-down.svg" class="header-secondary-region-arrow" alt="▾">
+        <!-- 账号操作区：搜索按钮 + 账号区（间隔由组内 gap 控制，不受 nav 48px gap 影响） -->
+        <div class="header-actions">
+          <div class="header-secondary-search" @click="goSearch">
+            <img src="/icons/search-icon.svg" class="header-secondary-search-icon" alt="搜索">
           </div>
-          <div v-if="showRegionMenu" class="region-popup--secondary" @click.stop>
-            <div class="dropdown-popup-inner">
-              <button
-                v-for="opt in regionOptions"
-                :key="opt"
-                :class="['dropdown-chip', { 'dropdown-chip-active': opt === selectedRegion }]"
-                @click="selectRegion(opt)"
-              >{{ opt }}</button>
-            </div>
-          </div>
-        </div>
-        <!-- 搜索按钮 -->
-        <div class="header-secondary-search" @click="goSearch">
-          <img src="/icons/header-search-icon.svg" class="header-secondary-search-icon" alt="搜索">
+          <button class="header-account-btn" @click="goAccount">登录/注册</button>
         </div>
       </template>
 

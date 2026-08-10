@@ -1,4 +1,4 @@
-# 桂字号设计系统
+# 桂农易采设计系统
 
 > 从现有代码反向提取，以 `src/styles/variables.css` 和实际组件渲染为准。
 > 与 `design-tokens.md` 不一致时，以本文件为准。

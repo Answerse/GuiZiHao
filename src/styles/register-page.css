@@ -1,0 +1,144 @@
+/* ============ 注册页（二级页通用框架内） ============ */
+/* 页面根容器：白色背景，作为 .detail-body 内的内容承载 */
+.register-page {
+  background-color: var(--color-bg-white);
+}
+
+/* 卡片：面包屑下方的内容区，整体居中，最大宽度 640px（已在 .detail-body 内） */
+.register-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+}
+
+.register-title {
+  width: 100%;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-huge);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-align: center;
+  /* 高度自适应：仅字体高度，无额外 margin；与表单区间隔由 .register-fields 的 margin-top 控制 */
+}
+
+/* 区块 */
+.register-block {
+  width: 100%;
+  margin-bottom: 32px;
+}
+/* 标题与内容区（首个区块）的统一大间隔；其余区块不再额外加顶距 */
+.register-card > .register-block:first-of-type {
+  margin-top: 48px;
+}
+
+.block-label,
+.register-block-title {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+/* 账号类型 / 身份选择：描边式单选组 */
+.account-type-group {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.account-type-btn {
+  flex: 1;
+  height: 44px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-white);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.account-type-btn:hover {
+  border-color: var(--color-brand-green);
+}
+/* 描边式选中：绿边 + 绿字，不整块填充，与提交按钮明显区分 */
+.account-type-btn.active {
+  border-color: var(--color-brand-green);
+  background-color: rgba(22, 163, 74, 0.06);
+  color: var(--color-brand-green);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 表单字段 */
+.register-fields {
+  display: flex;
+  flex-direction: column;
+  row-gap: 28px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+}
+
+/* input 沿用登录弹窗样式：无边框容器 + 底部 1px 下边框，透明输入 */
+.input-field {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid rgba(16, 18, 21, 0.2);
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  font-weight: 330;
+  font-family: 'MiSans', sans-serif;
+  color: #111827;
+  transition: border-color 0.2s ease;
+}
+.input-field::placeholder {
+  color: #6B7280;
+}
+.input-field:focus {
+  border-bottom-color: var(--color-brand-green);
+}
+select.input-field {
+  appearance: none;
+  background-image: url('/icons/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 14px;
+  padding-right: 28px;
+  cursor: pointer;
+}
+
+/* 提交按钮：沿用登录弹窗按钮样式（绿底、圆角 8px、白字） */
+.submit-btn {
+  width: 100%;
+  height: 64px;
+  margin-top: 48px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-brand-green);
+  color: #F9FAFB;
+  font-size: 20px;
+  font-weight: 330;
+  font-family: 'MiSans', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.submit-btn:hover {
+  opacity: 0.9;
+}

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Header from '@/components/Header.vue'
 import FooterSection from '@/components/FooterSection.vue'
+import Breadcrumb from '@/components/Breadcrumb.vue'
 import { brandProducts } from '@/data/brand-products'
 
 const route = useRoute()
@@ -18,11 +19,14 @@ const showPurchaseModal = ref(false)
 // 是否有电商销售链接
 const hasSalesLink = computed(() => !!brandProduct.value.salesLink)
 
+// 陈皮通独立项目地址（陈皮通已抽为独立项目，部署后替换为正式域名）
+const CHENPITONG_BASE_URL = 'http://localhost:5175'
+
 const salesUrl = computed(() => {
   const link = brandProduct.value.salesLink
   if (!link) return ''
   if (link.startsWith('http')) return link
-  return window.location.origin + link
+  return CHENPITONG_BASE_URL + link
 })
 
 // 拟真联系方式
@@ -56,7 +60,7 @@ function closeModals() {
 function goToStore() {
   const link = brandProduct.value.salesLink
   if (link) {
-    window.open(link, '_blank')
+    window.open(link.startsWith('http') ? link : CHENPITONG_BASE_URL + link, '_blank')
   }
   closeModals()
 }
@@ -67,18 +71,11 @@ function goToStore() {
     <Header alwaysWhite />
     <div class="detail-body">
       <!-- 面包屑导航 -->
-      <div class="detail-breadcrumb">
-        <div class="breadcrumb-content">
-          <button class="back-btn" @click="$router.go(-1)" aria-label="后退">
-            <img src="/icons/arrow-left.svg" class="back-btn-icon" alt="">
-          </button>
-          <router-link to="/" class="breadcrumb-item">首页</router-link>
-          <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-          <router-link :to="{ name: 'Home', query: { tab: 2 } }" class="breadcrumb-item">农产品品牌</router-link>
-          <img src="/images/breadcrumb-chevron.svg" class="breadcrumb-chevron" alt=">">
-          <span class="breadcrumb-item breadcrumb-current">{{ brandProduct.fullName }}</span>
-        </div>
-      </div>
+      <Breadcrumb :items="[
+        { label: '首页', to: '/' },
+        { label: '农产品品牌', to: { name: 'Home', query: { tab: 2 } } },
+        { label: brandProduct.fullName }
+      ]" />
 
       <!-- 主图 + 信息 -->
       <div class="detail-hero">

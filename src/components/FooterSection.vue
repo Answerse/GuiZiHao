@@ -7,9 +7,9 @@
       <div class="footer-columns">
         <div class="footer-info">
           <div class="footer-logo">
-            <img src="/images/footer-logomark.svg" alt="桂字号" class="footer-logo-mark">
+            <img src="/images/footer-logomark.svg" alt="桂农易采" class="footer-logo-mark">
             <div class="footer-logo-text">
-              <img src="/images/footer-logotype.svg" alt="桂字号" class="footer-logo-type">
+              <img src="/images/footer-logotype.svg" alt="桂农易采" class="footer-logo-type">
               <p class="footer-logo-subtitle">广西优质农产品原产地采购平台</p>
             </div>
           </div>

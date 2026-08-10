@@ -27,19 +27,19 @@ const router = createRouter({
       component: () => import('@/views/EnterpriseDetail.vue')
     },
     {
-      path: '/chenpitong',
-      name: 'ChenpiTong',
-      component: () => import('@/views/ChenpiTongHome.vue')
-    },
-    {
-      path: '/chenpitong/product',
-      name: 'ChenpiTongProduct',
-      component: () => import('@/views/ChenpiTongProduct.vue')
-    },
-    {
       path: '/search',
       name: 'Search',
       component: () => import('@/views/SearchPage.vue')
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('@/views/RegisterPage.vue')
+    },
+    {
+      path: '/user-center',
+      name: 'UserCenter',
+      component: () => import('@/views/UserCenterPage.vue')
     }
   ]
 })
