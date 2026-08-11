@@ -99,7 +99,6 @@
   left: 0;
   right: 0;
   background-color: #FFFFFF;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   max-width: 100%;
   z-index: 30;
 }

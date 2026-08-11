@@ -140,6 +140,14 @@
 | `0 30px 80px rgba(0,0,0,0.4)` | Coverflow 焦点卡片 | recommend-section.css |
 | `0 12px 32px rgba(0,0,0,0.12)` | 产品卡片 hover | product-section.css |
 
+#### 1.5.1 卡片规范（强制）
+
+**非必要时，卡片样式不允许使用描边（border）和阴影（box-shadow），除非特别说明。**
+
+- 卡片的层次区分优先通过 `背景色`（如 `--color-bg-white` 置于 `--color-bg-page` 底色之上）与 `圆角`（`--radius-sm`）实现，而非描边或阴影。
+- 仅在用户明确指定的场景下（如固定顶栏、下拉弹窗、Coverflow 焦点卡片、产品卡片 hover 等已有阴影的系统组件）保留阴影。
+- 账户中心（`user-center-page.css`）所有卡片（余额头部、我的资产、功能中心、空态、订单卡）已统一去除描边与阴影，仅以白底 + 圆角呈现。
+
 ---
 
 ### 1.6 渐变系统
