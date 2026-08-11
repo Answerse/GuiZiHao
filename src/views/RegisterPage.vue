@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import Header from '../components/Header.vue'
 import FooterSection from '../components/FooterSection.vue'
 import Breadcrumb from '../components/Breadcrumb.vue'
-
-const router = useRouter()
 
 // 账号类型：个人 / 企业
 type AccountType = 'personal' | 'company'
@@ -32,10 +29,6 @@ const form = ref({
   account: '',
   password: '',
 })
-
-function goHome() {
-  router.push('/')
-}
 
 function onSubmit() {
   const payload = {

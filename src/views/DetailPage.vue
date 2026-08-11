@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import Header from '@/components/Header.vue'
@@ -9,7 +9,6 @@ import Breadcrumb from '@/components/Breadcrumb.vue'
 import { products } from '@/data/products'
 
 const route = useRoute()
-const router = useRouter()
 
 const product = computed(() => {
   const id = Number(route.params.productId)

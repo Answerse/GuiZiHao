@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    items: { label: string; to?: string }[]
+    items: { label: string; to?: RouteLocationRaw }[]
     showBack?: boolean
     backIcon?: string
   }>(),
